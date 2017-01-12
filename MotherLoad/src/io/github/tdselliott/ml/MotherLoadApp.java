@@ -30,7 +30,7 @@ public class MotherLoadApp extends GameApplication {
 //------------------------------------------------------------------------------
     @Override
     protected void initInput() {
-        
+        System.out.println("Testing the print while Mack edits other code.");
     }
 //------------------------------------------------------------------------------
     @Override
