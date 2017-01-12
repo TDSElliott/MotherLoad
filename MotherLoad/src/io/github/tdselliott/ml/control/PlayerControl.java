@@ -25,6 +25,7 @@ package io.github.tdselliott.ml.control;
 
 import com.almasb.ents.AbstractControl;
 import com.almasb.ents.Entity;
+import com.almasb.fxgl.entity.component.PositionComponent;
 
 /**
  *
@@ -32,13 +33,47 @@ import com.almasb.ents.Entity;
  */
 public class PlayerControl extends AbstractControl {
 
-    @Override
-    public void onAdded(Entity entity) {
+    protected PositionComponent position;
 
+    private double positionX = 0;
+    private double positionY = 0;
+    private double velocityX = 0;
+    private double velocityY = 0;
+
+    public PlayerControl() {
+        
+    }
+    
+    public PlayerControl(double x,double y) {
+        x = positionX;
+        y = positionY;
     }
     
     @Override
+    public void onAdded(Entity entity) {
+        position = entity.getComponentUnsafe(PositionComponent.class);
+    }
+
+    @Override
     public void onUpdate(Entity entity, double d) {
+        updatePosition();
+    }
+
+    private void updatePosition() {
+        positionX += velocityX;
+        positionY += velocityY;
+        position.setValue(positionX, positionY);
+    }
+    
+    public void moveUp() {
+        
+    }
+    
+    public void moveHorizontal(boolean x) {
+        
+    }
+    
+    public void moveDown() {
         
     }
     

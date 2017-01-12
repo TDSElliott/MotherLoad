@@ -23,39 +23,10 @@
  */
 package io.github.tdselliott.ml;
 
-import com.almasb.ents.Entity;
-import com.almasb.fxgl.asset.AssetLoader;
-import com.almasb.fxgl.entity.EntityView;
-import com.almasb.fxgl.entity.GameEntity;
-import com.almasb.fxgl.entity.component.CollidableComponent;
-import io.github.tdselliott.ml.control.PlayerControl;
-
 /**
  *
- * @author Tyler
+ * @author Mack
  */
-public class EntityFactory {
-    
-    private static AssetLoader assetLoader;
-    
-    
-    public static Entity newPlayer(double x, double y) {
-        //
-        GameEntity Player = new GameEntity();
-        
-        //
-        Player.getTypeComponent().setValue(EntityType.PLAYER);
-        Player.getPositionComponent().setValue(x, y);
-        Player.getMainViewComponent().setView(new EntityView(assetLoader.loadTexture("player.png")), true);
-        
-        //Components
-        Player.addComponent(new CollidableComponent(true));
-        
-        //Control
-        Player.addControl(new PlayerControl(x, y));
-        
-        //
-        return Player;
-    }
-    
+public enum EntityType {
+    PLAYER, 
 }
