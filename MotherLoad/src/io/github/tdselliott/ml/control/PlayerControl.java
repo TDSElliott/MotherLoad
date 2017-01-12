@@ -39,12 +39,12 @@ public class PlayerControl extends AbstractControl {
     private double positionY = 0;
     private double velocityX = 0;
     private double velocityY = 0;
-    private double accelerationX = .01;
-    private double accelerationY = .01;
+    private double accelerationX = .05;
+    private double accelerationY = .05;
 
-    private double velocityCapX = 5;
-    private double velocityCapY = 1;
-    private double velocityDecay = .03;
+    private double velocityCapX = 4;
+    private double velocityCapY = 10;
+    private double velocityDecay = .15;
 
     boolean hKeyDown = false;
 
