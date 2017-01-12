@@ -24,6 +24,8 @@
 package io.github.tdselliott.ml;
 
 import com.almasb.ents.Entity;
+import com.almasb.fxgl.app.FXGL;
+import com.almasb.fxgl.app.ServiceType;
 import com.almasb.fxgl.asset.AssetLoader;
 import com.almasb.fxgl.entity.EntityView;
 import com.almasb.fxgl.entity.GameEntity;
@@ -37,28 +39,31 @@ import javafx.scene.shape.Rectangle;
  * @author Tyler
  */
 public class EntityFactory {
-    
+
     private static AssetLoader assetLoader;
-    
-    
+
+    static {
+        assetLoader = FXGL.getService(ServiceType.ASSET_LOADER);
+    }
+
     public static Entity newPlayer(double x, double y) {
         //
         GameEntity Player = new GameEntity();
-        
+
         //
         Player.getTypeComponent().setValue(EntityType.PLAYER);
         Player.getPositionComponent().setValue(x, y);
-        //Player.getMainViewComponent().setView(new EntityView(assetLoader.loadTexture("player.png")), true);
-        Player.getMainViewComponent().setView(new Rectangle(5,5, Color.BLACK), true);
-        
+        Player.getMainViewComponent().setView(new EntityView(assetLoader.loadTexture("player.png")), true);
+        //Player.getMainViewComponent().setView(new Rectangle(5, 5, Color.BLACK), true);
+
         //Components
         Player.addComponent(new CollidableComponent(true));
-        
+
         //Control
         Player.addControl(new PlayerControl(x, y));
-        
+
         //
         return Player;
     }
-    
+
 }
