@@ -7,7 +7,7 @@ import static javafx.application.Application.launch;
 
 /**
  *
- * @author Dr. D. Lerious
+ * @author Tyler Elliott
  * @author Mackenzie Guy
  * @author Logan L
  * @author Victor Russan
