@@ -29,6 +29,8 @@ import com.almasb.fxgl.entity.EntityView;
 import com.almasb.fxgl.entity.GameEntity;
 import com.almasb.fxgl.entity.component.CollidableComponent;
 import io.github.tdselliott.ml.control.PlayerControl;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
 /**
  *
@@ -46,7 +48,8 @@ public class EntityFactory {
         //
         Player.getTypeComponent().setValue(EntityType.PLAYER);
         Player.getPositionComponent().setValue(x, y);
-        Player.getMainViewComponent().setView(new EntityView(assetLoader.loadTexture("player.png")), true);
+        //Player.getMainViewComponent().setView(new EntityView(assetLoader.loadTexture("player.png")), true);
+        Player.getMainViewComponent().setView(new Rectangle(5,5, Color.BLACK), true);
         
         //Components
         Player.addComponent(new CollidableComponent(true));

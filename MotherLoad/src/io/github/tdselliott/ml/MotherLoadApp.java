@@ -83,14 +83,14 @@ public class MotherLoadApp extends GameApplication {
             protected void onAction() {
                 CtrPlayer.moveHorizontal(false);
             }
-        }, KeyCode.S);
+        }, KeyCode.D);
 
         input.addAction(new UserAction("Move Down") {
             @Override
             protected void onAction() {
                 CtrPlayer.moveDown();
             }
-        }, KeyCode.D);
+        }, KeyCode.S);
     }
 //------------------------------------------------------------------------------
     @Override
@@ -99,6 +99,8 @@ public class MotherLoadApp extends GameApplication {
 //------------------------------------------------------------------------------
     @Override
     protected void initGame() {
+        
+        //create player
         player = EntityFactory.newPlayer(100 , 100);
         getGameWorld().addEntity(player);
         CtrPlayer = player.getControlUnsafe(PlayerControl.class);
