@@ -8,6 +8,7 @@ import static javafx.application.Application.launch;
 /**
  *
  * @author Dr. D. Lerious
+ * @author Dr. i. Lerious
  */
 public class MotherLoadApp extends GameApplication {
 
