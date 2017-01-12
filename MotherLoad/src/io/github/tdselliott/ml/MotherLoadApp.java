@@ -36,6 +36,7 @@ public class MotherLoadApp extends GameApplication {
     @Override
     protected void initAssets() {
         System.out.println("001");
+        System.out.print("tstestsgfas");
     }
 //------------------------------------------------------------------------------
     @Override
