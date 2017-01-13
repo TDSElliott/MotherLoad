@@ -57,10 +57,9 @@ public class MotherLoadApp extends GameApplication {
 
     private Entity player;
     private PlayerControl CtrPlayer;
-    
-    private Entity ground;// = new ArrayList();
-    
-    
+
+    private ArrayList<Entity> ground = new ArrayList();// = new ArrayList();
+
     @Override
     protected void initSettings(GameSettings gs) {
         // The settings code to generate the window and remove FXGL intro for dev
@@ -79,12 +78,12 @@ public class MotherLoadApp extends GameApplication {
     @Override
     protected void initInput() {
         Input input = getInput(); // get input service
-        
+
         input.addAction(new UserAction("Move With Mouse") {
             @Override
             protected void onAction() {
                 CtrPlayer.moveToMouse(input.getMousePositionWorld());
-            System.out.println("hi");
+                System.out.println("hi");
             }
         }, MouseButton.PRIMARY);
     }
@@ -97,28 +96,31 @@ public class MotherLoadApp extends GameApplication {
 
     @Override
     protected void initGame() {
-        
+
         //Create player
-        player = EntityFactory.newPlayer(100 , 100);
+        player = EntityFactory.newPlayer(100, 100);
         getGameWorld().addEntity(player);
         CtrPlayer = player.getControlUnsafe(PlayerControl.class);
+
+        for (int x = 0; x < 10; x++) {
+            ground.add(EntityFactory.newGroundTest(30*x, 200));
+            getGameWorld().addEntity(ground.get(x));
+        }
+
         
-        ground = EntityFactory.newGroundTest(100 , 200);
-        getGameWorld().addEntity(ground);
     }
 //------------------------------------------------------------------------------
 
     @Override
     protected void initPhysics() {
         PhysicsWorld physicsWorld = getPhysicsWorld();
-        
-        physicsWorld.setGravity(0, 5) ;
-       
+
+        physicsWorld.setGravity(0, 5);
+
         physicsWorld.addCollisionHandler(new CollisionHandler(EntityType.PLAYER, EntityType.GROUND) {
             @Override
-           
-            protected void onCollisionBegin(Entity player, Entity ground) 
-            {
+
+            protected void onCollisionBegin(Entity player, Entity ground) {
                 CtrPlayer.stop();
             }
         });
@@ -127,14 +129,14 @@ public class MotherLoadApp extends GameApplication {
 
     @Override
     protected void initUI() {
-        Texture texture = getAssetLoader().loadTexture("Background.png");
+//        Texture texture = getAssetLoader().loadTexture("Background.png");
+//
+//        //Creates a new EntityView called "bg" and sets it to the texure previously created
+//        EntityView bg = new EntityView(texture);
+//
+//        //Adds the "bg" entityview to the game
+//        getGameScene().addGameView(bg);
 
-        //Creates a new EntityView called "bg" and sets it to the texure previously created
-        EntityView bg = new EntityView(texture);
-
-        //Adds the "bg" entityview to the game
-        getGameScene().addGameView(bg);
-        
     }
 //------------------------------------------------------------------------------
 

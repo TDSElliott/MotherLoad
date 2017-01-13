@@ -8,6 +8,7 @@ package io.github.tdselliott.ml.control;
 import com.almasb.ents.AbstractControl;
 import com.almasb.ents.Entity;
 import com.almasb.fxgl.entity.component.PositionComponent;
+import java.util.ArrayList;
 
 /**
  *
@@ -24,6 +25,10 @@ public class LandControl extends AbstractControl {
     
     @Override
     public void onUpdate(Entity entity, double d) {
+        
+    }
+    
+    public void move(double x, double y) {
         
     }
     
