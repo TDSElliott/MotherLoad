@@ -83,7 +83,6 @@ public class MotherLoadApp extends GameApplication {
             @Override
             protected void onAction() {
                 CtrPlayer.moveToMouse(input.getMousePositionWorld());
-                System.out.println("hi");
             }
         }, MouseButton.PRIMARY);
     }
@@ -103,7 +102,7 @@ public class MotherLoadApp extends GameApplication {
         CtrPlayer = player.getControlUnsafe(PlayerControl.class);
 
         for (int x = 0; x < 10; x++) {
-            ground.add(EntityFactory.newGroundTest(30*x, 200));
+            ground.add(EntityFactory.newGroundTest(64*x, 200));
             getGameWorld().addEntity(ground.get(x));
         }
 
@@ -120,8 +119,8 @@ public class MotherLoadApp extends GameApplication {
         physicsWorld.addCollisionHandler(new CollisionHandler(EntityType.PLAYER, EntityType.GROUND) {
             @Override
 
-            protected void onCollisionBegin(Entity player, Entity ground) {
-                CtrPlayer.stop();
+            protected void onCollision(Entity player, Entity ground) {
+                CtrPlayer.hitGround();
             }
         });
     }

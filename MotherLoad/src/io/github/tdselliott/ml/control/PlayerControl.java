@@ -36,7 +36,6 @@ public class PlayerControl extends AbstractControl {
 
     protected PositionComponent position;
 
-
     private Point2D positionXY;
     private Point2D imageOffSet = new Point2D(25, 25);
     private double velocityX = 0;
@@ -48,7 +47,14 @@ public class PlayerControl extends AbstractControl {
     private double velocityCapY = 1;
     private double velocityDecay = .1;
 
+    boolean wasOnGround = false;
+
     boolean hKeyDown = false;
+
+    boolean groundDown = false;
+    boolean groundUp = false;
+    boolean groundLeft = false;
+    boolean groundRight = false;
 
     public PlayerControl() {
 
@@ -89,26 +95,30 @@ public class PlayerControl extends AbstractControl {
     }
 
     public void moveToMouse(Point2D mouse) {
+
         hKeyDown = true;
         double angleTemp = getAngle(positionXY, mouse);
-        System.out.println(Math.toDegrees(angleTemp));
         velocityX += Math.cos(angleTemp) * accelerationX;
         velocityY += Math.sin(angleTemp) * accelerationY;
 
     }
 
     public double getAngle(Point2D player, Point2D target) {
-        double angle =  Math.atan2(target.getY() - player.getY(), target.getX() - player.getX());
+        double angle = Math.atan2(target.getY() - player.getY(), target.getX() - player.getX());
 
         if (angle < 0) {
-            angle += Math.PI*2;
+            angle += Math.PI * 2;
         }
 
         return angle;
     }
 
-    public void stop() {
-        velocityY = 0; 
+    public void hitGround() {
+        positionXY = positionXY.add(-velocityX, 0);
+        positionXY = positionXY.add(0, -velocityY);
+        velocityX = 0;
+        velocityY = 0;
+        wasOnGround = true;
     }
 
 }
