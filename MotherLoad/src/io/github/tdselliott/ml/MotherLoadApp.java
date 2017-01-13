@@ -36,7 +36,7 @@ import com.almasb.fxgl.texture.Texture;
 import io.github.tdselliott.ml.control.PlayerControl;
 import static javafx.application.Application.launch;
 import javafx.scene.input.KeyCode;
-import javax.swing.text.View;
+import javafx.scene.input.MouseButton;
 
 // Joke/Reference List -- To be deleted only if you wish to incure the WRATH OF GOD
 // Seriously I will kill you if you delete these - Tyler
@@ -45,7 +45,6 @@ import javax.swing.text.View;
 // Dr. D. Lerious
 // Mr F
 // more to follow...
-
 /**
  *
  * @author Tyler Elliott
@@ -75,23 +74,18 @@ public class MotherLoadApp extends GameApplication {
         gs.setApplicationMode(ApplicationMode.DEVELOPER); // Dev, Debug, or Release
     }
 //------------------------------------------------------------------------------
+
     @Override
     protected void initInput() {
         Input input = getInput(); // get input service
         
-        input.addAction(new UserAction("Move Up") {
+        input.addAction(new UserAction("Move With Mouse") {
             @Override
             protected void onAction() {
-                CtrPlayer.moveUp();
+                CtrPlayer.moveToMouse(input.getMousePositionWorld());
+            System.out.println("hi");
             }
-        }, KeyCode.W);
-        
-        input.addAction(new UserAction("Move Right") {
-            @Override
-            protected void onAction() {
-                CtrPlayer.moveHorizontal(true);
-            }
-        }, KeyCode.A);
+        }, MouseButton.PRIMARY);
 
         input.addAction(new UserAction("Move Left") {
             @Override
@@ -109,10 +103,12 @@ public class MotherLoadApp extends GameApplication {
         }, KeyCode.S);
     }
 //------------------------------------------------------------------------------
+
     @Override
     protected void initAssets() {
     }
 //------------------------------------------------------------------------------
+
     @Override
     protected void initGame() {
         
@@ -125,6 +121,7 @@ public class MotherLoadApp extends GameApplication {
         getGameWorld().addEntity(ground);
     }
 //------------------------------------------------------------------------------
+
     @Override
     protected void initPhysics() {
         PhysicsWorld physicsWorld = getPhysicsWorld();
@@ -141,6 +138,7 @@ public class MotherLoadApp extends GameApplication {
         });
     }
 //------------------------------------------------------------------------------
+
     @Override
     protected void initUI() {
         Texture texture = getAssetLoader().loadTexture("Background.png");
@@ -153,14 +151,17 @@ public class MotherLoadApp extends GameApplication {
         
     }
 //------------------------------------------------------------------------------
+
     @Override
     protected void onUpdate(double d) {
-        
+
     }
 //------------------------------------------------------------------------------
+
     /**
-     * Contains FXGL code to launch the window.
-     * Nothing else will need to be added in here.
+     * Contains FXGL code to launch the window. Nothing else will need to be
+     * added in here.
+     *
      * @param args the command line arguments
      */
     public static void main(String[] args) {
