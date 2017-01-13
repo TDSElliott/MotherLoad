@@ -32,7 +32,7 @@ import com.almasb.fxgl.entity.component.PositionComponent;
  * @author macko
  */
 public class PlayerControl extends AbstractControl {
-
+  
     protected PositionComponent position;
 
     private double positionX = 0;
