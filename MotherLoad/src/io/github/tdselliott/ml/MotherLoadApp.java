@@ -34,6 +34,7 @@ import com.almasb.fxgl.settings.GameSettings;
 import io.github.tdselliott.ml.control.PlayerControl;
 import static javafx.application.Application.launch;
 import javafx.scene.input.KeyCode;
+import javax.swing.text.View;
 
 // Joke/Reference List -- To be deleted only if you wish to incure the WRATH OF GOD
 // Seriously I will kill you if you delete these - Tyler
@@ -101,6 +102,7 @@ public class MotherLoadApp extends GameApplication {
             @Override
             protected void onAction() {
                 CtrPlayer.moveDown();
+                
             }
         }, KeyCode.S);
     }
@@ -112,7 +114,7 @@ public class MotherLoadApp extends GameApplication {
     @Override
     protected void initGame() {
         
-        //create player
+        //Create player
         player = EntityFactory.newPlayer(100 , 100);
         getGameWorld().addEntity(player);
         CtrPlayer = player.getControlUnsafe(PlayerControl.class);

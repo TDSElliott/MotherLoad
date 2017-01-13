@@ -34,6 +34,7 @@ import com.almasb.fxgl.entity.component.PositionComponent;
 public class PlayerControl extends AbstractControl {
   
     protected PositionComponent position;
+    
 
     private double positionX = 0;
     private double positionY = 0;
