@@ -30,7 +30,7 @@ import javafx.geometry.Point2D;
 
 /**
  *
- * @author macko
+ * @author Mackenzie Guy
  */
 public class PlayerControl extends AbstractControl {
 
