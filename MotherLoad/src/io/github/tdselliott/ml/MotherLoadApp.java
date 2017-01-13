@@ -34,6 +34,7 @@ import com.almasb.fxgl.settings.GameSettings;
 import io.github.tdselliott.ml.control.PlayerControl;
 import static javafx.application.Application.launch;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.MouseButton;
 
 // Joke/Reference List -- To be deleted only if you wish to incure the WRATH OF GOD
 // Seriously I will kill you if you delete these - Tyler
@@ -42,7 +43,6 @@ import javafx.scene.input.KeyCode;
 // Dr. D. Lerious
 // Mr F
 // more to follow...
-
 /**
  *
  * @author Tyler Elliott
@@ -72,48 +72,32 @@ public class MotherLoadApp extends GameApplication {
         gs.setApplicationMode(ApplicationMode.DEVELOPER); // Dev, Debug, or Release
     }
 //------------------------------------------------------------------------------
+
     @Override
     protected void initInput() {
         Input input = getInput(); // get input service
         
-        input.addAction(new UserAction("Move Up") {
+        input.addAction(new UserAction("Move With Mouse") {
             @Override
             protected void onAction() {
-                CtrPlayer.moveUp();
+                CtrPlayer.moveToMouse(input.getMousePositionWorld());
+            System.out.println("hi");
             }
-        }, KeyCode.W);
-        
-        input.addAction(new UserAction("Move Right") {
-            @Override
-            protected void onAction() {
-                CtrPlayer.moveHorizontal(true);
-            }
-        }, KeyCode.A);
+        }, MouseButton.PRIMARY);
 
-        input.addAction(new UserAction("Move Left") {
-            @Override
-            protected void onAction() {
-                CtrPlayer.moveHorizontal(false);
-            }
-        }, KeyCode.D);
-
-        input.addAction(new UserAction("Move Down") {
-            @Override
-            protected void onAction() {
-                CtrPlayer.moveDown();
-            }
-        }, KeyCode.S);
     }
 //------------------------------------------------------------------------------
+
     @Override
     protected void initAssets() {
     }
 //------------------------------------------------------------------------------
+
     @Override
     protected void initGame() {
-        
+
         //create player
-        player = EntityFactory.newPlayer(100 , 100);
+        player = EntityFactory.newPlayer(100, 100);
         getGameWorld().addEntity(player);
         CtrPlayer = player.getControlUnsafe(PlayerControl.class);
         
@@ -121,6 +105,7 @@ public class MotherLoadApp extends GameApplication {
         getGameWorld().addEntity(ground);
     }
 //------------------------------------------------------------------------------
+
     @Override
     protected void initPhysics() {
         PhysicsWorld physicsWorld = getPhysicsWorld();
@@ -137,19 +122,23 @@ public class MotherLoadApp extends GameApplication {
         });
     }
 //------------------------------------------------------------------------------
+
     @Override
     protected void initUI() {
-        
+
     }
 //------------------------------------------------------------------------------
+
     @Override
     protected void onUpdate(double d) {
-        
+
     }
 //------------------------------------------------------------------------------
+
     /**
-     * Contains FXGL code to launch the window.
-     * Nothing else will need to be added in here.
+     * Contains FXGL code to launch the window. Nothing else will need to be
+     * added in here.
+     *
      * @param args the command line arguments
      */
     public static void main(String[] args) {
