@@ -26,11 +26,13 @@ package io.github.tdselliott.ml;
 import com.almasb.ents.Entity;
 import com.almasb.fxgl.app.ApplicationMode;
 import com.almasb.fxgl.app.GameApplication;
+import com.almasb.fxgl.entity.EntityView;
 import com.almasb.fxgl.input.Input;
 import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.physics.CollisionHandler;
 import com.almasb.fxgl.physics.PhysicsWorld;
 import com.almasb.fxgl.settings.GameSettings;
+import com.almasb.fxgl.texture.Texture;
 import io.github.tdselliott.ml.control.PlayerControl;
 import static javafx.application.Application.launch;
 import javafx.scene.input.KeyCode;
@@ -141,6 +143,13 @@ public class MotherLoadApp extends GameApplication {
 //------------------------------------------------------------------------------
     @Override
     protected void initUI() {
+        Texture texture = getAssetLoader().loadTexture("Background.png");
+
+        //Creates a new EntityView called "bg" and sets it to the texure previously created
+        EntityView bg = new EntityView(texture);
+
+        //Adds the "bg" entityview to the game
+        getGameScene().addGameView(bg);
         
     }
 //------------------------------------------------------------------------------
