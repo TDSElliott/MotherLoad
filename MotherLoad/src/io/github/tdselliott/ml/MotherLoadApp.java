@@ -124,18 +124,17 @@ public class MotherLoadApp extends GameApplication {
     @Override
     protected void initPhysics() {
         PhysicsWorld physicsWorld = getPhysicsWorld();
+        
+        physicsWorld.setGravity(0, 5) ;
        
-       //Checks if the "ASTEROIDBIG" entity type has collided with the "PLAYER" entity type
-       physicsWorld.addCollisionHandler(new CollisionHandler(EntityType.PLAYER, EntityType.GROUND) 
-       {
-           @Override
-           //Does the following code as soon as the collision between the two entities have begun
-           protected void onCollisionBegin(Entity player, Entity ground) 
-           {
-               //Sets the "hit" variable equal to true, meaning that the player has hit a big asteroid
+        physicsWorld.addCollisionHandler(new CollisionHandler(EntityType.PLAYER, EntityType.GROUND) {
+            @Override
+           
+            protected void onCollisionBegin(Entity player, Entity ground) 
+            {
                 CtrPlayer.stop();
-           }
-       });
+            }
+        });
     }
 //------------------------------------------------------------------------------
     @Override
