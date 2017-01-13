@@ -108,7 +108,7 @@ public class PlayerControl extends AbstractControl {
     }
 
     public void stop() {
-        velocityY = 0;
+        velocityY = 0;  //hello
     }
 
 }
