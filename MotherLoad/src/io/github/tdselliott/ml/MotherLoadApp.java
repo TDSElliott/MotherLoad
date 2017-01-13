@@ -33,6 +33,14 @@ import io.github.tdselliott.ml.control.PlayerControl;
 import static javafx.application.Application.launch;
 import javafx.scene.input.KeyCode;
 
+// Joke/Reference List -- To be deleted only if you wish to incure the WRATH OF GOD
+// Seriously I will kill you if you delete these - Tyler
+// These to be inserted randomly around the code
+// 867-5309
+// Dr. D. Lerious
+// Mr F
+// more to follow...
+
 /**
  *
  * @author Tyler Elliott
