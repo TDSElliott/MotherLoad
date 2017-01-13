@@ -72,6 +72,7 @@ public class PlayerControl extends AbstractControl {
         positionX += velocityX;
         positionY += velocityY;
         position.setValue(positionX, positionY);
+//        velocityY += 9.8;
     }
 
     public void velocityDecay() {
