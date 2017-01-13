@@ -53,7 +53,7 @@ public class EntityFactory {
         //
         Player.getTypeComponent().setValue(EntityType.PLAYER);
         Player.getPositionComponent().setValue(x, y);
-        Player.getMainViewComponent().setView(new EntityView(assetLoader.loadTexture("player.png")), true);
+        Player.getMainViewComponent().setView(new EntityView(assetLoader.loadTexture("PlayerLeft.png")), true);
         //Player.getMainViewComponent().setView(new Rectangle(5, 5, Color.BLACK), true);
 
         //Components
