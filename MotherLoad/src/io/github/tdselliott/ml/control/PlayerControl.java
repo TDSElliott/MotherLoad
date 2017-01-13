@@ -107,5 +107,9 @@ public class PlayerControl extends AbstractControl {
     public void moveDown() {
         velocityY += accelerationY;//temp to be replaced with gravity
     }
+    
+    public void stop() {
+        velocityY = 0;  
+    }
 
 }

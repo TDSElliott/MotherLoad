@@ -28,6 +28,8 @@ import com.almasb.fxgl.app.ApplicationMode;
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.input.Input;
 import com.almasb.fxgl.input.UserAction;
+import com.almasb.fxgl.physics.CollisionHandler;
+import com.almasb.fxgl.physics.PhysicsWorld;
 import com.almasb.fxgl.settings.GameSettings;
 import io.github.tdselliott.ml.control.PlayerControl;
 import static javafx.application.Application.launch;
@@ -52,6 +54,8 @@ public class MotherLoadApp extends GameApplication {
 
     private Entity player;
     private PlayerControl CtrPlayer;
+    
+    private Entity ground;
     
     
     @Override
@@ -112,11 +116,26 @@ public class MotherLoadApp extends GameApplication {
         player = EntityFactory.newPlayer(100 , 100);
         getGameWorld().addEntity(player);
         CtrPlayer = player.getControlUnsafe(PlayerControl.class);
+        
+        ground = EntityFactory.newGroundTest(100 , 200);
+        getGameWorld().addEntity(ground);
     }
 //------------------------------------------------------------------------------
     @Override
     protected void initPhysics() {
-        
+        PhysicsWorld physicsWorld = getPhysicsWorld();
+       
+       //Checks if the "ASTEROIDBIG" entity type has collided with the "PLAYER" entity type
+       physicsWorld.addCollisionHandler(new CollisionHandler(EntityType.PLAYER, EntityType.GROUND) 
+       {
+           @Override
+           //Does the following code as soon as the collision between the two entities have begun
+           protected void onCollisionBegin(Entity player, Entity ground) 
+           {
+               //Sets the "hit" variable equal to true, meaning that the player has hit a big asteroid
+                CtrPlayer.stop();
+           }
+       });
     }
 //------------------------------------------------------------------------------
     @Override
