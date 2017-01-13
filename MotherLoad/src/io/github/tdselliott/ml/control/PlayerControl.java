@@ -90,7 +90,7 @@ public class PlayerControl extends AbstractControl {
         hKeyDown = true;
         
         
-        double angleTemp = Math.toRadians(125+positionXY.angle(mouse.subtract(positionXY))) ;
+        double angleTemp = Math.toRadians(-45+positionXY.angle(mouse.subtract(positionXY))) ;
         double tempX = mouse.getX() - positionXY.getX();
         double tempY = mouse.getY() - positionXY.getY();
         
