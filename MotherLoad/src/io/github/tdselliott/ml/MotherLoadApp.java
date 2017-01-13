@@ -86,21 +86,6 @@ public class MotherLoadApp extends GameApplication {
             System.out.println("hi");
             }
         }, MouseButton.PRIMARY);
-
-        input.addAction(new UserAction("Move Left") {
-            @Override
-            protected void onAction() {
-                CtrPlayer.moveHorizontal(false);
-            }
-        }, KeyCode.D);
-
-        input.addAction(new UserAction("Move Down") {
-            @Override
-            protected void onAction() {
-                CtrPlayer.moveDown();
-                
-            }
-        }, KeyCode.S);
     }
 //------------------------------------------------------------------------------
 

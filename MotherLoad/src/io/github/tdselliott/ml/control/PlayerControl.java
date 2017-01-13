@@ -35,9 +35,10 @@ import javafx.geometry.Point2D;
 public class PlayerControl extends AbstractControl {
 
     protected PositionComponent position;
-    
+
 
     private Point2D positionXY;
+    private Point2D imageOffSet = new Point2D(25, 25);
     private double velocityX = 0;
     private double velocityY = 0;
     private double accelerationX = .06;
@@ -50,11 +51,11 @@ public class PlayerControl extends AbstractControl {
     boolean hKeyDown = false;
 
     public PlayerControl() {
-        
+
     }
 
     public PlayerControl(double x, double y) {
-        positionXY = new Point2D(x,y);
+        positionXY = new Point2D(x, y);
     }
 
     @Override
@@ -89,20 +90,25 @@ public class PlayerControl extends AbstractControl {
 
     public void moveToMouse(Point2D mouse) {
         hKeyDown = true;
-        
-        
-        double angleTemp = Math.toRadians(-45+positionXY.angle(mouse.subtract(positionXY))) ;
-        double tempX = mouse.getX() - positionXY.getX();
-        double tempY = mouse.getY() - positionXY.getY();
-        
-        System.out.print(" " + angleTemp);
-        velocityX += Math.sin(angleTemp)*accelerationX;
-        velocityY += Math.cos(angleTemp)*accelerationY;
-        
+        double angleTemp = getAngle(positionXY, mouse);
+        System.out.println(Math.toDegrees(angleTemp));
+        velocityX += Math.cos(angleTemp) * accelerationX;
+        velocityY += Math.sin(angleTemp) * accelerationY;
+
     }
-    
+
+    public double getAngle(Point2D player, Point2D target) {
+        double angle =  Math.atan2(target.getY() - player.getY(), target.getX() - player.getX());
+
+        if (angle < 0) {
+            angle += Math.PI*2;
+        }
+
+        return angle;
+    }
+
     public void stop() {
-        velocityY = 0;  
+        velocityY = 0;
     }
 
 }
