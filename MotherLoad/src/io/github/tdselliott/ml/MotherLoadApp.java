@@ -34,6 +34,7 @@ import com.almasb.fxgl.physics.PhysicsWorld;
 import com.almasb.fxgl.settings.GameSettings;
 import com.almasb.fxgl.texture.Texture;
 import io.github.tdselliott.ml.control.PlayerControl;
+import java.util.ArrayList;
 import static javafx.application.Application.launch;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
@@ -57,7 +58,7 @@ public class MotherLoadApp extends GameApplication {
     private Entity player;
     private PlayerControl CtrPlayer;
     
-    private Entity ground;
+    private Entity ground;// = new ArrayList();
     
     
     @Override
