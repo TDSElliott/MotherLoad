@@ -26,12 +26,26 @@ package io.github.tdselliott.ml;
 import com.almasb.ents.Entity;
 import com.almasb.fxgl.app.ApplicationMode;
 import com.almasb.fxgl.app.GameApplication;
+import com.almasb.fxgl.entity.EntityView;
 import com.almasb.fxgl.input.Input;
 import com.almasb.fxgl.input.UserAction;
+import com.almasb.fxgl.physics.CollisionHandler;
+import com.almasb.fxgl.physics.PhysicsWorld;
 import com.almasb.fxgl.settings.GameSettings;
+import com.almasb.fxgl.texture.Texture;
 import io.github.tdselliott.ml.control.PlayerControl;
+import java.util.ArrayList;
 import static javafx.application.Application.launch;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.MouseButton;
+
+// Joke/Reference List -- To be deleted only if you wish to incure the WRATH OF GOD
+// Seriously I will kill you if you delete these - Tyler
+// These to be inserted randomly around the code
+// 867-5309
+// Dr. D. Lerious
+// Mr F
+// more to follow...
 
 /**
  *
@@ -44,8 +58,9 @@ public class MotherLoadApp extends GameApplication {
 
     private Entity player;
     private PlayerControl CtrPlayer;
-    
-    
+
+    private Entity[][] ground = new Entity[50][50];
+
     @Override
     protected void initSettings(GameSettings gs) {
         // The settings code to generate the window and remove FXGL intro for dev
@@ -60,70 +75,83 @@ public class MotherLoadApp extends GameApplication {
         gs.setApplicationMode(ApplicationMode.DEVELOPER); // Dev, Debug, or Release
     }
 //------------------------------------------------------------------------------
+
     @Override
     protected void initInput() {
         Input input = getInput(); // get input service
-        
-        input.addAction(new UserAction("Move Up") {
-            @Override
-            protected void onAction() {
-                CtrPlayer.moveUp();
-            }
-        }, KeyCode.W);
-        
-        input.addAction(new UserAction("Move Right") {
-            @Override
-            protected void onAction() {
-                CtrPlayer.moveHorizontal(true);
-            }
-        }, KeyCode.A);
 
-        input.addAction(new UserAction("Move Left") {
+        input.addAction(new UserAction("Move With Mouse") {
             @Override
             protected void onAction() {
-                CtrPlayer.moveHorizontal(false);
+                CtrPlayer.moveToMouse(input.getMousePositionWorld());
             }
-        }, KeyCode.D);
-
-        input.addAction(new UserAction("Move Down") {
-            @Override
-            protected void onAction() {
-                CtrPlayer.moveDown();
-            }
-        }, KeyCode.S);
+        }, MouseButton.PRIMARY);
     }
 //------------------------------------------------------------------------------
+
     @Override
     protected void initAssets() {
     }
 //------------------------------------------------------------------------------
+
     @Override
     protected void initGame() {
-        
-        //create player
-        player = EntityFactory.newPlayer(100 , 100);
+
+        //Create player
+        player = EntityFactory.newPlayer(100, 100);
         getGameWorld().addEntity(player);
         CtrPlayer = player.getControlUnsafe(PlayerControl.class);
+
+        for (int x = 0; x < 15; x++) {
+            for (int y = 0; y < 5; y++) {
+                ground[x][y] = EntityFactory.newGroundTest(64 * x-32, 64*y+400);
+                //ground.add();
+                getGameWorld().addEntity(ground[x][y]);
+            }
+        }
+
     }
 //------------------------------------------------------------------------------
+
     @Override
     protected void initPhysics() {
-        
+        PhysicsWorld physicsWorld = getPhysicsWorld();
+
+        physicsWorld.setGravity(0, 5);
+
+        physicsWorld.addCollisionHandler(new CollisionHandler(EntityType.PLAYER, EntityType.GROUND) {
+            @Override
+
+            protected void onCollision(Entity player, Entity ground) {
+                CtrPlayer.hitGround();
+            }
+        });
     }
 //------------------------------------------------------------------------------
+
     @Override
     protected void initUI() {
-        
+//        Texture texture = getAssetLoader().loadTexture("Background.png");
+//
+//        //Creates a new EntityView called "bg" and sets it to the texure previously created
+//        EntityView bg = new EntityView(texture);
+//
+//        //Adds the "bg" entityview to the game
+//        getGameScene().addGameView(bg);
+
     }
 //------------------------------------------------------------------------------
+
     @Override
     protected void onUpdate(double d) {
-        
+
     }
 //------------------------------------------------------------------------------
+
     /**
-     * Contains FXGL code to launch the window.
-     * Nothing else will need to be added in here.
+     * Contains FXGL code to launch the window. Nothing else will need to be
+     * added in here.
+     *
      * @param args the command line arguments
      */
     public static void main(String[] args) {

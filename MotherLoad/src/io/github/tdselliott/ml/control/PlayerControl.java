@@ -26,35 +26,42 @@ package io.github.tdselliott.ml.control;
 import com.almasb.ents.AbstractControl;
 import com.almasb.ents.Entity;
 import com.almasb.fxgl.entity.component.PositionComponent;
+import javafx.geometry.Point2D;
 
 /**
  *
- * @author macko
+ * @author Mackenzie Guy
  */
 public class PlayerControl extends AbstractControl {
 
     protected PositionComponent position;
 
-    private double positionX = 0;
-    private double positionY = 0;
+    private Point2D positionXY;
+    private Point2D imageOffSet = new Point2D(25, 25);
     private double velocityX = 0;
     private double velocityY = 0;
-    private double accelerationX = .05;
-    private double accelerationY = .05;
+    private double accelerationX = .06;
+    private double accelerationY = .06;
 
-    private double velocityCapX = 4;
-    private double velocityCapY = 10;
-    private double velocityDecay = .15;
+    private double velocityCapX = 5;
+    private double velocityCapY = 1;
+    private double velocityDecay = .1;
+
+    boolean wasOnGround = false;
 
     boolean hKeyDown = false;
+
+    boolean groundDown = false;
+    boolean groundUp = false;
+    boolean groundLeft = false;
+    boolean groundRight = false;
 
     public PlayerControl() {
 
     }
 
     public PlayerControl(double x, double y) {
-        positionX = x;
-        positionY = y;
+        positionXY = new Point2D(x, y);
     }
 
     @Override
@@ -69,9 +76,8 @@ public class PlayerControl extends AbstractControl {
     }
 
     private void updatePosition() {
-        positionX += velocityX;
-        positionY += velocityY;
-        position.setValue(positionX, positionY);
+        positionXY = positionXY.add(velocityX, velocityY);
+        position.setValue(positionXY);
     }
 
     public void velocityDecay() {
@@ -88,23 +94,31 @@ public class PlayerControl extends AbstractControl {
         hKeyDown = false;
     }
 
-    public void moveUp() {
-        velocityY -= accelerationY;
-    }
+    public void moveToMouse(Point2D mouse) {
 
-    public void moveHorizontal(boolean left) {
         hKeyDown = true;
-        if (Math.abs(velocityX) < velocityCapX) {
-            if (left) {
-                velocityX -= accelerationX;
-            } else {
-                velocityX += accelerationX;
-            }
-        }
+        double angleTemp = getAngle(positionXY, mouse);
+        velocityX += Math.cos(angleTemp) * accelerationX;
+        velocityY += Math.sin(angleTemp) * accelerationY;
+
     }
 
-    public void moveDown() {
-        velocityY += accelerationY;//temp to be replaced with gravity
+    public double getAngle(Point2D player, Point2D target) {
+        double angle = Math.atan2(target.getY() - player.getY(), target.getX() - player.getX());
+
+        if (angle < 0) {
+            angle += Math.PI * 2;
+        }
+
+        return angle;
+    }
+
+    public void hitGround() {
+        positionXY = positionXY.add(-velocityX, 0);
+        positionXY = positionXY.add(0, -velocityY);
+        velocityX = 0;
+        velocityY = 0;
+        wasOnGround = true;
     }
 
 }

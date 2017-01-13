@@ -32,6 +32,7 @@ import com.almasb.fxgl.entity.GameEntity;
 import com.almasb.fxgl.entity.component.CollidableComponent;
 import io.github.tdselliott.ml.control.PlayerControl;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 
 /**
@@ -53,7 +54,7 @@ public class EntityFactory {
         //
         Player.getTypeComponent().setValue(EntityType.PLAYER);
         Player.getPositionComponent().setValue(x, y);
-        Player.getMainViewComponent().setView(new EntityView(assetLoader.loadTexture("player.png")), true);
+        Player.getMainViewComponent().setView(new EntityView(assetLoader.loadTexture("PlayerLeft.png")), true);
         //Player.getMainViewComponent().setView(new Rectangle(5, 5, Color.BLACK), true);
 
         //Components
@@ -64,6 +65,17 @@ public class EntityFactory {
 
         //
         return Player;
+    }
+    
+    public static Entity newGroundTest(double x, double y) {
+        GameEntity ground = new GameEntity(); //Creates a new GameEntity called "bullet"
+        ground.getTypeComponent().setValue(EntityType.GROUND); //Sets it to the "BULLET" EnitityType
+        ground.getPositionComponent().setValue(x + 20, y + 20); //Adds the bullet at the given coordinates.
+        ground.getMainViewComponent().setView(new EntityView(assetLoader.loadTexture("Ground1.png")), true);
+        ground.addComponent(new CollidableComponent(true)); //Makes it so that the bullet can collide with other GameEntites
+//        ground.addControl(new BulletControl(a)); //Sets the control to the BulletControl class
+        
+        return ground;
     }
 
 }
