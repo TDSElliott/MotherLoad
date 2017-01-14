@@ -1,300 +1,300 @@
-15:55:44.659 [FXGL Launcher Thread     ] DEBUG FXGLLoggerFactory    - Service [LoggerFactory] initialized
-15:55:44.663 [FXGL Launcher Thread     ] DEBUG FXGL                 - FXGL configuration complete
-15:55:44.663 [FXGL Launcher Thread     ] DEBUG FXGL                 - Loading FXGL system data
-15:55:44.665 [FXGL Launcher Thread     ] DEBUG IOTask               - Executing task: readDataTask(system/fxgl.bundle)
-15:55:44.668 [FXGL Launcher Thread     ] DEBUG FS                   - Reading from: system\fxgl.bundle
-15:55:44.673 [FXGL Launcher Thread     ] DEBUG IOTask               - Task succeeded: readDataTask(system/fxgl.bundle)
-15:55:44.673 [FXGL Launcher Thread     ] DEBUG Bundle               - Logging bundle: FXGL
-15:55:44.674 [FXGL Launcher Thread     ] DEBUG Bundle               - FXGL.offline.timer.version.check=2017-01-12T08:38:28.585
-15:55:44.686 [FXGL Launcher Thread     ] DEBUG GameApplication      - Configuring GameApplication
-15:55:44.690 [FXGL Launcher Thread     ] DEBUG FXGLExceptionHandler - Service [ExceptionHandler] initialized
-15:55:44.690 [FXGL Launcher Thread     ] DEBUG FXGLEventBus         - Service [EventBus] initialized
-15:55:44.693 [FXGL Launcher Thread     ] DEBUG FXGLExecutor         - Service [Executor] initialized
-15:55:44.693 [FXGL Launcher Thread     ] DEBUG PreInitTask          - Injecting gameWorld & physicsWorld
-15:55:44.697 [FXGL Launcher Thread     ] DEBUG GameWorld            - Game world initialized
-15:55:44.728 [FXGL Launcher Thread     ] DEBUG FXGLPooler           - Service [Pooler] initialized with default size = 128
-15:55:44.728 [FXGL Launcher Thread     ] DEBUG PhysicsWorld         - Physics world initialized: appHeight=700.0, physics.ppm=50.0
-15:55:44.729 [FXGL Launcher Thread     ] DEBUG FXGLInput            - Service [Input] initialized
-15:55:44.745 [FXGL Launcher Thread     ] DEBUG FXGLInput            - Registered new binding: Screenshot - P
-15:55:44.745 [FXGL Launcher Thread     ] DEBUG FXGLInput            - Registered new binding: Dev Options - CTRL+0
-15:55:44.745 [FXGL Launcher Thread     ] DEBUG FXGLInput            - Registered new binding: Move With Mouse - PRIMARY
-15:55:44.767 [FXGL Launcher Thread     ] DEBUG GameScene            - Game scene initialized: 800.0x700.0
-15:55:44.772 [FXGL Launcher Thread     ] DEBUG FXGLAssetLoader      - Service [AssetLoader] initialized: cacheSize=35
-15:55:44.774 [FXGL Launcher Thread     ] DEBUG FXGLAssetLoader      - Loading from disk: /assets/sounds/system/notification.wav
-15:55:44.794 [FXGL Launcher Thread     ] DEBUG FXGLAssetLoader      - Loading from disk: /assets/sounds/menu/select.wav
-15:55:44.795 [FXGL Launcher Thread     ] DEBUG FXGLAssetLoader      - Loading from disk: /assets/sounds/menu/back.wav
-15:55:44.796 [FXGL Launcher Thread     ] DEBUG FXGLAssetLoader      - Loading from disk: /assets/sounds/menu/press.wav
-15:55:44.798 [FXGL Launcher Thread     ] DEBUG FXGLAssetLoader      - Loading from disk: /assets/ui/fonts/Copperplate_Gothic_Light_Regular.ttf
-15:55:44.935 [FXGL Launcher Thread     ] DEBUG FXGLAssetLoader      - Loading from disk: /assets/ui/css/fxgl.css
-15:55:44.935 [FXGL Launcher Thread     ] DEBUG FXGLAssetLoader      - Loading from disk: /assets/ui/icons/fxgl_icon.png
-15:55:44.964 [FXGL Launcher Thread     ] DEBUG FXGLAssetLoader      - Loading from disk: /assets/ui/css/fxgl_dark.css
-15:55:44.972 [FXGL Launcher Thread     ] DEBUG FXGLDisplay          - Target size: DoubleProperty [value: 800.0] x DoubleProperty [value: 700.0] @ 1.0
-15:55:44.972 [FXGL Launcher Thread     ] DEBUG FXGLDisplay          - New size:    800.0 x 700.0 @ DoubleProperty [value: 1.0]
-15:55:44.973 [FXGL Launcher Thread     ] DEBUG FXGLDisplay          - Service [Display] initialized
-15:55:44.973 [FXGL Launcher Thread     ] DEBUG FXGLDisplay          - Using CSS: CSS(externalForm=jar:file:/I:/Documents/NetBeansProjects/MotherLoad/MotherLoad/lib/fxgl-0.2.9-uber.jar!/assets/ui/css/fxgl_dark.css)
-15:55:44.973 [FXGL Launcher Thread     ] DEBUG InitScenesTask       - Injecting loadingScene & gameScene
-15:55:44.993 [FXGL Launcher Thread     ] DEBUG FXGLMasterTimer      - Service [MasterTimer] initialized
-15:55:44.996 [FXGL Launcher Thread     ] DEBUG FXGLAudioPlayer      - Service [AudioPlayer] initialized
-15:55:45.002 [FXGL Launcher Thread     ] DEBUG InitProfilerTask     - Injecting profiler
-15:55:45.002 [FXGL Launcher Thread     ] DEBUG GameApplication      - Starting new game
-15:55:45.004 [FXGL Launcher Thread     ] DEBUG GameApplication      - Initializing App
-15:55:45.004 [FXGL Launcher Thread     ] DEBUG FXGLInput            - Clearing active input actions
-15:55:45.005 [FXGL Launcher Thread     ] DEBUG FXGLMasterTimer      - Stopping master timer
-15:55:45.005 [FXGL Launcher Thread     ] DEBUG GameApplication      - State: STARTUP -> PAUSED
-15:55:45.005 [FXGL Launcher Thread     ] DEBUG FXGLEventBus         - Firing event: FXGLEvent[type=PAUSE]
-15:55:45.006 [FXGL Launcher Thread     ] DEBUG FXGLInput            - Clearing active input actions
-15:55:45.006 [FXGL Launcher Thread     ] DEBUG FXGLMasterTimer      - Resetting ticks and clearing all actions
-15:55:45.006 [FXGL Launcher Thread     ] DEBUG GameWorld            - Resetting game world
-15:55:45.006 [FXGL Launcher Thread     ] TRACE EntityWorld          - Resetting entity world
-15:55:45.008 [FXGL Launcher Thread     ] DEBUG PhysicsWorld         - Resetting physics world
-15:55:45.008 [FXGL Launcher Thread     ] DEBUG GameScene            - Resetting game scene
-15:55:45.008 [FXGL Launcher Thread     ] DEBUG FXGLEventBus         - Firing event: FXGLEvent[type=RESET]
-15:55:45.060 [FXGL Launcher Thread     ] DEBUG GameApplication      - State: PAUSED -> LOADING
-15:55:45.085 [FXGL Background Thread 1 ] DEBUG InitAppTask          - Initializing Assets
-15:55:45.085 [FXGL Background Thread 1 ] DEBUG InitAppTask          - Initializing Game
-15:55:45.097 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from disk: /assets/textures/PlayerLeft.png
-15:55:45.103 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from disk: /assets/textures/Ground1.png
-15:55:45.106 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
-15:55:45.107 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
-15:55:45.108 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
-15:55:45.109 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
-15:55:45.110 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
-15:55:45.111 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
-15:55:45.112 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
-15:55:45.113 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
-15:55:45.114 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
-15:55:45.115 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
-15:55:45.115 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
-15:55:45.116 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
-15:55:45.117 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
-15:55:45.117 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
-15:55:45.118 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
-15:55:45.118 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
-15:55:45.119 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
-15:55:45.119 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
-15:55:45.120 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
-15:55:45.120 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
-15:55:45.121 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
-15:55:45.121 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
-15:55:45.121 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
-15:55:45.122 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
-15:55:45.122 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
-15:55:45.123 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
-15:55:45.123 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
-15:55:45.124 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
-15:55:45.124 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
-15:55:45.124 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
-15:55:45.125 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
-15:55:45.125 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
-15:55:45.126 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
-15:55:45.126 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
-15:55:45.127 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
-15:55:45.127 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
-15:55:45.128 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
-15:55:45.128 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
-15:55:45.129 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
-15:55:45.129 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
-15:55:45.130 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
-15:55:45.130 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
-15:55:45.131 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
-15:55:45.131 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
-15:55:45.132 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
-15:55:45.132 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
-15:55:45.132 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
-15:55:45.133 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
-15:55:45.133 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
-15:55:45.134 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
-15:55:45.134 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
-15:55:45.135 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
-15:55:45.135 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
-15:55:45.136 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
-15:55:45.136 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
-15:55:45.137 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
-15:55:45.137 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
-15:55:45.138 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
-15:55:45.138 [JavaFX Application Thread] DEBUG FXGLDisplay          - Showing stage
-15:55:45.138 [JavaFX Application Thread] DEBUG FXGLDisplay          - Root size: 800.0x700.0
-15:55:45.138 [JavaFX Application Thread] DEBUG FXGLDisplay          - Scene size: 800.0x700.0
-15:55:45.138 [JavaFX Application Thread] DEBUG FXGLDisplay          - Stage size: 816.0x739.0
-15:55:45.138 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
-15:55:45.139 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
-15:55:45.139 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
-15:55:45.140 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
-15:55:45.141 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
-15:55:45.142 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
-15:55:45.142 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
-15:55:45.143 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
-15:55:45.143 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
-15:55:45.144 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
-15:55:45.145 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
-15:55:45.145 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
-15:55:45.146 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
-15:55:45.146 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
-15:55:45.147 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
-15:55:45.147 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
-15:55:45.148 [FXGL Background Thread 1 ] DEBUG InitAppTask          - Initializing Physics
-15:55:45.148 [FXGL Background Thread 1 ] DEBUG InitAppTask          - Initializing UI
-15:55:45.148 [FXGL Background Thread 1 ] DEBUG InitAppTask          - Initialization Complete
-15:55:45.210 [JavaFX Application Thread] DEBUG FXGLInput            - Clearing active input actions
-15:55:45.210 [JavaFX Application Thread] DEBUG FXGLMasterTimer      - Starting master timer
-15:55:45.210 [JavaFX Application Thread] DEBUG GameApplication      - State: LOADING -> PLAYING
-15:55:45.214 [JavaFX Application Thread] DEBUG FXGLEventBus         - Firing event: FXGLEvent[type=RESUME]
-15:55:45.217 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
-15:55:45.217 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
-15:55:45.219 [JavaFX Application Thread] DEBUG GameScene            - Creating render group for layer: TOP(2147483647)
-15:55:45.222 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
-15:55:45.222 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
-15:55:45.222 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
-15:55:45.222 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
-15:55:45.223 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
-15:55:45.223 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
-15:55:45.223 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
-15:55:45.223 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
-15:55:45.223 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
-15:55:45.223 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
-15:55:45.223 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
-15:55:45.223 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
-15:55:45.223 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
-15:55:45.223 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
-15:55:45.224 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
-15:55:45.224 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
-15:55:45.224 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
-15:55:45.224 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
-15:55:45.224 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
-15:55:45.224 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
-15:55:45.224 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
-15:55:45.225 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
-15:55:45.225 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
-15:55:45.225 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
-15:55:45.225 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
-15:55:45.225 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
-15:55:45.226 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
-15:55:45.226 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
-15:55:45.226 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
-15:55:45.226 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
-15:55:45.226 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
-15:55:45.226 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
-15:55:45.226 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
-15:55:45.226 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
-15:55:45.227 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
-15:55:45.227 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
-15:55:45.227 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
-15:55:45.227 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
-15:55:45.227 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
-15:55:45.227 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
-15:55:45.227 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
-15:55:45.227 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
-15:55:45.227 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
-15:55:45.227 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
-15:55:45.228 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
-15:55:45.228 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
-15:55:45.228 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
-15:55:45.228 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
-15:55:45.228 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
-15:55:45.228 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
-15:55:45.228 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
-15:55:45.228 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
-15:55:45.228 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
-15:55:45.228 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
-15:55:45.229 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
-15:55:45.229 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
-15:55:45.229 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
-15:55:45.229 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
-15:55:45.229 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
-15:55:45.229 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
-15:55:45.229 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
-15:55:45.229 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
-15:55:45.229 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
-15:55:45.229 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
-15:55:45.230 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
-15:55:45.230 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
-15:55:45.230 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
-15:55:45.230 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
-15:55:45.230 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
-15:55:45.230 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
-15:55:45.230 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
-15:55:45.230 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
-15:55:45.230 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
-15:55:45.230 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
-15:55:45.231 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
-15:55:45.231 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
-15:55:45.231 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
-15:55:45.231 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
-15:55:45.231 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
-15:55:45.231 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
-15:55:45.231 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
-15:55:45.231 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
-15:55:45.231 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
-15:55:45.231 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
-15:55:45.232 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
-15:55:45.232 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
-15:55:45.232 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
-15:55:45.232 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
-15:55:45.232 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
-15:55:45.232 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
-15:55:45.232 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
-15:55:45.232 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
-15:55:45.232 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
-15:55:45.232 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
-15:55:45.233 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
-15:55:45.233 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
-15:55:45.233 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
-15:55:45.233 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
-15:55:45.233 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
-15:55:45.233 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
-15:55:45.233 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
-15:55:45.233 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
-15:55:45.233 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
-15:55:45.233 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
-15:55:45.234 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
-15:55:45.234 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
-15:55:45.234 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
-15:55:45.234 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
-15:55:45.234 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
-15:55:45.234 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
-15:55:45.234 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
-15:55:45.234 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
-15:55:45.235 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
-15:55:45.235 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
-15:55:45.235 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
-15:55:45.235 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
-15:55:45.235 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
-15:55:45.235 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
-15:55:45.235 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
-15:55:45.235 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
-15:55:45.236 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
-15:55:45.236 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
-15:55:45.236 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
-15:55:45.236 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
-15:55:45.236 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
-15:55:45.236 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
-15:55:45.236 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
-15:55:45.236 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
-15:55:45.236 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
-15:55:45.236 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
-15:55:45.236 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
-15:55:45.237 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
-15:55:45.237 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
-15:55:45.237 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
-15:55:45.237 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
-15:55:45.237 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
-15:55:45.237 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
-15:55:45.237 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
-15:55:45.237 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
-15:55:45.237 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
-15:55:45.237 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
-15:55:45.237 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
-15:55:45.238 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
-15:55:45.238 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
-15:55:45.238 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
-15:55:45.238 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
-15:55:45.238 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
-15:55:45.238 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
-15:55:45.238 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
-15:55:45.238 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
-15:56:14.643 [JavaFX Application Thread] DEBUG FXGLEventBus         - Firing event: DisplayEvent[type=CLOSE_REQUEST]
-15:56:14.644 [JavaFX Application Thread] DEBUG FXGLEventBus         - Firing event: FXGLEvent[type=EXIT]
-15:56:14.646 [JavaFX Application Thread] DEBUG FXGL                 - Saving FXGL system data
-15:56:14.647 [JavaFX Application Thread] DEBUG IOTask               - Executing task: writeDataTask(system/fxgl.bundle)
-15:56:14.648 [JavaFX Application Thread] DEBUG FS                   - Writing to: system\fxgl.bundle
-15:56:14.651 [JavaFX Application Thread] DEBUG IOTask               - Task succeeded: writeDataTask(system/fxgl.bundle)
+11:13:43.743 [FXGL Launcher Thread     ] DEBUG FXGLLoggerFactory    - Service [LoggerFactory] initialized
+11:13:43.747 [FXGL Launcher Thread     ] DEBUG FXGL                 - FXGL configuration complete
+11:13:43.747 [FXGL Launcher Thread     ] DEBUG FXGL                 - Loading FXGL system data
+11:13:43.750 [FXGL Launcher Thread     ] DEBUG IOTask               - Executing task: readDataTask(system/fxgl.bundle)
+11:13:43.754 [FXGL Launcher Thread     ] DEBUG FS                   - Reading from: system\fxgl.bundle
+11:13:43.758 [FXGL Launcher Thread     ] DEBUG IOTask               - Task succeeded: readDataTask(system/fxgl.bundle)
+11:13:43.759 [FXGL Launcher Thread     ] DEBUG Bundle               - Logging bundle: FXGL
+11:13:43.759 [FXGL Launcher Thread     ] DEBUG Bundle               - FXGL.offline.timer.version.check=2017-01-12T08:38:28.585
+11:13:43.764 [FXGL Launcher Thread     ] DEBUG GameApplication      - Configuring GameApplication
+11:13:43.768 [FXGL Launcher Thread     ] DEBUG FXGLExceptionHandler - Service [ExceptionHandler] initialized
+11:13:43.768 [FXGL Launcher Thread     ] DEBUG FXGLEventBus         - Service [EventBus] initialized
+11:13:43.771 [FXGL Launcher Thread     ] DEBUG FXGLExecutor         - Service [Executor] initialized
+11:13:43.771 [FXGL Launcher Thread     ] DEBUG PreInitTask          - Injecting gameWorld & physicsWorld
+11:13:43.775 [FXGL Launcher Thread     ] DEBUG GameWorld            - Game world initialized
+11:13:43.806 [FXGL Launcher Thread     ] DEBUG FXGLPooler           - Service [Pooler] initialized with default size = 128
+11:13:43.806 [FXGL Launcher Thread     ] DEBUG PhysicsWorld         - Physics world initialized: appHeight=700.0, physics.ppm=50.0
+11:13:43.807 [FXGL Launcher Thread     ] DEBUG FXGLInput            - Service [Input] initialized
+11:13:43.822 [FXGL Launcher Thread     ] DEBUG FXGLInput            - Registered new binding: Screenshot - P
+11:13:43.822 [FXGL Launcher Thread     ] DEBUG FXGLInput            - Registered new binding: Dev Options - CTRL+0
+11:13:43.822 [FXGL Launcher Thread     ] DEBUG FXGLInput            - Registered new binding: Move With Mouse - PRIMARY
+11:13:43.849 [FXGL Launcher Thread     ] DEBUG GameScene            - Game scene initialized: 800.0x700.0
+11:13:43.856 [FXGL Launcher Thread     ] DEBUG FXGLAssetLoader      - Service [AssetLoader] initialized: cacheSize=35
+11:13:43.858 [FXGL Launcher Thread     ] DEBUG FXGLAssetLoader      - Loading from disk: /assets/sounds/system/notification.wav
+11:13:43.884 [FXGL Launcher Thread     ] DEBUG FXGLAssetLoader      - Loading from disk: /assets/sounds/menu/select.wav
+11:13:43.886 [FXGL Launcher Thread     ] DEBUG FXGLAssetLoader      - Loading from disk: /assets/sounds/menu/back.wav
+11:13:43.888 [FXGL Launcher Thread     ] DEBUG FXGLAssetLoader      - Loading from disk: /assets/sounds/menu/press.wav
+11:13:43.891 [FXGL Launcher Thread     ] DEBUG FXGLAssetLoader      - Loading from disk: /assets/ui/fonts/Copperplate_Gothic_Light_Regular.ttf
+11:13:44.043 [FXGL Launcher Thread     ] DEBUG FXGLAssetLoader      - Loading from disk: /assets/ui/css/fxgl.css
+11:13:44.043 [FXGL Launcher Thread     ] DEBUG FXGLAssetLoader      - Loading from disk: /assets/ui/icons/fxgl_icon.png
+11:13:44.073 [FXGL Launcher Thread     ] DEBUG FXGLAssetLoader      - Loading from disk: /assets/ui/css/fxgl_dark.css
+11:13:44.081 [FXGL Launcher Thread     ] DEBUG FXGLDisplay          - Target size: DoubleProperty [value: 800.0] x DoubleProperty [value: 700.0] @ 1.0
+11:13:44.081 [FXGL Launcher Thread     ] DEBUG FXGLDisplay          - New size:    800.0 x 700.0 @ DoubleProperty [value: 1.0]
+11:13:44.081 [FXGL Launcher Thread     ] DEBUG FXGLDisplay          - Service [Display] initialized
+11:13:44.082 [FXGL Launcher Thread     ] DEBUG FXGLDisplay          - Using CSS: CSS(externalForm=jar:file:/I:/Documents/NetBeansProjects/MotherLoad/MotherLoad/lib/fxgl-0.2.9-uber.jar!/assets/ui/css/fxgl_dark.css)
+11:13:44.082 [FXGL Launcher Thread     ] DEBUG InitScenesTask       - Injecting loadingScene & gameScene
+11:13:44.165 [FXGL Launcher Thread     ] DEBUG FXGLMasterTimer      - Service [MasterTimer] initialized
+11:13:44.167 [FXGL Launcher Thread     ] DEBUG FXGLAudioPlayer      - Service [AudioPlayer] initialized
+11:13:44.193 [FXGL Launcher Thread     ] DEBUG InitProfilerTask     - Injecting profiler
+11:13:44.193 [FXGL Launcher Thread     ] DEBUG GameApplication      - Starting new game
+11:13:44.194 [FXGL Launcher Thread     ] DEBUG GameApplication      - Initializing App
+11:13:44.196 [FXGL Launcher Thread     ] DEBUG FXGLInput            - Clearing active input actions
+11:13:44.196 [FXGL Launcher Thread     ] DEBUG FXGLMasterTimer      - Stopping master timer
+11:13:44.196 [FXGL Launcher Thread     ] DEBUG GameApplication      - State: STARTUP -> PAUSED
+11:13:44.196 [FXGL Launcher Thread     ] DEBUG FXGLEventBus         - Firing event: FXGLEvent[type=PAUSE]
+11:13:44.197 [FXGL Launcher Thread     ] DEBUG FXGLInput            - Clearing active input actions
+11:13:44.198 [FXGL Launcher Thread     ] DEBUG FXGLMasterTimer      - Resetting ticks and clearing all actions
+11:13:44.198 [FXGL Launcher Thread     ] DEBUG GameWorld            - Resetting game world
+11:13:44.198 [FXGL Launcher Thread     ] TRACE EntityWorld          - Resetting entity world
+11:13:44.199 [FXGL Launcher Thread     ] DEBUG PhysicsWorld         - Resetting physics world
+11:13:44.199 [FXGL Launcher Thread     ] DEBUG GameScene            - Resetting game scene
+11:13:44.199 [FXGL Launcher Thread     ] DEBUG FXGLEventBus         - Firing event: FXGLEvent[type=RESET]
+11:13:44.252 [FXGL Launcher Thread     ] DEBUG GameApplication      - State: PAUSED -> LOADING
+11:13:44.276 [FXGL Background Thread 1 ] DEBUG InitAppTask          - Initializing Assets
+11:13:44.277 [FXGL Background Thread 1 ] DEBUG InitAppTask          - Initializing Game
+11:13:44.312 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from disk: /assets/textures/PlayerLeft.png
+11:13:44.319 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from disk: /assets/textures/Ground1.png
+11:13:44.321 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
+11:13:44.322 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
+11:13:44.322 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
+11:13:44.323 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
+11:13:44.323 [JavaFX Application Thread] DEBUG FXGLDisplay          - Showing stage
+11:13:44.323 [JavaFX Application Thread] DEBUG FXGLDisplay          - Root size: 800.0x700.0
+11:13:44.323 [JavaFX Application Thread] DEBUG FXGLDisplay          - Scene size: 800.0x700.0
+11:13:44.323 [JavaFX Application Thread] DEBUG FXGLDisplay          - Stage size: 816.0x739.0
+11:13:44.324 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
+11:13:44.324 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
+11:13:44.325 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
+11:13:44.326 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
+11:13:44.327 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
+11:13:44.327 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
+11:13:44.328 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
+11:13:44.329 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
+11:13:44.329 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
+11:13:44.330 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
+11:13:44.331 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
+11:13:44.332 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
+11:13:44.333 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
+11:13:44.333 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
+11:13:44.334 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
+11:13:44.335 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
+11:13:44.335 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
+11:13:44.336 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
+11:13:44.336 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
+11:13:44.337 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
+11:13:44.337 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
+11:13:44.338 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
+11:13:44.338 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
+11:13:44.338 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
+11:13:44.339 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
+11:13:44.339 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
+11:13:44.340 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
+11:13:44.341 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
+11:13:44.341 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
+11:13:44.342 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
+11:13:44.342 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
+11:13:44.343 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
+11:13:44.344 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
+11:13:44.344 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
+11:13:44.345 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
+11:13:44.345 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
+11:13:44.346 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
+11:13:44.346 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
+11:13:44.346 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
+11:13:44.347 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
+11:13:44.347 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
+11:13:44.348 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
+11:13:44.348 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
+11:13:44.349 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
+11:13:44.349 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
+11:13:44.350 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
+11:13:44.350 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
+11:13:44.351 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
+11:13:44.351 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
+11:13:44.351 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
+11:13:44.352 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
+11:13:44.352 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
+11:13:44.353 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
+11:13:44.353 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
+11:13:44.354 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
+11:13:44.354 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
+11:13:44.354 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
+11:13:44.355 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
+11:13:44.355 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
+11:13:44.356 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
+11:13:44.356 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
+11:13:44.357 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
+11:13:44.357 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
+11:13:44.358 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
+11:13:44.358 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
+11:13:44.359 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
+11:13:44.359 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
+11:13:44.360 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
+11:13:44.360 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
+11:13:44.360 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoader      - Loading from cache: /assets/textures/Ground1.png
+11:13:44.361 [FXGL Background Thread 1 ] DEBUG InitAppTask          - Initializing Physics
+11:13:44.361 [FXGL Background Thread 1 ] DEBUG InitAppTask          - Initializing UI
+11:13:44.361 [FXGL Background Thread 1 ] DEBUG InitAppTask          - Initialization Complete
+11:13:44.379 [JavaFX Application Thread] DEBUG FXGLInput            - Clearing active input actions
+11:13:44.379 [JavaFX Application Thread] DEBUG FXGLMasterTimer      - Starting master timer
+11:13:44.379 [JavaFX Application Thread] DEBUG GameApplication      - State: LOADING -> PLAYING
+11:13:44.383 [JavaFX Application Thread] DEBUG FXGLEventBus         - Firing event: FXGLEvent[type=RESUME]
+11:13:44.386 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
+11:13:44.386 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
+11:13:44.388 [JavaFX Application Thread] DEBUG GameScene            - Creating render group for layer: TOP(2147483647)
+11:13:44.391 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
+11:13:44.391 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
+11:13:44.392 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
+11:13:44.392 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
+11:13:44.392 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
+11:13:44.392 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
+11:13:44.392 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
+11:13:44.392 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
+11:13:44.392 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
+11:13:44.393 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
+11:13:44.393 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
+11:13:44.393 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
+11:13:44.393 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
+11:13:44.393 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
+11:13:44.393 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
+11:13:44.393 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
+11:13:44.393 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
+11:13:44.393 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
+11:13:44.394 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
+11:13:44.394 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
+11:13:44.394 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
+11:13:44.394 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
+11:13:44.394 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
+11:13:44.394 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
+11:13:44.394 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
+11:13:44.394 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
+11:13:44.395 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
+11:13:44.395 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
+11:13:44.395 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
+11:13:44.395 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
+11:13:44.395 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
+11:13:44.395 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
+11:13:44.395 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
+11:13:44.395 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
+11:13:44.395 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
+11:13:44.395 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
+11:13:44.396 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
+11:13:44.396 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
+11:13:44.396 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
+11:13:44.396 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
+11:13:44.396 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
+11:13:44.396 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
+11:13:44.397 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
+11:13:44.397 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
+11:13:44.397 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
+11:13:44.397 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
+11:13:44.397 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
+11:13:44.397 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
+11:13:44.397 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
+11:13:44.398 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
+11:13:44.398 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
+11:13:44.398 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
+11:13:44.398 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
+11:13:44.398 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
+11:13:44.398 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
+11:13:44.398 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
+11:13:44.399 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
+11:13:44.399 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
+11:13:44.399 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
+11:13:44.399 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
+11:13:44.399 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
+11:13:44.399 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
+11:13:44.400 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
+11:13:44.400 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
+11:13:44.400 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
+11:13:44.400 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
+11:13:44.400 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
+11:13:44.400 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
+11:13:44.400 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
+11:13:44.400 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
+11:13:44.400 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
+11:13:44.400 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
+11:13:44.401 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
+11:13:44.401 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
+11:13:44.401 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
+11:13:44.401 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
+11:13:44.401 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
+11:13:44.401 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
+11:13:44.401 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
+11:13:44.401 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
+11:13:44.401 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
+11:13:44.401 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
+11:13:44.402 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
+11:13:44.402 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
+11:13:44.402 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
+11:13:44.402 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
+11:13:44.402 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
+11:13:44.402 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
+11:13:44.402 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
+11:13:44.402 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
+11:13:44.402 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
+11:13:44.402 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
+11:13:44.403 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
+11:13:44.403 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
+11:13:44.403 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
+11:13:44.403 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
+11:13:44.403 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
+11:13:44.403 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
+11:13:44.403 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
+11:13:44.403 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
+11:13:44.403 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
+11:13:44.403 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
+11:13:44.404 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
+11:13:44.404 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
+11:13:44.404 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
+11:13:44.404 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
+11:13:44.404 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
+11:13:44.404 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
+11:13:44.404 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
+11:13:44.404 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
+11:13:44.404 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
+11:13:44.404 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
+11:13:44.405 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
+11:13:44.405 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
+11:13:44.405 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
+11:13:44.405 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
+11:13:44.405 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
+11:13:44.405 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
+11:13:44.405 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
+11:13:44.405 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
+11:13:44.406 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
+11:13:44.406 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
+11:13:44.406 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
+11:13:44.406 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
+11:13:44.406 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
+11:13:44.406 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
+11:13:44.406 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
+11:13:44.406 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
+11:13:44.406 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
+11:13:44.406 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
+11:13:44.407 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
+11:13:44.407 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
+11:13:44.407 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
+11:13:44.407 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
+11:13:44.407 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
+11:13:44.407 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
+11:13:44.407 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
+11:13:44.407 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
+11:13:44.407 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
+11:13:44.407 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
+11:13:44.408 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
+11:13:44.408 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
+11:13:44.408 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
+11:13:44.408 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
+11:13:44.408 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
+11:13:44.408 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
+11:13:44.408 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
+11:13:44.408 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
+11:13:44.408 [JavaFX Application Thread] DEBUG GameScene            - Entity added to scene
+11:13:44.408 [JavaFX Application Thread] DEBUG GameScene            - Added MainViewComponent
+11:14:02.725 [JavaFX Application Thread] DEBUG FXGLEventBus         - Firing event: DisplayEvent[type=CLOSE_REQUEST]
+11:14:02.726 [JavaFX Application Thread] DEBUG FXGLEventBus         - Firing event: FXGLEvent[type=EXIT]
+11:14:02.728 [JavaFX Application Thread] DEBUG FXGL                 - Saving FXGL system data
+11:14:02.729 [JavaFX Application Thread] DEBUG IOTask               - Executing task: writeDataTask(system/fxgl.bundle)
+11:14:02.730 [JavaFX Application Thread] DEBUG FS                   - Writing to: system\fxgl.bundle
+11:14:02.733 [JavaFX Application Thread] DEBUG IOTask               - Task succeeded: writeDataTask(system/fxgl.bundle)

@@ -27,7 +27,7 @@ import com.almasb.ents.AbstractControl;
 import com.almasb.ents.Entity;
 import com.almasb.fxgl.entity.component.PositionComponent;
 import javafx.geometry.Point2D;
-
+ 
 /**
  *
  * @author Mackenzie Guy
@@ -41,8 +41,10 @@ public class PlayerControl extends AbstractControl {
     private double velocityX = 0;
     private double velocityY = 0;
     private double accelerationX = .06;
-    private double accelerationY = .06;
+    private double accelerationY = .12;
 
+    private double gravity = 0.06;
+    
     private double velocityCapX = 5;
     private double velocityCapY = 1;
     private double velocityDecay = .1;
@@ -76,6 +78,7 @@ public class PlayerControl extends AbstractControl {
     }
 
     private void updatePosition() {
+        velocityY += gravity;
         positionXY = positionXY.add(velocityX, velocityY);
         position.setValue(positionXY);
     }
@@ -120,5 +123,21 @@ public class PlayerControl extends AbstractControl {
         velocityY = 0;
         wasOnGround = true;
     }
+    
+    public Point2D rtnPosition(){
+        return positionXY;
+    }
 
+    public void triggerGround(int x){
+        switch(x){
+            case 1:
+                groundDown = true;
+            case 2:
+                groundUp = true;
+            case 3:
+                groundLeft = true;
+            case 4:
+                groundRight = true;
+        }
+    }
 }

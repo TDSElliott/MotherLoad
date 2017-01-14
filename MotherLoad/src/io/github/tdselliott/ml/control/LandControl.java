@@ -9,6 +9,7 @@ import com.almasb.ents.AbstractControl;
 import com.almasb.ents.Entity;
 import com.almasb.fxgl.entity.component.PositionComponent;
 import java.util.ArrayList;
+import javafx.geometry.Point2D;
 
 /**
  *
@@ -16,6 +17,16 @@ import java.util.ArrayList;
  */
 public class LandControl extends AbstractControl {
 
+    public static double landPos;
+    
+    public int arrayXValue;
+    public int arrayYValue;
+    
+    public LandControl(int x, int y) {
+        arrayXValue = x;
+        arrayYValue = y;
+    }
+    
     protected PositionComponent position;
     
     @Override
@@ -28,8 +39,15 @@ public class LandControl extends AbstractControl {
         
     }
     
-    public void move(double x, double y) {
-        
+    public void setLocation(Point2D pos) {
+        position.setValue(pos);
     }
     
+    public void moveLocation(Point2D pos) {
+        position.setValue(position.getValue().add(pos));
+    }
+    
+    public void updatePlayerSide(Point2D playerPos){
+        
+    }
 }

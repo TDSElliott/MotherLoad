@@ -33,6 +33,7 @@ import com.almasb.fxgl.physics.CollisionHandler;
 import com.almasb.fxgl.physics.PhysicsWorld;
 import com.almasb.fxgl.settings.GameSettings;
 import com.almasb.fxgl.texture.Texture;
+import io.github.tdselliott.ml.control.LandControl;
 import io.github.tdselliott.ml.control.PlayerControl;
 import java.util.ArrayList;
 import static javafx.application.Application.launch;
@@ -60,7 +61,8 @@ public class MotherLoadApp extends GameApplication {
     private PlayerControl CtrPlayer;
 
     private Entity[][] ground = new Entity[50][50];
-
+    private LandControl[][] CtrLand = new LandControl[50][50];
+    
     @Override
     protected void initSettings(GameSettings gs) {
         // The settings code to generate the window and remove FXGL intro for dev
@@ -102,11 +104,12 @@ public class MotherLoadApp extends GameApplication {
         getGameWorld().addEntity(player);
         CtrPlayer = player.getControlUnsafe(PlayerControl.class);
 
+        //Create ground
         for (int x = 0; x < 15; x++) {
             for (int y = 0; y < 5; y++) {
-                ground[x][y] = EntityFactory.newGroundTest(64 * x-32, 64*y+400);
-                //ground.add();
+                ground[x][y] = EntityFactory.newGroundTest(64 * x-32, 64*y+400,x,y);
                 getGameWorld().addEntity(ground[x][y]);
+                CtrLand[x][y] = ground[x][y].getControlUnsafe(LandControl.class);
             }
         }
 
@@ -124,6 +127,8 @@ public class MotherLoadApp extends GameApplication {
 
             protected void onCollision(Entity player, Entity ground) {
                 CtrPlayer.hitGround();
+                LandControl ctrTemp = (LandControl)ground.getControls().get(0);
+                System.out.println(ctrTemp.arrayXValue);
             }
         });
     }
@@ -158,5 +163,9 @@ public class MotherLoadApp extends GameApplication {
         launch(args);
     }
 //------------------------------------------------------------------------------
+    
+    public void moveLand(double x, double y){
+        
+    }
 }
 ////////////////////////////////////////////////////////////////////////////////
