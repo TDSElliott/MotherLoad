@@ -128,7 +128,7 @@ public class MotherLoadApp extends GameApplication {
             protected void onCollision(Entity player, Entity ground) {
                 CtrPlayer.hitGround();
                 LandControl ctrTemp = (LandControl)ground.getControls().get(0);
-                System.out.println(ctrTemp.arrayXValue);
+                System.out.println("x = " + ctrTemp.arrayXValue + "y = " + ctrTemp.arrayYValue);
             }
         });
     }

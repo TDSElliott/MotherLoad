@@ -27,7 +27,7 @@ import com.almasb.ents.AbstractControl;
 import com.almasb.ents.Entity;
 import com.almasb.fxgl.entity.component.PositionComponent;
 import javafx.geometry.Point2D;
- 
+
 /**
  *
  * @author Mackenzie Guy
@@ -44,9 +44,9 @@ public class PlayerControl extends AbstractControl {
     private double accelerationY = .12;
 
     private double gravity = 0.06;
-    
+
     private double velocityCapX = 5;
-    private double velocityCapY = 1;
+    private double velocityCapY = 5;
     private double velocityDecay = .1;
 
     boolean wasOnGround = false;
@@ -73,7 +73,7 @@ public class PlayerControl extends AbstractControl {
 
     @Override
     public void onUpdate(Entity entity, double d) {
-        updatePosition();
+        //updatePosition();
         velocityDecay();
     }
 
@@ -101,9 +101,19 @@ public class PlayerControl extends AbstractControl {
 
         hKeyDown = true;
         double angleTemp = getAngle(positionXY, mouse);
-        velocityX += Math.cos(angleTemp) * accelerationX;
-        velocityY += Math.sin(angleTemp) * accelerationY;
+        
+        if (Math.abs(velocityX) < velocityCapX) {
+            velocityX += Math.cos(angleTemp) * accelerationX;
+        }
+        if (Math.abs(velocityY) < velocityCapY) {
+            velocityY += Math.sin(angleTemp) * accelerationY;
+        }
 
+        System.out.println(angleTemp > Math.PI/3 && angleTemp < 2*Math.PI/3);
+        if(angleTemp > Math.PI/3 && angleTemp < 2*Math.PI/3){
+            //dig();
+        }
+        
     }
 
     public double getAngle(Point2D player, Point2D target) {
@@ -123,13 +133,13 @@ public class PlayerControl extends AbstractControl {
         velocityY = 0;
         wasOnGround = true;
     }
-    
-    public Point2D rtnPosition(){
+
+    public Point2D rtnPosition() {
         return positionXY;
     }
 
-    public void triggerGround(int x){
-        switch(x){
+    public void triggerGround(int x) {
+        switch (x) {
             case 1:
                 groundDown = true;
             case 2:
