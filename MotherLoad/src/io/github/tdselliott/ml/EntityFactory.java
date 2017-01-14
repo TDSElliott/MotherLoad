@@ -76,7 +76,7 @@ public class EntityFactory {
         
         
         //Components
-        ground.addComponent(new CollidableComponent(true)); //Makes it so that the bullet can collide with other GameEntites
+        //ground.addComponent(new CollidableComponent(true)); //Makes it so that the bullet can collide with other GameEntites
         
         //Control
         ground.addControl(new LandControl(x, y, arrX, arrY));

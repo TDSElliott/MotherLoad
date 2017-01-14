@@ -26,6 +26,7 @@ package io.github.tdselliott.ml.control;
 import com.almasb.ents.AbstractControl;
 import com.almasb.ents.Entity;
 import com.almasb.fxgl.entity.component.PositionComponent;
+import io.github.tdselliott.ml.MotherLoadApp;
 import javafx.geometry.Point2D;
 
 /**
@@ -53,7 +54,8 @@ public class PlayerControl extends AbstractControl {
     private double velocityDecay = .1;
 
     private boolean isInMenu = false;
-
+    private boolean isDigging = false;
+    
     boolean wasOnGround = false;
 
     boolean hKeyDown = false;
@@ -125,7 +127,7 @@ public class PlayerControl extends AbstractControl {
 
             System.out.println(angleTemp > Math.PI / 3 && angleTemp < 2 * Math.PI / 3);
             if (angleTemp > Math.PI / 3 && angleTemp < 2 * Math.PI / 3) {
-                //dig();
+                isDigging = true;
             }
         }
     }
@@ -141,7 +143,7 @@ public class PlayerControl extends AbstractControl {
     }
 
     public void isColliding() {
-
+        
         groundDown = false;
         groundUp = false;
         groundLeft = false;
@@ -152,12 +154,22 @@ public class PlayerControl extends AbstractControl {
         double yOffSet = -landStart.getY() + positionXY.getY();
         int arrX = (int) Math.floor(xOffSet / 64);
         int arrY = (int) Math.floor(yOffSet / 64);
-        System.out.println("x = " + arrX + "y = " + arrY);
 
-        //Colliding down
-        if (arrY > -2) {
-            groundDown = true;
+        System.out.println("x = " + arrX + "y = " + arrY);
+        System.out.println("x = " + xOffSet + "y = " + yOffSet);
+
+        if (arrX >= 0 && arrY >= -1) 
+        {
+            //Colliding down
+            if (MotherLoadApp.ground[arrX][arrY + 1].isActive()) {
+                groundDown = true;
+                if(isDigging){
+                    MotherLoadApp.ground[arrX][arrY + 1].removeAllComponents();
+                    MotherLoadApp.ground[arrX][arrY + 1].removeFromWorld();
+                }
+            }
         }
+        isDigging = false;
     }
 
     public void hitGround() {

@@ -61,7 +61,7 @@ public class MotherLoadApp extends GameApplication {
     private Entity player;
     private PlayerControl CtrPlayer;
 
-    public Entity[][] ground = new Entity[50][50];
+    public static Entity[][] ground = new Entity[50][50];
     private LandControl[][] CtrLand = new LandControl[50][50];
     
     @Override
@@ -108,8 +108,8 @@ public class MotherLoadApp extends GameApplication {
         int groundStartX = 0;
         int groundStartY = 400;
         //Create ground
-        for (int x = 0; x < 15; x++) {
-            for (int y = 0; y < 5; y++) {
+        for (int x = 0; x < 40; x++) {
+            for (int y = 0; y < 40; y++) {
                 ground[x][y] = EntityFactory.newGround(64 * x + groundStartX, 64 * y + groundStartY, x, y);
                 getGameWorld().addEntity(ground[x][y]);
                 CtrLand[x][y] = ground[x][y].getControlUnsafe(LandControl.class);
@@ -169,6 +169,10 @@ public class MotherLoadApp extends GameApplication {
     
     public void moveLand(double x, double y){
         
+    }
+    
+    public static Entity[][] getGround(){
+        return ground;
     }
 }
 ////////////////////////////////////////////////////////////////////////////////
