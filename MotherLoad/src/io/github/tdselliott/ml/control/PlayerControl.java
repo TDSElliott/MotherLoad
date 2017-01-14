@@ -37,17 +37,22 @@ public class PlayerControl extends AbstractControl {
     protected PositionComponent position;
 
     private Point2D positionXY;
-    private Point2D imageOffSet = new Point2D(25, 25);
     private double velocityX = 0;
     private double velocityY = 0;
     private double accelerationX = .06;
     private double accelerationY = .12;
+
+    private Point2D imageOffSet = new Point2D(25, 25);
+    private int imageWidth = 60;
+    private int imageHight = 60;
 
     private double gravity = 0.06;
 
     private double velocityCapX = 5;
     private double velocityCapY = 5;
     private double velocityDecay = .1;
+
+    private boolean isInMenu = false;
 
     boolean wasOnGround = false;
 
@@ -73,12 +78,21 @@ public class PlayerControl extends AbstractControl {
 
     @Override
     public void onUpdate(Entity entity, double d) {
-        //updatePosition();
+        updatePosition();
         velocityDecay();
+        isColliding();
     }
 
     private void updatePosition() {
+
         velocityY += gravity;
+
+        if (groundDown) {
+            if (velocityY > 0) {
+                velocityY = 0;
+            }
+        }
+
         positionXY = positionXY.add(velocityX, velocityY);
         position.setValue(positionXY);
     }
@@ -98,22 +112,22 @@ public class PlayerControl extends AbstractControl {
     }
 
     public void moveToMouse(Point2D mouse) {
+        if (!isInMenu) {
+            hKeyDown = true;
+            double angleTemp = getAngle(positionXY.add(imageHight / 2, imageWidth / 2), mouse);
 
-        hKeyDown = true;
-        double angleTemp = getAngle(positionXY, mouse);
-        
-        if (Math.abs(velocityX) < velocityCapX) {
-            velocityX += Math.cos(angleTemp) * accelerationX;
-        }
-        if (Math.abs(velocityY) < velocityCapY) {
-            velocityY += Math.sin(angleTemp) * accelerationY;
-        }
+            if (Math.abs(velocityX) < velocityCapX) {
+                velocityX += Math.cos(angleTemp) * accelerationX;
+            }
+            if (Math.abs(velocityY) < velocityCapY) {
+                velocityY += Math.sin(angleTemp) * accelerationY;
+            }
 
-        System.out.println(angleTemp > Math.PI/3 && angleTemp < 2*Math.PI/3);
-        if(angleTemp > Math.PI/3 && angleTemp < 2*Math.PI/3){
-            //dig();
+            System.out.println(angleTemp > Math.PI / 3 && angleTemp < 2 * Math.PI / 3);
+            if (angleTemp > Math.PI / 3 && angleTemp < 2 * Math.PI / 3) {
+                //dig();
+            }
         }
-        
     }
 
     public double getAngle(Point2D player, Point2D target) {
@@ -124,6 +138,26 @@ public class PlayerControl extends AbstractControl {
         }
 
         return angle;
+    }
+
+    public void isColliding() {
+
+        groundDown = false;
+        groundUp = false;
+        groundLeft = false;
+        groundRight = false;
+
+        Point2D landStart = LandControl.landPos;
+        double xOffSet = -landStart.getX() + positionXY.getX();
+        double yOffSet = -landStart.getY() + positionXY.getY();
+        int arrX = (int) Math.floor(xOffSet / 64);
+        int arrY = (int) Math.floor(yOffSet / 64);
+        System.out.println("x = " + arrX + "y = " + arrY);
+
+        //Colliding down
+        if (arrY > -2) {
+            groundDown = true;
+        }
     }
 
     public void hitGround() {

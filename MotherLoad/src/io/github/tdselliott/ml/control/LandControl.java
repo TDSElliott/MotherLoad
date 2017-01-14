@@ -17,14 +17,17 @@ import javafx.geometry.Point2D;
  */
 public class LandControl extends AbstractControl {
 
-    public static double landPos;
+    public static Point2D landPos;
+    
+    private Point2D positionXY;
     
     public int arrayXValue;
     public int arrayYValue;
     
-    public LandControl(int x, int y) {
-        arrayXValue = x;
-        arrayYValue = y;
+    public LandControl(double x, double y, int arrX, int arrY) {
+        arrayXValue = arrX;
+        arrayYValue = arrY;
+        positionXY = new Point2D(x,y);
     }
     
     protected PositionComponent position;

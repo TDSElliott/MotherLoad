@@ -37,6 +37,7 @@ import io.github.tdselliott.ml.control.LandControl;
 import io.github.tdselliott.ml.control.PlayerControl;
 import java.util.ArrayList;
 import static javafx.application.Application.launch;
+import javafx.geometry.Point2D;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 
@@ -60,7 +61,7 @@ public class MotherLoadApp extends GameApplication {
     private Entity player;
     private PlayerControl CtrPlayer;
 
-    private Entity[][] ground = new Entity[50][50];
+    public Entity[][] ground = new Entity[50][50];
     private LandControl[][] CtrLand = new LandControl[50][50];
     
     @Override
@@ -104,15 +105,17 @@ public class MotherLoadApp extends GameApplication {
         getGameWorld().addEntity(player);
         CtrPlayer = player.getControlUnsafe(PlayerControl.class);
 
+        int groundStartX = 0;
+        int groundStartY = 400;
         //Create ground
         for (int x = 0; x < 15; x++) {
             for (int y = 0; y < 5; y++) {
-                ground[x][y] = EntityFactory.newGroundTest(64 * x-32, 64*y+400,x,y);
+                ground[x][y] = EntityFactory.newGround(64 * x + groundStartX, 64 * y + groundStartY, x, y);
                 getGameWorld().addEntity(ground[x][y]);
                 CtrLand[x][y] = ground[x][y].getControlUnsafe(LandControl.class);
             }
         }
-
+        LandControl.landPos = new Point2D(0,400);
     }
 //------------------------------------------------------------------------------
 
@@ -126,9 +129,9 @@ public class MotherLoadApp extends GameApplication {
             @Override
 
             protected void onCollision(Entity player, Entity ground) {
-                CtrPlayer.hitGround();
-                LandControl ctrTemp = (LandControl)ground.getControls().get(0);
-                System.out.println("x = " + ctrTemp.arrayXValue + "y = " + ctrTemp.arrayYValue);
+//                CtrPlayer.hitGround();
+//                LandControl ctrTemp = (LandControl)ground.getControls().get(0);
+//                System.out.println("x = " + ctrTemp.arrayXValue + "y = " + ctrTemp.arrayYValue);
             }
         });
     }

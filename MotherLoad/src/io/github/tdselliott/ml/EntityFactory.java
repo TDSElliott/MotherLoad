@@ -55,8 +55,8 @@ public class EntityFactory {
         //
         Player.getTypeComponent().setValue(EntityType.PLAYER);
         Player.getPositionComponent().setValue(x, y);
-        Player.getMainViewComponent().setView(new EntityView(assetLoader.loadTexture("PlayerLeft.png")), true);
-        //Player.getMainViewComponent().setView(new Rectangle(5, 5, Color.BLACK), true);
+        //Player.getMainViewComponent().setView(new EntityView(assetLoader.loadTexture("PlayerLeft.png")), true);
+        Player.getMainViewComponent().setView(new Rectangle(60, 60, Color.BLACK), true);
 
         //Components
         Player.addComponent(new CollidableComponent(true));
@@ -68,17 +68,18 @@ public class EntityFactory {
         return Player;
     }
     
-    public static Entity newGroundTest(double x, double y, int arrX, int arrY) {
+    public static Entity newGround(double x, double y, int arrX, int arrY) {
         GameEntity ground = new GameEntity(); //Creates a new GameEntity called "bullet"
         ground.getTypeComponent().setValue(EntityType.GROUND); //Sets it to the "BULLET" EnitityType
         ground.getPositionComponent().setValue(x, y); //Adds the bullet at the given coordinates.
         ground.getMainViewComponent().setView(new EntityView(assetLoader.loadTexture("Ground1.png")), true);
         
+        
         //Components
         ground.addComponent(new CollidableComponent(true)); //Makes it so that the bullet can collide with other GameEntites
         
         //Control
-        ground.addControl(new LandControl(arrX, arrY));
+        ground.addControl(new LandControl(x, y, arrX, arrY));
         
         return ground;
     }
