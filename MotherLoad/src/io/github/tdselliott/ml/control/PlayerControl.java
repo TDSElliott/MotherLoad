@@ -54,8 +54,8 @@ public class PlayerControl extends AbstractControl {
     private double velocityDecay = .1;
 
     private boolean isInMenu = false;
-    private boolean isDigging = false;
-    
+    private boolean isPointDown = false;
+
     boolean wasOnGround = false;
 
     boolean hKeyDown = false;
@@ -94,6 +94,16 @@ public class PlayerControl extends AbstractControl {
                 velocityY = 0;
             }
         }
+        if (groundLeft) {
+            if (velocityX < 0) {
+                velocityX = 0;
+            }
+        }
+        if (groundRight) {
+            if (velocityX > 0) {
+                velocityX = 0;
+            }
+        }
 
         positionXY = positionXY.add(velocityX, velocityY);
         position.setValue(positionXY);
@@ -127,7 +137,7 @@ public class PlayerControl extends AbstractControl {
 
             System.out.println(angleTemp > Math.PI / 3 && angleTemp < 2 * Math.PI / 3);
             if (angleTemp > Math.PI / 3 && angleTemp < 2 * Math.PI / 3) {
-                isDigging = true;
+                isPointDown = true;
             }
         }
     }
@@ -143,33 +153,54 @@ public class PlayerControl extends AbstractControl {
     }
 
     public void isColliding() {
-        
+
         groundDown = false;
         groundUp = false;
         groundLeft = false;
         groundRight = false;
 
         Point2D landStart = LandControl.landPos;
-        double xOffSet = -landStart.getX() + positionXY.getX();
+        double xOffSet = -landStart.getX() + positionXY.getX() + imageWidth / 2;
         double yOffSet = -landStart.getY() + positionXY.getY();
         int arrX = (int) Math.floor(xOffSet / 64);
         int arrY = (int) Math.floor(yOffSet / 64);
 
-        System.out.println("x = " + arrX + "y = " + arrY);
-        System.out.println("x = " + xOffSet + "y = " + yOffSet);
 
-        if (arrX >= 0 && arrY >= -1) 
-        {
+        if (arrX >= 0 && arrY >= -1) {
             //Colliding down
             if (MotherLoadApp.ground[arrX][arrY + 1].isActive()) {
                 groundDown = true;
-                if(isDigging){
+                if (isPointDown && velocityX <= 0) {
                     MotherLoadApp.ground[arrX][arrY + 1].removeAllComponents();
                     MotherLoadApp.ground[arrX][arrY + 1].removeFromWorld();
                 }
             }
+
+            //Colliding Left/Right
+            if (arrY >= 0 && arrX > 0) {
+                double tempX = xOffSet - imageWidth / 2;
+                //left
+                if (MotherLoadApp.ground[arrX-1][arrY].isActive()) {
+                    if(((int) Math.floor(tempX / 64)) != arrX){
+                        groundLeft = true;
+                    }
+                }
+                //right
+                if (MotherLoadApp.ground[arrX+1][arrY].isActive()) {
+                    if(((int) Math.floor((tempX + imageWidth) / 64)) != arrX){
+                        groundRight = true;
+                    }
+                }
+            }
+            //Colliding Up
+            if (arrY > 0) {
+                if (MotherLoadApp.ground[arrX][arrY-1].isActive()) {
+                    
+                }
+            }
         }
-        isDigging = false;
+        isPointDown = false;
+
     }
 
     public void hitGround() {
