@@ -116,7 +116,7 @@ public class MotherLoadApp extends GameApplication {
                 String rOre = Integer.toString(randOre.nextInt(25)); 
                 Integer randomOre = Integer.parseInt(rOre);
                 
-                if(randomOre <= 20) {
+                if(randomOre <= 23) {
                     ground[x][y] = EntityFactory.newGround(64 * x + groundStartX, 64 * y + groundStartY, x, y);
                     getGameWorld().addEntity(ground[x][y]);
                     CtrLand[x][y] = ground[x][y].getControlUnsafe(LandControl.class);
