@@ -69,14 +69,10 @@ public class EntityFactory {
     }
     
     public static Entity newGround(double x, double y, int arrX, int arrY) {
-        GameEntity ground = new GameEntity(); //Creates a new GameEntity called "bullet"
-        ground.getTypeComponent().setValue(EntityType.GROUND); //Sets it to the "BULLET" EnitityType
-        ground.getPositionComponent().setValue(x, y); //Adds the bullet at the given coordinates.
-        ground.getMainViewComponent().setView(new EntityView(assetLoader.loadTexture("Ground1.png")), true);
-        
-        
-        //Components
-        //ground.addComponent(new CollidableComponent(true)); //Makes it so that the bullet can collide with other GameEntites
+        GameEntity ground = new GameEntity(); //Creates a new grounf GameEntity
+        ground.getTypeComponent().setValue(EntityType.GROUND); //Sets it to the GROUND EntityType
+        ground.getPositionComponent().setValue(x, y); 
+        ground.getMainViewComponent().setView(new EntityView(assetLoader.loadTexture("Ground1.png")), true); //Sets the image
         
         //Control
         ground.addControl(new LandControl(x, y, arrX, arrY));

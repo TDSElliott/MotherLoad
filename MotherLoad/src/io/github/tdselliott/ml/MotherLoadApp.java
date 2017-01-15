@@ -101,15 +101,15 @@ public class MotherLoadApp extends GameApplication {
     protected void initGame() {
 
         //Create player
-        player = EntityFactory.newPlayer(100, 100);
-        getGameWorld().addEntity(player);
-        CtrPlayer = player.getControlUnsafe(PlayerControl.class);
+        player = EntityFactory.newPlayer(100, 100); //Adds player at (100, 100)
+        getGameWorld().addEntity(player); //Adds player to the world
+        CtrPlayer = player.getControlUnsafe(PlayerControl.class); //Sets the CtrPLayer class to the PlayerControl class
 
         int groundStartX = 0;
         int groundStartY = 400;
         //Create ground
-        for (int x = 0; x < 40; x++) {
-            for (int y = 0; y < 40; y++) {
+        for (int x = 0; x < 40; x++) { //X For loop
+            for (int y = 0; y < 40; y++) { //Y For loop
                 ground[x][y] = EntityFactory.newGround(64 * x + groundStartX, 64 * y + groundStartY, x, y);
                 getGameWorld().addEntity(ground[x][y]);
                 CtrLand[x][y] = ground[x][y].getControlUnsafe(LandControl.class);
@@ -125,7 +125,7 @@ public class MotherLoadApp extends GameApplication {
 
         physicsWorld.setGravity(0, 5);
 
-        physicsWorld.addCollisionHandler(new CollisionHandler(EntityType.PLAYER, EntityType.GROUND) {
+        physicsWorld.addCollisionHandler(new CollisionHandler(EntityType.PLAYER, EntityType.GROUND) { //Collision between the player and the ground
             @Override
 
             protected void onCollision(Entity player, Entity ground) {
