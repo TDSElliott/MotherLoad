@@ -107,6 +107,11 @@ public class PlayerControl extends AbstractControl {
                 velocityX = 0;
             }
         }
+        if (groundUp) {
+            if (velocityY < 0) {
+                velocityY = 0;
+            }
+        }
 
         positionXY = positionXY.add(velocityX, velocityY);
         position.setValue(positionXY);
@@ -193,9 +198,9 @@ public class PlayerControl extends AbstractControl {
                 double tempX = xOffSet - imageWidth / 2;
                 //left
                 if (MotherLoadApp.ground[arrX - 1][arrY].isActive()) {
-                    if ((int)(Math.floor(tempX / 64)) != arrX) {
+                    if ((int) (Math.floor(tempX / 64)) != arrX) {
                         groundLeft = true;
-                        if (isPointLeft) {
+                        if (isPointLeft && groundDown) {
                             MotherLoadApp.ground[arrX - 1][arrY].removeAllComponents();
                             MotherLoadApp.ground[arrX - 1][arrY].removeFromWorld();
                         }
@@ -203,9 +208,9 @@ public class PlayerControl extends AbstractControl {
                 }
                 //right
                 if (MotherLoadApp.ground[arrX + 1][arrY].isActive()) {
-                    if ((int)(Math.floor((tempX + imageWidth) / 64)) != arrX) {
+                    if ((int) (Math.floor((tempX + imageWidth) / 64)) != arrX) {
                         groundRight = true;
-                        if (isPointRight) {
+                        if (isPointRight && groundDown) {
                             MotherLoadApp.ground[arrX + 1][arrY].removeAllComponents();
                             MotherLoadApp.ground[arrX + 1][arrY].removeFromWorld();
                         }
@@ -215,7 +220,7 @@ public class PlayerControl extends AbstractControl {
             //Colliding Up
             if (arrY > 0) {
                 if (MotherLoadApp.ground[arrX][arrY - 1].isActive()) {
-
+                    groundUp = true;
                 }
             }
         }
