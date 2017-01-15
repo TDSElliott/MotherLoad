@@ -115,17 +115,17 @@ public class MotherLoadApp extends GameApplication {
         getGameWorld().addEntity(player); //Adds player to the world
         CtrPlayer = player.getControlUnsafe(PlayerControl.class); //Sets the CtrPLayer class to the PlayerControl class
 
+        //Ground start coordinates
         int groundStartX = 0;
         int groundStartY = 400;
         //Create ground
         for (int x = 0; x < ground.length; x++) { //X For loop
             for (int y = 0; y < ground[x].length; y++) { //Y For loop
 
-                Random randOre = new Random();
-                String rOre = Integer.toString(randOre.nextInt(25));
-                Integer randomOre = Integer.parseInt(rOre);
+                Random randOre = new Random(); //Creates a new random variable called randOre
+                Integer randomOre = randOre.nextInt(25); //Creates a new Integer called randomOre and sets it equal to a random value between 0 and 25
 
-                if (randomOre <= 23) {
+                if (randomOre <= 23) { //Checks if the value is less or equal to 23
                     ground[x][y] = EntityFactory.newGround(64 * x + groundStartX, 64 * y + groundStartY, x, y);
                     getGameWorld().addEntity(ground[x][y]);
                     CtrLand[x][y] = ground[x][y].getControlUnsafe(LandControl.class);
