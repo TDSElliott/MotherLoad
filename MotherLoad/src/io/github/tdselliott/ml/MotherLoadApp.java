@@ -26,6 +26,8 @@ package io.github.tdselliott.ml;
 import com.almasb.ents.Entity;
 import com.almasb.fxgl.app.ApplicationMode;
 import com.almasb.fxgl.app.GameApplication;
+import com.almasb.fxgl.entity.GameEntity;
+import com.almasb.fxgl.entity.ScrollingBackgroundView;
 import com.almasb.fxgl.input.ActionType;
 import com.almasb.fxgl.input.Input;
 import com.almasb.fxgl.input.InputMapping;
@@ -39,10 +41,12 @@ import io.github.tdselliott.ml.control.LandControl;
 import io.github.tdselliott.ml.control.PlayerControl;
 import java.util.Random;
 import static javafx.application.Application.launch;
+import javafx.geometry.Orientation;
 import javafx.geometry.Point2D;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
 // Joke/Reference List -- To be deleted only if you wish to incure the WRATH OF GOD
 // Seriously I will kill you if you delete these - Tyler
@@ -95,7 +99,8 @@ public class MotherLoadApp extends GameApplication {
             }
         }, MouseButton.PRIMARY);
         
-        input.addInputMapping(new InputMapping("Open", KeyCode.O));
+        // Opens on any key you want (right now 'O') it's shop-idea
+        input.addInputMapping(new InputMapping("Open", KeyCode.O));       
     }
 //------------------------------------------------------------------------------
 
@@ -136,6 +141,14 @@ public class MotherLoadApp extends GameApplication {
             }
         }
         LandControl.landPos = new Point2D(0,400);
+        
+        
+        // attach gameworld to object
+        getGameScene().getViewport().bindToEntity(player, 0, 0);
+        
+        // 1. load texture to be the background and specify orientation (horizontal or vertical)
+        getGameScene().addGameView(new ScrollingBackgroundView(getAssetLoader().loadTexture("Background.png", 1066, 600),
+                Orientation.HORIZONTAL));
     }
 //------------------------------------------------------------------------------
 
