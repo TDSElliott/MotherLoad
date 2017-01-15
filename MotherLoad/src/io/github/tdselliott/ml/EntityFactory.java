@@ -79,5 +79,17 @@ public class EntityFactory {
         
         return ground;
     }
+    
+    public static Entity newIron(double x, double y, int arrX, int arrY) {
+        GameEntity iron = new GameEntity(); 
+        iron.getTypeComponent().setValue(EntityType.IRON); 
+        iron.getPositionComponent().setValue(x, y); 
+        iron.getMainViewComponent().setView(new EntityView(assetLoader.loadTexture("Iron.png")), true); //Sets the image
+        
+        //Control
+        iron.addControl(new LandControl(x, y, arrX, arrY));
+        
+        return iron;
+    }
 
 }
