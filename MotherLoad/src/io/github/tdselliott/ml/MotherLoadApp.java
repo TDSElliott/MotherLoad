@@ -57,7 +57,7 @@ import javafx.scene.paint.Color;
  * @author Tyler Elliott
  * @author Mackenzie Guy
  * @author Logan Laird
- * @author Victor the Rooooski
+ * @author Victor the Rooooski <-- Nice
  */
 public class MotherLoadApp extends GameApplication {
 
