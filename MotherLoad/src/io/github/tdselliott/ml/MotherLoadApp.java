@@ -26,6 +26,8 @@ package io.github.tdselliott.ml;
 import com.almasb.ents.Entity;
 import com.almasb.fxgl.app.ApplicationMode;
 import com.almasb.fxgl.app.GameApplication;
+import com.almasb.fxgl.entity.GameEntity;
+import com.almasb.fxgl.entity.ScrollingBackgroundView;
 import com.almasb.fxgl.input.ActionType;
 import com.almasb.fxgl.input.Input;
 import com.almasb.fxgl.input.InputMapping;
@@ -39,10 +41,12 @@ import io.github.tdselliott.ml.control.LandControl;
 import io.github.tdselliott.ml.control.PlayerControl;
 import java.util.Random;
 import static javafx.application.Application.launch;
+import javafx.geometry.Orientation;
 import javafx.geometry.Point2D;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
 // Joke/Reference List -- To be deleted only if you wish to incure the WRATH OF GOD
 // Seriously I will kill you if you delete these - Tyler
@@ -95,7 +99,8 @@ public class MotherLoadApp extends GameApplication {
             }
         }, MouseButton.PRIMARY);
         
-        input.addInputMapping(new InputMapping("Open", KeyCode.O));
+        // Opens on any key you want (right now 'O') it's shop-idea
+        input.addInputMapping(new InputMapping("Open", KeyCode.O));       
     }
 //------------------------------------------------------------------------------
 
@@ -112,6 +117,16 @@ public class MotherLoadApp extends GameApplication {
         getGameWorld().addEntity(player); //Adds player to the world
         CtrPlayer = player.getControlUnsafe(PlayerControl.class); //Sets the CtrPLayer class to the PlayerControl class
 
+//        for(int x = 0; x < 40; x++) {
+//            for(int y = 0; y < 1; y++) {
+//            
+//                ground[x][y] = EntityFactory.newGround(64 * x , 64 * y + 336, x, y);
+//                getGameWorld().addEntity(ground[x][y]);
+//                CtrLand[x][y] = ground[x][y].getControlUnsafe(LandControl.class);
+//            }
+//            
+//        }
+        
         int groundStartX = 0;
         int groundStartY = 400;
         //Create ground
@@ -123,12 +138,12 @@ public class MotherLoadApp extends GameApplication {
                 Integer randomOre = Integer.parseInt(rOre);
                 
                 if(randomOre <= 23) {
-                    ground[x][y] = EntityFactory.newGround(64 * x + groundStartX, 64 * y + groundStartY, x, y);
+                    ground[x][y] = EntityFactory.newGround(64 * x, 64 * y + groundStartY, x, y);
                     getGameWorld().addEntity(ground[x][y]);
                     CtrLand[x][y] = ground[x][y].getControlUnsafe(LandControl.class);
                 }
                 else {
-                    ground[x][y] = EntityFactory.newIron(64 * x + groundStartX, 64 * y + groundStartY, x, y);
+                    ground[x][y] = EntityFactory.newIron(64 * x, 64 * y + groundStartY, x, y);
                     getGameWorld().addEntity(ground[x][y]);
                     CtrLand[x][y] = ground[x][y].getControlUnsafe(LandControl.class);
                 }
@@ -136,6 +151,14 @@ public class MotherLoadApp extends GameApplication {
             }
         }
         LandControl.landPos = new Point2D(0,400);
+        
+        
+        // attach gameworld to object
+        getGameScene().getViewport().bindToEntity(player, 0, 0);
+        
+        // 1. load texture to be the background and specify orientation (horizontal or vertical)
+        getGameScene().addGameView(new ScrollingBackgroundView(getAssetLoader().loadTexture("Background.png", 1066, 600),
+                Orientation.HORIZONTAL));
     }
 //------------------------------------------------------------------------------
 
