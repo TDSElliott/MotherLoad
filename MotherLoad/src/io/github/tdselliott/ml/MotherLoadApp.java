@@ -26,17 +26,23 @@ package io.github.tdselliott.ml;
 import com.almasb.ents.Entity;
 import com.almasb.fxgl.app.ApplicationMode;
 import com.almasb.fxgl.app.GameApplication;
+import com.almasb.fxgl.input.ActionType;
 import com.almasb.fxgl.input.Input;
+import com.almasb.fxgl.input.InputMapping;
+import com.almasb.fxgl.input.OnUserAction;
 import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.physics.CollisionHandler;
 import com.almasb.fxgl.physics.PhysicsWorld;
 import com.almasb.fxgl.settings.GameSettings;
+import com.almasb.fxgl.ui.InGameWindow;
 import io.github.tdselliott.ml.control.LandControl;
 import io.github.tdselliott.ml.control.PlayerControl;
 import java.util.Random;
 import static javafx.application.Application.launch;
 import javafx.geometry.Point2D;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
+import javafx.scene.paint.Color;
 
 // Joke/Reference List -- To be deleted only if you wish to incure the WRATH OF GOD
 // Seriously I will kill you if you delete these - Tyler
@@ -51,7 +57,7 @@ import javafx.scene.input.MouseButton;
  * @author Tyler Elliott
  * @author Mackenzie Guy
  * @author Logan Laird
- * @author Victor Russan
+ * @author Victor the Rooooski
  */
 public class MotherLoadApp extends GameApplication {
 
@@ -60,6 +66,8 @@ public class MotherLoadApp extends GameApplication {
 
     public static Entity[][] ground = new Entity[50][50];
     private LandControl[][] CtrLand = new LandControl[50][50];
+    
+//------------------------------------------------------------------------------
     
     @Override
     protected void initSettings(GameSettings gs) {
@@ -75,7 +83,7 @@ public class MotherLoadApp extends GameApplication {
         gs.setApplicationMode(ApplicationMode.DEVELOPER); // Dev, Debug, or Release
     }
 //------------------------------------------------------------------------------
-
+    
     @Override
     protected void initInput() {
         Input input = getInput(); // get input service
@@ -86,6 +94,8 @@ public class MotherLoadApp extends GameApplication {
                 CtrPlayer.moveToMouse(input.getMousePositionWorld());
             }
         }, MouseButton.PRIMARY);
+        
+        input.addInputMapping(new InputMapping("Open", KeyCode.O));
     }
 //------------------------------------------------------------------------------
 
@@ -183,6 +193,20 @@ public class MotherLoadApp extends GameApplication {
     
     public static Entity[][] getGround(){
         return ground;
+    }
+    
+    @OnUserAction(name = "Open", type = ActionType.ON_ACTION_BEGIN)
+    public void openWindow() {
+        // Create in-game window
+        InGameWindow window = new InGameWindow("Feul Shop");
+        
+        // Set properties
+        window.setPrefSize(300, 200);
+        window.setPosition(400, 300);
+        window.setBackgroundColor(Color.ORANGE);
+        
+        // Attach to the game scene as a UI node
+        getGameScene().addUINode(window);
     }
 }
 ////////////////////////////////////////////////////////////////////////////////
