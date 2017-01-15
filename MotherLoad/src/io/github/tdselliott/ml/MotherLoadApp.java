@@ -55,7 +55,6 @@ import javafx.scene.shape.Rectangle;
 // Dr. D. Lerious
 // Mr F
 // more to follow...
-
 /**
  *
  * @author Tyler Elliott
@@ -69,10 +68,9 @@ public class MotherLoadApp extends GameApplication {
     private PlayerControl CtrPlayer;
 
     public static Entity[][] ground = new Entity[50][50];
-    private LandControl[][] CtrLand = new LandControl[50][50];
-    
+    private LandControl[][] CtrLand = new LandControl[ground.length][ground[0].length];
+
 //------------------------------------------------------------------------------
-    
     @Override
     protected void initSettings(GameSettings gs) {
         // The settings code to generate the window and remove FXGL intro for dev
@@ -87,7 +85,7 @@ public class MotherLoadApp extends GameApplication {
         gs.setApplicationMode(ApplicationMode.DEVELOPER); // Dev, Debug, or Release
     }
 //------------------------------------------------------------------------------
-    
+
     @Override
     protected void initInput() {
         Input input = getInput(); // get input service
@@ -98,9 +96,9 @@ public class MotherLoadApp extends GameApplication {
                 CtrPlayer.moveToMouse(input.getMousePositionWorld());
             }
         }, MouseButton.PRIMARY);
-        
+
         // Opens on any key you want (right now 'O') it's shop-idea
-        input.addInputMapping(new InputMapping("Open", KeyCode.O));       
+        input.addInputMapping(new InputMapping("Open", KeyCode.O));
     }
 //------------------------------------------------------------------------------
 
@@ -117,48 +115,32 @@ public class MotherLoadApp extends GameApplication {
         getGameWorld().addEntity(player); //Adds player to the world
         CtrPlayer = player.getControlUnsafe(PlayerControl.class); //Sets the CtrPLayer class to the PlayerControl class
 
-//        for(int x = 0; x < 40; x++) {
-//            for(int y = 0; y < 1; y++) {
-//            
-//                ground[x][y] = EntityFactory.newGround(64 * x , 64 * y + 336, x, y);
-//                getGameWorld().addEntity(ground[x][y]);
-//                CtrLand[x][y] = ground[x][y].getControlUnsafe(LandControl.class);
-//            }
-//            
-//        }
-        
         int groundStartX = 0;
         int groundStartY = 400;
         //Create ground
-        for (int x = 0; x < 40; x++) { //X For loop
-            for (int y = 0; y < 40; y++) { //Y For loop
-                
+        for (int x = 0; x < ground.length; x++) { //X For loop
+            for (int y = 0; y < ground[x].length; y++) { //Y For loop
+
                 Random randOre = new Random();
-                String rOre = Integer.toString(randOre.nextInt(25)); 
+                String rOre = Integer.toString(randOre.nextInt(25));
                 Integer randomOre = Integer.parseInt(rOre);
-                
-                if(randomOre <= 23) {
-                    ground[x][y] = EntityFactory.newGround(64 * x, 64 * y + groundStartY, x, y);
+
+                if (randomOre <= 23) {
+                    ground[x][y] = EntityFactory.newGround(64 * x + groundStartX, 64 * y + groundStartY, x, y);
+                    getGameWorld().addEntity(ground[x][y]);
+                    CtrLand[x][y] = ground[x][y].getControlUnsafe(LandControl.class);
+                } else {
+                    ground[x][y] = EntityFactory.newIron(64 * x + groundStartX, 64 * y + groundStartY, x, y);
                     getGameWorld().addEntity(ground[x][y]);
                     CtrLand[x][y] = ground[x][y].getControlUnsafe(LandControl.class);
                 }
-                else {
-                    ground[x][y] = EntityFactory.newIron(64 * x, 64 * y + groundStartY, x, y);
-                    getGameWorld().addEntity(ground[x][y]);
-                    CtrLand[x][y] = ground[x][y].getControlUnsafe(LandControl.class);
-                }
-               
             }
         }
-        LandControl.landPos = new Point2D(0,400);
-        
-        
-        // attach gameworld to object
-        getGameScene().getViewport().bindToEntity(player, 0, 0);
-        
-        // 1. load texture to be the background and specify orientation (horizontal or vertical)
-        getGameScene().addGameView(new ScrollingBackgroundView(getAssetLoader().loadTexture("Background.png", 1066, 600),
-                Orientation.HORIZONTAL));
+        LandControl.landPos = new Point2D(0, 400);
+
+        // 1. load texture to be the background and specify orientation (horizontal or vertical) 
+//        getGameScene().addGameView(new ScrollingBackgroundView(getAssetLoader().loadTexture("Background.png", 1066, 600),
+//                Orientation.HORIZONTAL));
     }
 //------------------------------------------------------------------------------
 
@@ -168,15 +150,15 @@ public class MotherLoadApp extends GameApplication {
 
         physicsWorld.setGravity(0, 5);
 
-        physicsWorld.addCollisionHandler(new CollisionHandler(EntityType.PLAYER, EntityType.GROUND) { //Collision between the player and the ground
-            @Override
-
-            protected void onCollision(Entity player, Entity ground) {
+//        physicsWorld.addCollisionHandler(new CollisionHandler(EntityType.PLAYER, EntityType.GROUND) { //Collision between the player and the ground
+//            @Override
+//
+//            protected void onCollision(Entity player, Entity ground) {
 //                CtrPlayer.hitGround();
 //                LandControl ctrTemp = (LandControl)ground.getControls().get(0);
 //                System.out.println("x = " + ctrTemp.arrayXValue + "y = " + ctrTemp.arrayYValue);
-            }
-        });
+//            }
+//        });
     }
 //------------------------------------------------------------------------------
 
@@ -195,7 +177,7 @@ public class MotherLoadApp extends GameApplication {
 
     @Override
     protected void onUpdate(double d) {
-
+        setCamera();
     }
 //------------------------------------------------------------------------------
 
@@ -209,25 +191,30 @@ public class MotherLoadApp extends GameApplication {
         launch(args);
     }
 //------------------------------------------------------------------------------
-    
-    public void moveLand(double x, double y){
-        
+
+    public void moveLand(double x, double y) {
+
     }
-    
-    public static Entity[][] getGround(){
+
+    public static Entity[][] getGround() {
         return ground;
     }
-    
+
+    public void setCamera() {
+        // attach gameworld to object
+        getGameScene().getViewport().bindToEntity(player, 100, 400);
+    }
+
     @OnUserAction(name = "Open", type = ActionType.ON_ACTION_BEGIN)
     public void openWindow() {
         // Create in-game window
         InGameWindow window = new InGameWindow("Feul Shop");
-        
+
         // Set properties
         window.setPrefSize(300, 200);
         window.setPosition(400, 300);
         window.setBackgroundColor(Color.ORANGE);
-        
+
         // Attach to the game scene as a UI node
         getGameScene().addUINode(window);
     }

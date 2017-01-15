@@ -36,7 +36,6 @@ import javafx.geometry.Point2D;
 public class PlayerControl extends AbstractControl {
 
     //Creates all the reqired variables
-    
     protected PositionComponent position;
 
     private Point2D positionXY;
@@ -45,7 +44,6 @@ public class PlayerControl extends AbstractControl {
     private double accelerationX = .06;
     private double accelerationY = .12;
 
-    private Point2D imageOffSet = new Point2D(25, 25);
     private int imageWidth = 60;
     private int imageHight = 60;
 
@@ -56,9 +54,11 @@ public class PlayerControl extends AbstractControl {
     private double velocityDecay = .1;
 
     private boolean isInMenu = false;
-    private boolean isPointDown = false;
 
-    boolean wasOnGround = false;
+    private boolean isPointDown = false;
+    private boolean isPointUp = false;
+    private boolean isPointLeft = false;
+    private boolean isPointRight = false;
 
     boolean hKeyDown = false;
 
@@ -77,14 +77,13 @@ public class PlayerControl extends AbstractControl {
 
     @Override
     public void onAdded(Entity entity) {
-        position = entity.getComponentUnsafe(PositionComponent.class); 
+        position = entity.getComponentUnsafe(PositionComponent.class);
     }
 
     @Override
     public void onUpdate(Entity entity, double d) {
-        
         //Does the following methods on every update
-        updatePosition(); 
+        updatePosition();
         velocityDecay();
         isColliding();
     }
@@ -93,7 +92,7 @@ public class PlayerControl extends AbstractControl {
 
         velocityY += gravity; //Adds the gravity value to the velocityY variable
 
-        if (groundDown) { 
+        if (groundDown) {
             if (velocityY > 0) {
                 velocityY = 0;
             }
@@ -139,10 +138,20 @@ public class PlayerControl extends AbstractControl {
                 velocityY += Math.sin(angleTemp) * accelerationY;
             }
 
-            System.out.println(angleTemp > Math.PI / 3 && angleTemp < 2 * Math.PI / 3);
-            if (angleTemp > Math.PI / 3 && angleTemp < 2 * Math.PI / 3) {
+            if (angleTemp > Math.PI / 4 && angleTemp < 3 * Math.PI / 4) {
                 isPointDown = true;
+                System.out.println("down");
+            } else if (angleTemp > 5 * Math.PI / 4 && angleTemp < 7 * Math.PI / 4) {
+                isPointUp = true;
+                System.out.println("up");
+            } else if (angleTemp > 3 * Math.PI / 4 && angleTemp < 5 * Math.PI / 4) {
+                isPointRight = true;
+                System.out.println("right");
+            } else {
+                isPointLeft = true;
+                System.out.println("left");
             }
+
         }
     }
 
@@ -169,12 +178,11 @@ public class PlayerControl extends AbstractControl {
         int arrX = (int) Math.floor(xOffSet / 64);
         int arrY = (int) Math.floor(yOffSet / 64);
 
-
         if (arrX >= 0 && arrY >= -1) {
             //Colliding down
             if (MotherLoadApp.ground[arrX][arrY + 1].isActive()) {
                 groundDown = true;
-                if (isPointDown && velocityX <= 0) {
+                if (isPointDown) {
                     MotherLoadApp.ground[arrX][arrY + 1].removeAllComponents();
                     MotherLoadApp.ground[arrX][arrY + 1].removeFromWorld();
                 }
@@ -184,51 +192,42 @@ public class PlayerControl extends AbstractControl {
             if (arrY >= 0 && arrX > 0) {
                 double tempX = xOffSet - imageWidth / 2;
                 //left
-                if (MotherLoadApp.ground[arrX-1][arrY].isActive()) {
-                    if(((int) Math.floor(tempX / 64)) != arrX){
+                if (MotherLoadApp.ground[arrX - 1][arrY].isActive()) {
+                    if ((int)(Math.floor(tempX / 64)) != arrX) {
                         groundLeft = true;
+                        if (isPointLeft) {
+                            MotherLoadApp.ground[arrX - 1][arrY].removeAllComponents();
+                            MotherLoadApp.ground[arrX - 1][arrY].removeFromWorld();
+                        }
                     }
                 }
                 //right
-                if (MotherLoadApp.ground[arrX+1][arrY].isActive()) {
-                    if(((int) Math.floor((tempX + imageWidth) / 64)) != arrX){
+                if (MotherLoadApp.ground[arrX + 1][arrY].isActive()) {
+                    if ((int)(Math.floor((tempX + imageWidth) / 64)) != arrX) {
                         groundRight = true;
+                        if (isPointRight) {
+                            MotherLoadApp.ground[arrX + 1][arrY].removeAllComponents();
+                            MotherLoadApp.ground[arrX + 1][arrY].removeFromWorld();
+                        }
                     }
                 }
             }
             //Colliding Up
             if (arrY > 0) {
-                if (MotherLoadApp.ground[arrX][arrY-1].isActive()) {
-                    
+                if (MotherLoadApp.ground[arrX][arrY - 1].isActive()) {
+
                 }
             }
         }
         isPointDown = false;
+        isPointUp = false;
+        isPointLeft = false;
+        isPointRight = false;
 
-    }
-
-    public void hitGround() {
-        positionXY = positionXY.add(-velocityX, 0);
-        positionXY = positionXY.add(0, -velocityY);
-        velocityX = 0;
-        velocityY = 0;
-        wasOnGround = true;
     }
 
     public Point2D rtnPosition() {
         return positionXY;
     }
 
-    public void triggerGround(int x) {
-        switch (x) {
-            case 1:
-                groundDown = true;
-            case 2:
-                groundUp = true;
-            case 3:
-                groundLeft = true;
-            case 4:
-                groundRight = true;
-        }
-    }
 }
