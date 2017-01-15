@@ -36,6 +36,7 @@ import com.almasb.fxgl.texture.Texture;
 import io.github.tdselliott.ml.control.LandControl;
 import io.github.tdselliott.ml.control.PlayerControl;
 import java.util.ArrayList;
+import java.util.Random;
 import static javafx.application.Application.launch;
 import javafx.geometry.Point2D;
 import javafx.scene.input.KeyCode;
@@ -110,9 +111,22 @@ public class MotherLoadApp extends GameApplication {
         //Create ground
         for (int x = 0; x < 40; x++) { //X For loop
             for (int y = 0; y < 40; y++) { //Y For loop
-                ground[x][y] = EntityFactory.newGround(64 * x + groundStartX, 64 * y + groundStartY, x, y);
-                getGameWorld().addEntity(ground[x][y]);
-                CtrLand[x][y] = ground[x][y].getControlUnsafe(LandControl.class);
+                
+                Random randOre = new Random();
+                String rOre = Integer.toString(randOre.nextInt(25)); 
+                Integer randomOre = Integer.parseInt(rOre);
+                
+                if(randomOre <= 20) {
+                    ground[x][y] = EntityFactory.newGround(64 * x + groundStartX, 64 * y + groundStartY, x, y);
+                    getGameWorld().addEntity(ground[x][y]);
+                    CtrLand[x][y] = ground[x][y].getControlUnsafe(LandControl.class);
+                }
+                else {
+                    ground[x][y] = EntityFactory.newIron(64 * x + groundStartX, 64 * y + groundStartY, x, y);
+                    getGameWorld().addEntity(ground[x][y]);
+                    CtrLand[x][y] = ground[x][y].getControlUnsafe(LandControl.class);
+                }
+               
             }
         }
         LandControl.landPos = new Point2D(0,400);
