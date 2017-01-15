@@ -150,10 +150,10 @@ public class PlayerControl extends AbstractControl {
                 isPointUp = true;
                 System.out.println("up");
             } else if (angleTemp > 3 * Math.PI / 4 && angleTemp < 5 * Math.PI / 4) {
-                isPointRight = true;
+                isPointLeft = true;
                 System.out.println("right");
             } else {
-                isPointLeft = true;
+                isPointRight = true;
                 System.out.println("left");
             }
 
@@ -209,6 +209,7 @@ public class PlayerControl extends AbstractControl {
                 //right
                 if (MotherLoadApp.ground[arrX + 1][arrY].isActive()) {
                     if ((int) (Math.floor((tempX + imageWidth) / 64)) != arrX) {
+
                         groundRight = true;
                         if (isPointRight && groundDown) {
                             MotherLoadApp.ground[arrX + 1][arrY].removeAllComponents();
@@ -219,8 +220,9 @@ public class PlayerControl extends AbstractControl {
             }
             //Colliding Up
             if (arrY > 0) {
-                if (MotherLoadApp.ground[arrX][arrY - 1].isActive()) {
-                    groundUp = true;
+                int tmpArrY = (int) Math.floor((yOffSet + imageHight) / 64);
+                if (MotherLoadApp.ground[arrX][tmpArrY - 1].isActive()) {
+                        groundUp = true;
                 }
             }
         }

@@ -202,7 +202,7 @@ public class MotherLoadApp extends GameApplication {
 
     public void setCamera() {
         // attach gameworld to object
-        getGameScene().getViewport().bindToEntity(player, 100, 400);
+        getGameScene().getViewport().bindToEntity(player, 400, 350);
     }
 
     @OnUserAction(name = "Open", type = ActionType.ON_ACTION_BEGIN)
