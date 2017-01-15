@@ -35,6 +35,8 @@ import javafx.geometry.Point2D;
  */
 public class PlayerControl extends AbstractControl {
 
+    //Creates all the reqired variables
+    
     protected PositionComponent position;
 
     private Point2D positionXY;
@@ -70,26 +72,28 @@ public class PlayerControl extends AbstractControl {
     }
 
     public PlayerControl(double x, double y) {
-        positionXY = new Point2D(x, y);
+        positionXY = new Point2D(x, y); //Sets the positionXY variable equal to the Point2D with the given coordinates
     }
 
     @Override
     public void onAdded(Entity entity) {
-        position = entity.getComponentUnsafe(PositionComponent.class);
+        position = entity.getComponentUnsafe(PositionComponent.class); 
     }
 
     @Override
     public void onUpdate(Entity entity, double d) {
-        updatePosition();
+        
+        //Does the following methods on every update
+        updatePosition(); 
         velocityDecay();
         isColliding();
     }
 
     private void updatePosition() {
 
-        velocityY += gravity;
+        velocityY += gravity; //Adds the gravity value to the velocityY variable
 
-        if (groundDown) {
+        if (groundDown) { 
             if (velocityY > 0) {
                 velocityY = 0;
             }

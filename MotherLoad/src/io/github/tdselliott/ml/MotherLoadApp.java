@@ -36,6 +36,7 @@ import com.almasb.fxgl.texture.Texture;
 import io.github.tdselliott.ml.control.LandControl;
 import io.github.tdselliott.ml.control.PlayerControl;
 import java.util.ArrayList;
+import java.util.Random;
 import static javafx.application.Application.launch;
 import javafx.geometry.Point2D;
 import javafx.scene.input.KeyCode;
@@ -101,18 +102,31 @@ public class MotherLoadApp extends GameApplication {
     protected void initGame() {
 
         //Create player
-        player = EntityFactory.newPlayer(100, 100);
-        getGameWorld().addEntity(player);
-        CtrPlayer = player.getControlUnsafe(PlayerControl.class);
+        player = EntityFactory.newPlayer(100, 100); //Adds player at (100, 100)
+        getGameWorld().addEntity(player); //Adds player to the world
+        CtrPlayer = player.getControlUnsafe(PlayerControl.class); //Sets the CtrPLayer class to the PlayerControl class
 
         int groundStartX = 0;
         int groundStartY = 400;
         //Create ground
-        for (int x = 0; x < 40; x++) {
-            for (int y = 0; y < 40; y++) {
-                ground[x][y] = EntityFactory.newGround(64 * x + groundStartX, 64 * y + groundStartY, x, y);
-                getGameWorld().addEntity(ground[x][y]);
-                CtrLand[x][y] = ground[x][y].getControlUnsafe(LandControl.class);
+        for (int x = 0; x < 40; x++) { //X For loop
+            for (int y = 0; y < 40; y++) { //Y For loop
+                
+                Random randOre = new Random();
+                String rOre = Integer.toString(randOre.nextInt(25)); 
+                Integer randomOre = Integer.parseInt(rOre);
+                
+                if(randomOre <= 23) {
+                    ground[x][y] = EntityFactory.newGround(64 * x + groundStartX, 64 * y + groundStartY, x, y);
+                    getGameWorld().addEntity(ground[x][y]);
+                    CtrLand[x][y] = ground[x][y].getControlUnsafe(LandControl.class);
+                }
+                else {
+                    ground[x][y] = EntityFactory.newIron(64 * x + groundStartX, 64 * y + groundStartY, x, y);
+                    getGameWorld().addEntity(ground[x][y]);
+                    CtrLand[x][y] = ground[x][y].getControlUnsafe(LandControl.class);
+                }
+               
             }
         }
         LandControl.landPos = new Point2D(0,400);
@@ -125,7 +139,7 @@ public class MotherLoadApp extends GameApplication {
 
         physicsWorld.setGravity(0, 5);
 
-        physicsWorld.addCollisionHandler(new CollisionHandler(EntityType.PLAYER, EntityType.GROUND) {
+        physicsWorld.addCollisionHandler(new CollisionHandler(EntityType.PLAYER, EntityType.GROUND) { //Collision between the player and the ground
             @Override
 
             protected void onCollision(Entity player, Entity ground) {
