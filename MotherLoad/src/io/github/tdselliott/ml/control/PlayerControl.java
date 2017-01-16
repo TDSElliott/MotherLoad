@@ -190,6 +190,7 @@ public class PlayerControl extends AbstractControl {
                 if (isPointDown) {
                     MotherLoadApp.ground[arrX][arrY + 1].removeAllComponents();
                     MotherLoadApp.ground[arrX][arrY + 1].removeFromWorld();
+                    MotherLoadApp.in.add("TEst");
                 }
             }
 
@@ -203,6 +204,7 @@ public class PlayerControl extends AbstractControl {
                         if (isPointLeft && groundDown) {
                             MotherLoadApp.ground[arrX - 1][arrY].removeAllComponents();
                             MotherLoadApp.ground[arrX - 1][arrY].removeFromWorld();
+                            MotherLoadApp.in.add("TEst");
                         }
                     }
                 }
@@ -214,6 +216,8 @@ public class PlayerControl extends AbstractControl {
                         if (isPointRight && groundDown) {
                             MotherLoadApp.ground[arrX + 1][arrY].removeAllComponents();
                             MotherLoadApp.ground[arrX + 1][arrY].removeFromWorld();
+                            MotherLoadApp.in.add("TEst");
+                            
                         }
                     }
                 }

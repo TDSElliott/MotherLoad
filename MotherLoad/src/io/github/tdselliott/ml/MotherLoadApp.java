@@ -39,6 +39,7 @@ import com.almasb.fxgl.settings.GameSettings;
 import com.almasb.fxgl.ui.InGameWindow;
 import io.github.tdselliott.ml.control.LandControl;
 import io.github.tdselliott.ml.control.PlayerControl;
+import java.util.ArrayList;
 import java.util.Random;
 import static javafx.application.Application.launch;
 import javafx.geometry.Orientation;
@@ -67,8 +68,10 @@ public class MotherLoadApp extends GameApplication {
     private Entity player;
     private PlayerControl CtrPlayer;
 
-    public static Entity[][] ground = new Entity[50][50];
+    public static Entity[][] ground = new Entity[50][100];
     private LandControl[][] CtrLand = new LandControl[ground.length][ground[0].length];
+    
+    public static ArrayList<String> in = new ArrayList();
 
 //------------------------------------------------------------------------------
     @Override
@@ -141,6 +144,8 @@ public class MotherLoadApp extends GameApplication {
         // 1. load texture to be the background and specify orientation (horizontal or vertical) 
 //        getGameScene().addGameView(new ScrollingBackgroundView(getAssetLoader().loadTexture("Background.png", 1066, 600),
 //                Orientation.HORIZONTAL));
+
+        in.add("TEST");
     }
 //------------------------------------------------------------------------------
 
