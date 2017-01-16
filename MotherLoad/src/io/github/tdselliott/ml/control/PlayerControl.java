@@ -189,18 +189,7 @@ public class PlayerControl extends AbstractControl {
                     MotherLoadApp.ground[arrX][arrY + 1].removeAllComponents();
                     MotherLoadApp.ground[arrX][arrY + 1].removeFromWorld();
                     
-                    if(MotherLoadApp.ground[arrX][arrY + 1].toString().contains("GROUND")) {
-                        MotherLoadApp.in.add("Ground");
-                        System.out.println(MotherLoadApp.in);
-                    }
-                    else if(MotherLoadApp.ground[arrX][arrY + 1].toString().contains("IRON")) {
-                        MotherLoadApp.in.add("Iron");
-                        System.out.println(MotherLoadApp.in);
-                    }
-                    else {
-                        MotherLoadApp.in.add("Other");
-                        System.out.println(MotherLoadApp.in);
-                    }
+                    oreType(MotherLoadApp.ground[arrX][arrY + 1].toString(), arrX, arrY);
                 }
             }
 
@@ -214,7 +203,8 @@ public class PlayerControl extends AbstractControl {
                         if (isPointLeft && groundDown) {
                             MotherLoadApp.ground[arrX - 1][arrY].removeAllComponents();
                             MotherLoadApp.ground[arrX - 1][arrY].removeFromWorld();
-                            MotherLoadApp.in.add("TEst");
+                            
+                            oreType(MotherLoadApp.ground[arrX][arrY + 1].toString(), arrX, arrY);
                         }
                     }
                 }
@@ -226,7 +216,8 @@ public class PlayerControl extends AbstractControl {
                         if (isPointRight && groundDown) {
                             MotherLoadApp.ground[arrX + 1][arrY].removeAllComponents();
                             MotherLoadApp.ground[arrX + 1][arrY].removeFromWorld();
-                            MotherLoadApp.in.add("TEst");
+                            
+                            oreType(MotherLoadApp.ground[arrX][arrY + 1].toString(), arrX, arrY);
                             
                         }
                     }
@@ -249,6 +240,24 @@ public class PlayerControl extends AbstractControl {
 
     public Point2D rtnPosition() {
         return positionXY;
+    }
+    
+    public void oreType(String type, int arrX, int arrY) {
+        
+        String oreType;
+        
+        if(MotherLoadApp.ground[arrX][arrY + 1].toString().contains("GROUND")) {
+            MotherLoadApp.in.add("Ground");
+            System.out.println(MotherLoadApp.in);
+        }
+        else if(MotherLoadApp.ground[arrX][arrY + 1].toString().contains("IRON")) {
+            MotherLoadApp.in.add("Iron");
+            System.out.println(MotherLoadApp.in);
+        }
+        else {
+            MotherLoadApp.in.add("Other");
+            System.out.println(MotherLoadApp.in);
+        }
     }
 
 }
