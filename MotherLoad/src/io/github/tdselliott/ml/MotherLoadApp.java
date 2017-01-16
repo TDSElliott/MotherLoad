@@ -68,7 +68,7 @@ public class MotherLoadApp extends GameApplication {
     private Entity player;
     private PlayerControl CtrPlayer;
 
-    public static Entity[][] ground = new Entity[50][100];
+    public static Entity[][] ground = new Entity[50][200];
     private LandControl[][] CtrLand = new LandControl[ground.length][ground[0].length];
 
     public static ArrayList<String> in = new ArrayList(); //Inventory ArrayList
@@ -115,7 +115,7 @@ public class MotherLoadApp extends GameApplication {
     protected void initGame() {
 
         //Create player
-        player = EntityFactory.newPlayer(100, 100); //Adds player at (100, 100)
+        player = EntityFactory.newPlayer(300, 100); //Adds player at (100, 100)
         getGameWorld().addEntity(player); //Adds player to the world
         CtrPlayer = player.getControlUnsafe(PlayerControl.class); //Sets the CtrPLayer class to the PlayerControl class
 
@@ -126,61 +126,41 @@ public class MotherLoadApp extends GameApplication {
         for (int x = 0; x < ground.length; x++) { //X For loop
             for (int y = 0; y < ground[x].length; y++) { //Y For loop
                 int TierSize = 3;
-                for (int z = 1; z < TierSize; z++) {
-                    if (getDirtType(z, x) > 0) {
+                boolean hasPickedGround = false;
+                for (int z = 1; z < TierSize + 1; z++) {
+                    System.out.println(getDirtType(z, x));
+                    if (getDirtType(z, y) > Math.random() && !hasPickedGround) {
+                        System.out.print("ye boi");
                         ground[x][y] = EntityFactory.newGround(64 * x + groundStartX, 64 * y + groundStartY, x, y, z);//dirt
+                        getGameWorld().addEntity(ground[x][y]);
+                        hasPickedGround = true;
                     }
+                }
+                if (!hasPickedGround) {
                     ground[x][y] = EntityFactory.newGround(64 * x + groundStartX, 64 * y + groundStartY, x, y, 0);//dirt
                     getGameWorld().addEntity(ground[x][y]);
                 }
-
-//                Random randOre = new Random(); //Creates a new random variable called randOre
-//                Integer randomOre = randOre.nextInt(1000); //Creates a new Integer called randomOre and sets it equal to a random value between 0 and 25
-//
-//                if (randomOre <= 950) { //Checks if the value is less or equal to 23
-//                    ground[x][y] = EntityFactory.newGround(64 * x + groundStartX, 64 * y + groundStartY, x, y, 0);//dirt
-//                    getGameWorld().addEntity(ground[x][y]);
-//                    CtrLand[x][y] = ground[x][y].getControlUnsafe(LandControl.class);
-//                } else if (randomOre > 950 && randomOre < 975) {
-//                    ground[x][y] = EntityFactory.newGround(64 * x + groundStartX, 64 * y + groundStartY, x, y, 1);//iron
-//                    getGameWorld().addEntity(ground[x][y]);
-//                    CtrLand[x][y] = ground[x][y].getControlUnsafe(LandControl.class);
-//                } else if (randomOre > 975) {
-//                    ground[x][y] = EntityFactory.newGround(64 * x + groundStartX, 64 * y + groundStartY, x, y, 2);//bronze
-//                    getGameWorld().addEntity(ground[x][y]);
-//                    CtrLand[x][y] = ground[x][y].getControlUnsafe(LandControl.class);
-//                }
             }
         }
         //LandControl.landPos = new Point2D(0, 400);
 
         // 1. load texture to be the background and specify orientation (horizontal or vertical) 
-//        getGameScene().addGameView(new ScrollingBackgroundView(getAssetLoader().loadTexture("Background.png", 1066, 600),
-//                Orientation.HORIZONTAL));
+        //getGameScene().addGameView(new ScrollingBackgroundView(getAssetLoader().loadTexture("Background.png", 1066, 600),
+        //        Orientation.HORIZONTAL));
+
     }
 //------------------------------------------------------------------------------
 
     public double getDirtType(int Tier, int x) {
 
-        double chance = -.00003 * (x + 40 - (20 * Tier)) * (x - 60 - (20 * Tier));
+        double chance = -.00002 * (x + 40 - (20 * Tier)) * (x - 60 - (20 * Tier));
         return chance;
     }
 
     @Override
     protected void initPhysics() {
         PhysicsWorld physicsWorld = getPhysicsWorld();
-
         physicsWorld.setGravity(0, 5);
-
-//        physicsWorld.addCollisionHandler(new CollisionHandler(EntityType.PLAYER, EntityType.GROUND) { //Collision between the player and the ground
-//            @Override
-//
-//            protected void onCollision(Entity player, Entity ground) {
-//                CtrPlayer.hitGround();
-//                LandControl ctrTemp = (LandControl)ground.getControls().get(0);
-//                System.out.println("x = " + ctrTemp.arrayXValue + "y = " + ctrTemp.arrayYValue);
-//            }
-//        });
     }
 //------------------------------------------------------------------------------
 
@@ -213,10 +193,6 @@ public class MotherLoadApp extends GameApplication {
         launch(args);
     }
 //------------------------------------------------------------------------------
-
-    public void moveLand(double x, double y) {
-
-    }
 
     public static Entity[][] getGround() {
         return ground;
