@@ -79,9 +79,11 @@ public class EntityFactory {
                 ground.getTypeComponent().setValue(EntityType.IRON); //Sets it to the GROUND EntityType
                 ground.getMainViewComponent().setView(new EntityView(assetLoader.loadTexture("Iron.png")), true); //Sets the image   
                 break;
-            default:
-                ground.getTypeComponent().setValue(EntityType.GROUND); //Sets it to the GROUND EntityType
-                ground.getMainViewComponent().setView(new EntityView(assetLoader.loadTexture("Ground1.png")), true);
+            case "Bronze":
+                ground.getTypeComponent().setValue(EntityType.BRONZE); //Sets it to the GROUND EntityType
+                ground.getMainViewComponent().setView(new EntityView(assetLoader.loadTexture("Bronze.png")), true); //Sets the image   
+                break;
+                    
         }
 
         ground.getPositionComponent().setValue(x, y);

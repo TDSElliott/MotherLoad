@@ -246,11 +246,7 @@ public class PlayerControl extends AbstractControl {
         
         String oreType;
         
-        if(MotherLoadApp.ground[arrX][arrY + 1].toString().contains("GROUND")) {
-            MotherLoadApp.in.add("Ground");
-            System.out.println(MotherLoadApp.in);
-        }
-        else if(MotherLoadApp.ground[arrX][arrY + 1].toString().contains("IRON")) {
+        if(MotherLoadApp.ground[arrX][arrY + 1].toString().contains("IRON")) {
             MotherLoadApp.in.add("Iron");
             System.out.println(MotherLoadApp.in);
         }
