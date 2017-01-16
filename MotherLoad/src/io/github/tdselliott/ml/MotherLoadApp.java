@@ -71,7 +71,7 @@ public class MotherLoadApp extends GameApplication {
     public static Entity[][] ground = new Entity[50][100];
     private LandControl[][] CtrLand = new LandControl[ground.length][ground[0].length];
     
-    public static ArrayList<String> in = new ArrayList();
+    public static ArrayList<String> in = new ArrayList(); //Inventory ArrayList
 
 //------------------------------------------------------------------------------
     @Override
@@ -97,6 +97,7 @@ public class MotherLoadApp extends GameApplication {
             @Override
             protected void onAction() {
                 CtrPlayer.moveToMouse(input.getMousePositionWorld());
+                System.out.println(in);
             }
         }, MouseButton.PRIMARY);
 
@@ -133,7 +134,7 @@ public class MotherLoadApp extends GameApplication {
                     getGameWorld().addEntity(ground[x][y]);
                     CtrLand[x][y] = ground[x][y].getControlUnsafe(LandControl.class);
                 } else {
-                    ground[x][y] = EntityFactory.newIron(64 * x + groundStartX, 64 * y + groundStartY, x, y);
+                    ground[x][y] = EntityFactory.newOre(64 * x + groundStartX, 64 * y + groundStartY, x, y, "Iron");
                     getGameWorld().addEntity(ground[x][y]);
                     CtrLand[x][y] = ground[x][y].getControlUnsafe(LandControl.class);
                 }
@@ -144,8 +145,6 @@ public class MotherLoadApp extends GameApplication {
         // 1. load texture to be the background and specify orientation (horizontal or vertical) 
 //        getGameScene().addGameView(new ScrollingBackgroundView(getAssetLoader().loadTexture("Background.png", 1066, 600),
 //                Orientation.HORIZONTAL));
-
-        in.add("TEST");
     }
 //------------------------------------------------------------------------------
 
