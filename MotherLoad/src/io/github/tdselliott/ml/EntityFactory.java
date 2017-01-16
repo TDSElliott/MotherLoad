@@ -68,45 +68,15 @@ public class EntityFactory {
         return Player;
     }
 
-    public static Entity newGround(double x, double y, int arrX, int arrY, String Type) {
+    public static Entity newGround(double x, double y, int arrX, int arrY, int Tier) {
         GameEntity ground = new GameEntity(); //Creates a new grounf GameEntity
-        switch (Type) {
-            case "Dirt":
-                ground.getTypeComponent().setValue(EntityType.GROUND); //Sets it to the GROUND EntityType
-                ground.getMainViewComponent().setView(new EntityView(assetLoader.loadTexture("Ground1.png")), true); //Sets the image
-                break;
-            case "Iron":
-                ground.getTypeComponent().setValue(EntityType.IRON); //Sets it to the GROUND EntityType
-                ground.getMainViewComponent().setView(new EntityView(assetLoader.loadTexture("Iron.png")), true); //Sets the image   
-                break;
-            case "Bronze":
-                ground.getTypeComponent().setValue(EntityType.BRONZE); //Sets it to the GROUND EntityType
-                ground.getMainViewComponent().setView(new EntityView(assetLoader.loadTexture("Bronze.png")), true); //Sets the image   
-                break;
-            case "Silver":
-                ground.getTypeComponent().setValue(EntityType.SILVER); //Sets it to the GROUND EntityType
-                ground.getMainViewComponent().setView(new EntityView(assetLoader.loadTexture("Silver.png")), true); //Sets the image   
-                break;
-                    
-        }
-
+        ground.getTypeComponent().setValue(EntityType.GROUND); //Sets it to the GROUND EntityType
+        ground.getMainViewComponent().setView(new EntityView(assetLoader.loadTexture("Ground" + Tier + ".png")), true); //Sets the image
         ground.getPositionComponent().setValue(x, y);
 
         //Control
-        //ground.addControl(new LandControl(x, y, arrX, arrY));
+        ground.addControl(new LandControl(Tier));
 
         return ground;
     }
-
-//    public static Entity newIron(double x, double y, int arrX, int arrY) {
-//        GameEntity iron = new GameEntity(); 
-//        iron.getTypeComponent().setValue(EntityType.IRON); 
-//        iron.getPositionComponent().setValue(x, y); 
-//        iron.getMainViewComponent().setView(new EntityView(assetLoader.loadTexture("Iron.png")), true); //Sets the image
-//        
-//        //Control
-//        iron.addControl(new LandControl(x, y, arrX, arrY));
-//        
-//        return iron;
-//    }
 }

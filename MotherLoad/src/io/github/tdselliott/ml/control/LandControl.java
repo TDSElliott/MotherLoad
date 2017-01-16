@@ -17,24 +17,10 @@ import javafx.geometry.Point2D;
  */
 public class LandControl extends AbstractControl {
 
-    public static Point2D landPos;
+    int Tier;
     
-    private Point2D positionXY;
-    
-    public int arrayXValue;
-    public int arrayYValue;
-    
-    public LandControl(double x, double y, int arrX, int arrY) {
-        arrayXValue = arrX;
-        arrayYValue = arrY;
-        positionXY = new Point2D(x,y);
-    }
-    
-    protected PositionComponent position;
-    
-    @Override
-    public void onAdded(Entity entity) {
-        position = entity.getComponentUnsafe(PositionComponent.class);
+    public LandControl(int x) {
+        Tier = x;
     }
     
     @Override
@@ -42,15 +28,4 @@ public class LandControl extends AbstractControl {
         
     }
     
-    public void setLocation(Point2D pos) {
-        position.setValue(pos);
-    }
-    
-    public void moveLocation(Point2D pos) {
-        position.setValue(position.getValue().add(pos));
-    }
-    
-    public void updatePlayerSide(Point2D playerPos){
-        
-    }
 }

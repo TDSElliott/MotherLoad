@@ -174,7 +174,8 @@ public class PlayerControl extends AbstractControl {
         groundLeft = false;
         groundRight = false;
 
-        Point2D landStart = LandControl.landPos;
+        //Point2D landStart = LandControl.landPos;
+        Point2D landStart = new Point2D(0,400);
         double xOffSet = -landStart.getX() + positionXY.getX() + imageWidth / 2;
         double yOffSet = -landStart.getY() + positionXY.getY();
         int arrX = (int) Math.floor(xOffSet / 64);
