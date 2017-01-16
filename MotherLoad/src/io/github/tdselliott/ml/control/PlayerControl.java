@@ -32,6 +32,7 @@ import javafx.geometry.Point2D;
 /**
  *
  * @author Mackenzie Guy
+ * @author The Rooski
  */
 public class PlayerControl extends AbstractControl {
 
@@ -190,11 +191,16 @@ public class PlayerControl extends AbstractControl {
                     
                     if(MotherLoadApp.ground[arrX][arrY + 1].toString().contains("GROUND")) {
                         MotherLoadApp.in.add("Ground");
+                        System.out.println(MotherLoadApp.in);
+                    }
+                    else if(MotherLoadApp.ground[arrX][arrY + 1].toString().contains("IRON")) {
+                        MotherLoadApp.in.add("Iron");
+                        System.out.println(MotherLoadApp.in);
                     }
                     else {
                         MotherLoadApp.in.add("Other");
+                        System.out.println(MotherLoadApp.in);
                     }
-                    
                 }
             }
 
