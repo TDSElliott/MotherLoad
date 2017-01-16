@@ -35,8 +35,11 @@ import com.almasb.fxgl.input.OnUserAction;
 import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.physics.CollisionHandler;
 import com.almasb.fxgl.physics.PhysicsWorld;
+import com.almasb.fxgl.scene.SceneFactory;
+import com.almasb.fxgl.scene.menu.MenuStyle;
 import com.almasb.fxgl.settings.GameSettings;
 import com.almasb.fxgl.ui.InGameWindow;
+import com.almasb.fxgl.ui.InGameWindow.WindowDecor;
 import io.github.tdselliott.ml.control.LandControl;
 import io.github.tdselliott.ml.control.PlayerControl;
 import java.util.ArrayList;
@@ -83,6 +86,7 @@ public class MotherLoadApp extends GameApplication {
         gs.setVersion("0.01 [ALPHA]");
         gs.setIntroEnabled(false); // FXGL intro disabled (there is another mandatory load screen)
         gs.setMenuEnabled(false); // Disables initial menu
+        gs.setMenuStyle(MenuStyle.WARCRAFT3);
         gs.setProfilingEnabled(true); // Profiing enabled/disabled (dev/release)
         gs.setCloseConfirmation(false); // Close warning enabled/disabled
         gs.setApplicationMode(ApplicationMode.DEVELOPER); // Dev, Debug, or Release
@@ -205,14 +209,15 @@ public class MotherLoadApp extends GameApplication {
 
     @OnUserAction(name = "Open", type = ActionType.ON_ACTION_BEGIN)
     public void openWindow() {
+        
         // Create in-game window
-        InGameWindow window = new InGameWindow("Feul Shop");
+        InGameWindow window = new InGameWindow("Feul Shop", WindowDecor.CLOSE);
 
         // Set properties
         window.setPrefSize(300, 200);
         window.setPosition(400, 300);
         window.setBackgroundColor(Color.ORANGE);
-
+        
         // Attach to the game scene as a UI node
         getGameScene().addUINode(window);
     }
