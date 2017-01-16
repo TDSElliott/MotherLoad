@@ -187,7 +187,14 @@ public class PlayerControl extends AbstractControl {
                     System.out.println(MotherLoadApp.ground[arrX][arrY + 1].toString());
                     MotherLoadApp.ground[arrX][arrY + 1].removeAllComponents();
                     MotherLoadApp.ground[arrX][arrY + 1].removeFromWorld();
-                    MotherLoadApp.in.add("TEst");
+                    
+                    if(MotherLoadApp.ground[arrX][arrY + 1].toString().contains("GROUND")) {
+                        MotherLoadApp.in.add("Ground");
+                    }
+                    else {
+                        MotherLoadApp.in.add("Other");
+                    }
+                    
                 }
             }
 

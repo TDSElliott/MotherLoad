@@ -97,7 +97,7 @@ public class MotherLoadApp extends GameApplication {
             @Override
             protected void onAction() {
                 CtrPlayer.moveToMouse(input.getMousePositionWorld());
-                //System.out.println(in);
+                System.out.println(in);
             }
         }, MouseButton.PRIMARY);
         
