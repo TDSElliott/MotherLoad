@@ -40,6 +40,8 @@ public class PlayerControl extends AbstractControl {
     protected PositionComponent position;
 
     private Point2D positionXY;
+    private Point2D mouseXY;
+    private Point2D simMouseXY;
     private double velocityX = 0;
     private double velocityY = 0;
     private double accelerationX = .06;
@@ -55,6 +57,7 @@ public class PlayerControl extends AbstractControl {
     private double velocityDecay = .1;
 
     private boolean isInMenu = false;
+    private boolean mouseHeld = false;
 
     private boolean isPointDown = false;
     private boolean isPointUp = false;
@@ -87,6 +90,7 @@ public class PlayerControl extends AbstractControl {
         updatePosition();
         velocityDecay();
         isColliding();
+
     }
 
     private void updatePosition() {
@@ -132,10 +136,23 @@ public class PlayerControl extends AbstractControl {
         hKeyDown = false;
     }
 
+    public void mouseDown(Point2D mouse) {
+        mouseXY = mouse;
+        mouseHeld = true;
+    }
+
     public void moveToMouse(Point2D mouse) {
+        System.out.println(mouse == mouseXY);
+        if(mouse == mouseXY){
+            simMouseXY.add(velocityX, velocityY);
+        } else {
+            simMouseXY = mouse;
+        }
+        
+        mouseHeld = true;
         if (!isInMenu) {
             hKeyDown = true;
-            double angleTemp = getAngle(positionXY.add(imageHight / 2, imageWidth / 2), mouse);
+            double angleTemp = getAngle(positionXY.add(imageHight / 2, imageWidth / 2), simMouseXY);
 
             if (Math.abs(velocityX) < velocityCapX) {
                 velocityX += Math.cos(angleTemp) * accelerationX;
@@ -153,7 +170,7 @@ public class PlayerControl extends AbstractControl {
             } else {
                 isPointRight = true;
             }
-
+            mouseXY = mouse;
         }
     }
 
@@ -175,7 +192,7 @@ public class PlayerControl extends AbstractControl {
         groundRight = false;
 
         //Point2D landStart = LandControl.landPos;
-        Point2D landStart = new Point2D(0,400);
+        Point2D landStart = new Point2D(0, 400);
         double xOffSet = -landStart.getX() + positionXY.getX() + imageWidth / 2;
         double yOffSet = -landStart.getY() + positionXY.getY();
         int arrX = (int) Math.floor(xOffSet / 64);
@@ -189,7 +206,7 @@ public class PlayerControl extends AbstractControl {
                     System.out.println(MotherLoadApp.ground[arrX][arrY + 1].toString());
                     MotherLoadApp.ground[arrX][arrY + 1].removeAllComponents();
                     MotherLoadApp.ground[arrX][arrY + 1].removeFromWorld();
-                    
+
                     oreType(MotherLoadApp.ground[arrX][arrY + 1].toString(), arrX, arrY);
                 }
             }
@@ -204,7 +221,7 @@ public class PlayerControl extends AbstractControl {
                         if (isPointLeft && groundDown) {
                             MotherLoadApp.ground[arrX - 1][arrY].removeAllComponents();
                             MotherLoadApp.ground[arrX - 1][arrY].removeFromWorld();
-                            
+
                             oreType(MotherLoadApp.ground[arrX][arrY + 1].toString(), arrX, arrY);
                         }
                     }
@@ -217,9 +234,9 @@ public class PlayerControl extends AbstractControl {
                         if (isPointRight && groundDown) {
                             MotherLoadApp.ground[arrX + 1][arrY].removeAllComponents();
                             MotherLoadApp.ground[arrX + 1][arrY].removeFromWorld();
-                            
+
                             oreType(MotherLoadApp.ground[arrX][arrY + 1].toString(), arrX, arrY);
-                            
+
                         }
                     }
                 }
@@ -228,7 +245,7 @@ public class PlayerControl extends AbstractControl {
             if (arrY > 0) {
                 int tmpArrY = (int) Math.floor((yOffSet + imageHight) / 64);
                 if (MotherLoadApp.ground[arrX][tmpArrY - 1].isActive()) {
-                        groundUp = true;
+                    groundUp = true;
                 }
             }
         }
@@ -242,16 +259,15 @@ public class PlayerControl extends AbstractControl {
     public Point2D rtnPosition() {
         return positionXY;
     }
-    
+
     public void oreType(String type, int arrX, int arrY) {
-        
+
         String oreType;
-        
-        if(MotherLoadApp.ground[arrX][arrY + 1].toString().contains("IRON")) {
+
+        if (MotherLoadApp.ground[arrX][arrY + 1].toString().contains("IRON")) {
             MotherLoadApp.in.add("Iron");
             System.out.println(MotherLoadApp.in);
-        }
-        else {
+        } else {
             MotherLoadApp.in.add("Other");
             System.out.println(MotherLoadApp.in);
         }
