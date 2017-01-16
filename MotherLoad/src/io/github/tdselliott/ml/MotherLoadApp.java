@@ -130,11 +130,11 @@ public class MotherLoadApp extends GameApplication {
                 Integer randomOre = randOre.nextInt(25); //Creates a new Integer called randomOre and sets it equal to a random value between 0 and 25
 
                 if (randomOre <= 23) { //Checks if the value is less or equal to 23
-                    ground[x][y] = EntityFactory.newGround(64 * x + groundStartX, 64 * y + groundStartY, x, y);
+                    ground[x][y] = EntityFactory.newGround(64 * x + groundStartX, 64 * y + groundStartY, x, y,  "Dirt");
                     getGameWorld().addEntity(ground[x][y]);
                     CtrLand[x][y] = ground[x][y].getControlUnsafe(LandControl.class);
                 } else {
-                    ground[x][y] = EntityFactory.newOre(64 * x + groundStartX, 64 * y + groundStartY, x, y, "Iron");
+                    ground[x][y] = EntityFactory.newGround(64 * x + groundStartX, 64 * y + groundStartY, x, y, "Iron");
                     getGameWorld().addEntity(ground[x][y]);
                     CtrLand[x][y] = ground[x][y].getControlUnsafe(LandControl.class);
                 }
