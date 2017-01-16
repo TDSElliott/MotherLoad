@@ -97,9 +97,10 @@ public class MotherLoadApp extends GameApplication {
             @Override
             protected void onAction() {
                 CtrPlayer.moveToMouse(input.getMousePositionWorld());
-                System.out.println(in);
+                //System.out.println(in);
             }
         }, MouseButton.PRIMARY);
+        
 
         // Opens on any key you want (right now 'O') it's shop-idea
         input.addInputMapping(new InputMapping("Open", KeyCode.O));

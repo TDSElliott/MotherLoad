@@ -87,7 +87,7 @@ public class EntityFactory {
         ground.getPositionComponent().setValue(x, y);
 
         //Control
-        ground.addControl(new LandControl(x, y, arrX, arrY));
+        //ground.addControl(new LandControl(x, y, arrX, arrY));
 
         return ground;
     }

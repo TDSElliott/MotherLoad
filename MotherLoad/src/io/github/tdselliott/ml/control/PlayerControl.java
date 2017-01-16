@@ -145,16 +145,12 @@ public class PlayerControl extends AbstractControl {
 
             if (angleTemp > Math.PI / 4 && angleTemp < 3 * Math.PI / 4) {
                 isPointDown = true;
-                System.out.println("down");
             } else if (angleTemp > 5 * Math.PI / 4 && angleTemp < 7 * Math.PI / 4) {
                 isPointUp = true;
-                System.out.println("up");
             } else if (angleTemp > 3 * Math.PI / 4 && angleTemp < 5 * Math.PI / 4) {
                 isPointLeft = true;
-                System.out.println("right");
             } else {
                 isPointRight = true;
-                System.out.println("left");
             }
 
         }
@@ -188,6 +184,7 @@ public class PlayerControl extends AbstractControl {
             if (MotherLoadApp.ground[arrX][arrY + 1].isActive()) {
                 groundDown = true;
                 if (isPointDown) {
+                    System.out.println(MotherLoadApp.ground[arrX][arrY + 1].toString());
                     MotherLoadApp.ground[arrX][arrY + 1].removeAllComponents();
                     MotherLoadApp.ground[arrX][arrY + 1].removeFromWorld();
                     MotherLoadApp.in.add("TEst");
