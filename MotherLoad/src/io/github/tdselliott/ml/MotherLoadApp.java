@@ -134,7 +134,7 @@ public class MotherLoadApp extends GameApplication {
                     ground[x][y] = EntityFactory.newGround(64 * x + groundStartX, 64 * y + groundStartY, x, y,  "Dirt");
                     getGameWorld().addEntity(ground[x][y]);
                     CtrLand[x][y] = ground[x][y].getControlUnsafe(LandControl.class);
-                } else if (randomOre > 905 && randomOre < 975) {
+                } else if (randomOre > 950 && randomOre < 975) {
                     ground[x][y] = EntityFactory.newGround(64 * x + groundStartX, 64 * y + groundStartY, x, y, "Iron");
                     getGameWorld().addEntity(ground[x][y]);
                     CtrLand[x][y] = ground[x][y].getControlUnsafe(LandControl.class);
