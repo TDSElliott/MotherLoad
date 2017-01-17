@@ -262,6 +262,7 @@ public class MotherLoadApp extends GameApplication {
                         if (ground[x][y] != null) {
                             if (!ground[x][y].isActive() && !ctrLand[x][y].Mined) {
                                 ground[x][y] = EntityFactory.newGround(64 * x + groundStartX, 64 * y + groundStartY, x, y, arrTier[x][y]);
+                                ctrLand[x][y] = ground[x][y].getControlUnsafe(LandControl.class);
                                 getGameWorld().addEntity(ground[x][y]);
                             }
                         }
