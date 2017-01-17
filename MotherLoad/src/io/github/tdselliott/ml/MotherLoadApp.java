@@ -73,8 +73,8 @@ public class MotherLoadApp extends GameApplication {
     private Entity player;
     private PlayerControl CtrPlayer;
 
-    public static Entity[][] ground = new Entity[100][100];
-    public static LandControl[][] CtrLand = new LandControl[ground.length][ground[0].length];
+    public static ArrayList<ArrayList<Entity>> arrGround = new ArrayList<>();
+    public static ArrayList<ArrayList<LandControl>> arrCtrLand = new ArrayList<>();
 
     public static ArrayList<String> in = new ArrayList(); //Inventory ArrayList
 
@@ -105,7 +105,7 @@ public class MotherLoadApp extends GameApplication {
                 CtrPlayer.moveToMouse(input.getMousePositionWorld());
             }
         }, MouseButton.PRIMARY);
-        
+
         input.addAction(new UserAction("Move up") {
             @Override
             protected void onAction() {
@@ -136,39 +136,32 @@ public class MotherLoadApp extends GameApplication {
         int groundStartX = 0;
         int groundStartY = 400;
         //Create ground
-        for (int x = 0; x < ground.length; x++) { //X For loop
-            for (int y = 0; y < ground[x].length; y++) { //Y For loop
+        for (int x = 0; x < 50; x++) { //X For loop
+            arrGround.add(new ArrayList<>());//adds in a new depth level
+            arrCtrLand.add(new ArrayList<>());//adds in a new depth level for controls
+            for (int y = 0; y < 50; y++) { //Y For loop
                 int TierSize = 5; //Amount of ores in the game
-                
                 boolean hasPickedGround = false;
                 for (int z = 1; z < TierSize + 1; z++) {
-//                    System.out.println(getDirtType(z, x));
                     if (getDirtType(z, y) > Math.random() && !hasPickedGround) {
-//                        System.out.print("ye boi");
-                        ground[x][y] = EntityFactory.newGround(64 * x + groundStartX, 64 * y + groundStartY, x, y, z);//Ore
-                        CtrLand[x][y] = ground[x][y].getControlUnsafe(LandControl.class);
-                        getGameWorld().addEntity(ground[x][y]);
+                        arrGround.get(x).add(EntityFactory.newGround(64 * x + groundStartX, 64 * y + groundStartY, x, y, z));
+                        arrCtrLand.get(x).add(arrGround.get(x).get(y).getControlUnsafe(LandControl.class));
+                        getGameWorld().addEntity(arrGround.get(x).get(y));
                         hasPickedGround = true;
-                        
                     }
                 }
                 if (!hasPickedGround) {
-                    ground[x][y] = EntityFactory.newGround(64 * x + groundStartX, 64 * y + groundStartY, x, y, 0);//dirt
-                    CtrLand[x][y] = ground[x][y].getControlUnsafe(LandControl.class);
-                    getGameWorld().addEntity(ground[x][y]);
+                    arrGround.get(x).add(EntityFactory.newGround(64 * x + groundStartX, 64 * y + groundStartY, x, y, 0));
+                    arrCtrLand.get(x).add(arrGround.get(x).get(y).getControlUnsafe(LandControl.class));
+                    getGameWorld().addEntity(arrGround.get(x).get(y));
                 }
-                
-                
             }
         }
-        
-        //LandControl.landPos = new Point2D(0, 400);
 
+        
         // 1. load texture to be the background and specify orientation (horizontal or vertical) 
         //getGameScene().addGameView(new ScrollingBackgroundView(getAssetLoader().loadTexture("Background.png", 1066, 600),
         //        Orientation.HORIZONTAL));
-        
-        
         // QUICKTIME EVENTS CODE BELOW, for reference, currently timed
         // Uncomment to use as is, take away the timer to use as a once-off
 //        getMasterTimer().runAtInterval(() -> {
@@ -227,10 +220,6 @@ public class MotherLoadApp extends GameApplication {
     }
 //------------------------------------------------------------------------------
 
-    public static Entity[][] getGround() {
-        return ground;
-    }
-
     public void setCamera() {
         // attach gameworld to object
         getGameScene().getViewport().bindToEntity(player, 400, 350);
@@ -238,7 +227,7 @@ public class MotherLoadApp extends GameApplication {
 
     @OnUserAction(name = "Open Fuel Shop", type = ActionType.ON_ACTION_BEGIN)
     public void openWindow() {
-        
+
         // Create in-game window
         InGameWindow window = new InGameWindow("Feul Shop", WindowDecor.CLOSE);
 
@@ -246,14 +235,14 @@ public class MotherLoadApp extends GameApplication {
         window.setPrefSize(300, 200);
         window.setPosition(400, 300);
         window.setBackgroundColor(Color.ORANGE);
-        
+
         // Attach to the game scene as a UI node
         getGameScene().addUINode(window);
     }
-    
+
     @OnUserAction(name = "Open Sell", type = ActionType.ON_ACTION_BEGIN)
     public void openWindow2() {
-        
+
         // Create in-game window
         InGameWindow window = new InGameWindow("Sell", WindowDecor.CLOSE);
 
@@ -262,7 +251,7 @@ public class MotherLoadApp extends GameApplication {
         window.setPosition(400, 300);
         window.setBackgroundColor(Color.BLUE);
 //        window.accessibleTextProperty();
-        
+
         // Attach to the game scene as a UI node
         getGameScene().addUINode(window);
     }
