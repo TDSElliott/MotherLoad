@@ -73,8 +73,8 @@ public class MotherLoadApp extends GameApplication {
     private Entity player;
     private PlayerControl CtrPlayer;
 
-    public static ArrayList<ArrayList<Entity>> arrGround = new ArrayList<>();
-    public static ArrayList<ArrayList<LandControl>> arrCtrLand = new ArrayList<>();
+    public static Entity[][] ground = new Entity[20000][5000];
+    public static LandControl[][] ctrLand = new LandControl[20000][5000];
 
     public static ArrayList<String> in = new ArrayList(); //Inventory ArrayList
 
@@ -135,33 +135,11 @@ public class MotherLoadApp extends GameApplication {
         //Ground start coordinates
         int groundStartX = 0;
         int groundStartY = 400;
-        //Create ground
-        for (int x = 0; x < 50; x++) { //X For loop
-            arrGround.add(new ArrayList<>());//adds in a new depth level
-            arrCtrLand.add(new ArrayList<>());//adds in a new depth level for controls
-            for (int y = 0; y < 50; y++) { //Y For loop
-                int TierSize = 5; //Amount of ores in the game
-                boolean hasPickedGround = false;
-                for (int z = 1; z < TierSize + 1; z++) {
-                    if (getDirtType(z, y) > Math.random() && !hasPickedGround) {
-                        arrGround.get(x).add(EntityFactory.newGround(64 * x + groundStartX, 64 * y + groundStartY, x, y, z));
-                        arrCtrLand.get(x).add(arrGround.get(x).get(y).getControlUnsafe(LandControl.class));
-                        getGameWorld().addEntity(arrGround.get(x).get(y));
-                        hasPickedGround = true;
-                    }
-                }
-                if (!hasPickedGround) {
-                    arrGround.get(x).add(EntityFactory.newGround(64 * x + groundStartX, 64 * y + groundStartY, x, y, 0));
-                    arrCtrLand.get(x).add(arrGround.get(x).get(y).getControlUnsafe(LandControl.class));
-                    getGameWorld().addEntity(arrGround.get(x).get(y));
-                }
-            }
-        }
 
-        
         // 1. load texture to be the background and specify orientation (horizontal or vertical) 
-        //getGameScene().addGameView(new ScrollingBackgroundView(getAssetLoader().loadTexture("Background.png", 1066, 600),
-        //        Orientation.HORIZONTAL));
+//        getGameScene().addGameView(new ScrollingBackgroundView(getAssetLoader().loadTexture("Background.png", 1066, 600),
+//                Orientation.HORIZONTAL));
+        getGameScene().getViewport().bindToEntity(player, 400, 350);
         // QUICKTIME EVENTS CODE BELOW, for reference, currently timed
         // Uncomment to use as is, take away the timer to use as a once-off
 //        getMasterTimer().runAtInterval(() -> {
@@ -206,6 +184,7 @@ public class MotherLoadApp extends GameApplication {
     @Override
     protected void onUpdate(double d) {
         setCamera();
+        upDateLand();
     }
 //------------------------------------------------------------------------------
 
@@ -222,7 +201,7 @@ public class MotherLoadApp extends GameApplication {
 
     public void setCamera() {
         // attach gameworld to object
-        getGameScene().getViewport().bindToEntity(player, 400, 350);
+        //getGameScene().getViewport().bindToEntity(player, 400, 350);
     }
 
     @OnUserAction(name = "Open Fuel Shop", type = ActionType.ON_ACTION_BEGIN)
@@ -238,6 +217,38 @@ public class MotherLoadApp extends GameApplication {
 
         // Attach to the game scene as a UI node
         getGameScene().addUINode(window);
+    }
+
+    public void upDateLand() {
+        double camX = getGameScene().getViewport().getX();
+        double camY = getGameScene().getViewport().getY() - 400;
+        int posX = (int) Math.floor(camX / 64);
+        int posY = (int) Math.floor(camY / 64);
+        int groundStartX = 0;
+        int groundStartY = 400;
+
+        for (int y = posY; y < posY + 14; y++) { //X For loop
+            for (int x = posX; x < posX + 14; x++) { //Y For loop
+                int TierSize = 5; //Amount of ores in the game
+                boolean hasPickedGround = false;
+
+                if (y >= 0 && x >= 0 && ground[x][y] == null) {
+                    for (int z = 1; z < TierSize + 1; z++) {
+                        if (getDirtType(z, y) > Math.random() && !hasPickedGround) {
+                            ground[x][y] = EntityFactory.newGround(64 * x + groundStartX, 64 * y + groundStartY, x, y, z);
+                            ctrLand[x][y] = ground[x][y].getControlUnsafe(LandControl.class);
+                            getGameWorld().addEntity(ground[x][y]);
+                            hasPickedGround = true;
+                        }
+                    }
+                    if (!hasPickedGround) {
+                        ground[x][y] = EntityFactory.newGround(64 * x + groundStartX, 64 * y + groundStartY, x, y, 0);
+                        ctrLand[x][y] = ground[x][y].getControlUnsafe(LandControl.class);
+                        getGameWorld().addEntity(ground[x][y]);
+                    }
+                }
+            }
+        }
     }
 
     @OnUserAction(name = "Open Sell", type = ActionType.ON_ACTION_BEGIN)
