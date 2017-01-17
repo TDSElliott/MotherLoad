@@ -203,11 +203,12 @@ public class PlayerControl extends AbstractControl {
             if (MotherLoadApp.ground[arrX][arrY + 1].isActive()) {
                 groundDown = true;
                 if (isPointDown) {
-                    System.out.println(MotherLoadApp.ground[arrX][arrY + 1].toString());
                     MotherLoadApp.ground[arrX][arrY + 1].removeAllComponents();
                     MotherLoadApp.ground[arrX][arrY + 1].removeFromWorld();
 
-                    oreType(MotherLoadApp.ground[arrX][arrY + 1].toString(), arrX, arrY);
+                    System.out.println(MotherLoadApp.CtrLand[arrX][arrY + 1].Tier);
+                
+//                    oreType(MotherLoadApp.ground[arrX][arrY + 1].toString(), arrX, arrY);
                 }
             }
 
@@ -222,7 +223,8 @@ public class PlayerControl extends AbstractControl {
                             MotherLoadApp.ground[arrX - 1][arrY].removeAllComponents();
                             MotherLoadApp.ground[arrX - 1][arrY].removeFromWorld();
 
-                            oreType(MotherLoadApp.ground[arrX][arrY + 1].toString(), arrX, arrY);
+                            
+//                            oreType(MotherLoadApp.CtrLand[arrX][arrY + 1].toString(), arrX, arrY);
                         }
                     }
                 }
@@ -235,7 +237,8 @@ public class PlayerControl extends AbstractControl {
                             MotherLoadApp.ground[arrX + 1][arrY].removeAllComponents();
                             MotherLoadApp.ground[arrX + 1][arrY].removeFromWorld();
 
-                            oreType(MotherLoadApp.ground[arrX][arrY + 1].toString(), arrX, arrY);
+                            
+//                            oreType(MotherLoadApp.ground[arrX][arrY + 1].toString(), arrX, arrY);
 
                         }
                     }

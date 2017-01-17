@@ -17,10 +17,11 @@ import javafx.geometry.Point2D;
  */
 public class LandControl extends AbstractControl {
 
-    int Tier;
+    public static int Tier;
     
     public LandControl(int x) {
         Tier = x;
+        System.out.println(Tier);
     }
     
     @Override

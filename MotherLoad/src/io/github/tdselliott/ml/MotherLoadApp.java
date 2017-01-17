@@ -74,7 +74,7 @@ public class MotherLoadApp extends GameApplication {
     private PlayerControl CtrPlayer;
 
     public static Entity[][] ground = new Entity[25][25];
-    private LandControl[][] CtrLand = new LandControl[ground.length][ground[0].length];
+    public static LandControl[][] CtrLand = new LandControl[ground.length][ground[0].length];
 
     public static ArrayList<String> in = new ArrayList(); //Inventory ArrayList
 
@@ -138,22 +138,29 @@ public class MotherLoadApp extends GameApplication {
         for (int x = 0; x < ground.length; x++) { //X For loop
             for (int y = 0; y < ground[x].length; y++) { //Y For loop
                 int TierSize = 3;
+                
                 boolean hasPickedGround = false;
                 for (int z = 1; z < TierSize + 1; z++) {
 //                    System.out.println(getDirtType(z, x));
                     if (getDirtType(z, y) > Math.random() && !hasPickedGround) {
 //                        System.out.print("ye boi");
                         ground[x][y] = EntityFactory.newGround(64 * x + groundStartX, 64 * y + groundStartY, x, y, z);//dirt
+                        CtrLand[x][y] = ground[x][y].getControlUnsafe(LandControl.class);
                         getGameWorld().addEntity(ground[x][y]);
                         hasPickedGround = true;
+                        
                     }
                 }
                 if (!hasPickedGround) {
                     ground[x][y] = EntityFactory.newGround(64 * x + groundStartX, 64 * y + groundStartY, x, y, 0);//dirt
+                    CtrLand[x][y] = ground[x][y].getControlUnsafe(LandControl.class);
                     getGameWorld().addEntity(ground[x][y]);
                 }
+                
+                
             }
         }
+        
         //LandControl.landPos = new Point2D(0, 400);
 
         // 1. load texture to be the background and specify orientation (horizontal or vertical) 
