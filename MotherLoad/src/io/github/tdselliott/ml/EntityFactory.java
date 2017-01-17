@@ -71,7 +71,7 @@ public class EntityFactory {
     public static Entity newGround(double x, double y, int arrX, int arrY, int Tier) {
         GameEntity ground = new GameEntity(); //Creates a new grounf GameEntity
         ground.getTypeComponent().setValue(EntityType.GROUND); //Sets it to the GROUND EntityType
-        ground.getMainViewComponent().setView(new EntityView(assetLoader.loadTexture("Ground" + Tier + ".png")), true); //Sets the image
+        ground.getMainViewComponent().setView(new EntityView(assetLoader.loadTexture("Ground" + Tier + ".png")), false); //Sets the image
         ground.getPositionComponent().setValue(x, y);
 
         //Control
