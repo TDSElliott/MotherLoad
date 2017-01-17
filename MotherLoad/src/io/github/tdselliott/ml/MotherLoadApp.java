@@ -73,7 +73,7 @@ public class MotherLoadApp extends GameApplication {
     private Entity player;
     private PlayerControl CtrPlayer;
 
-    public static Entity[][] ground = new Entity[25][25];
+    public static Entity[][] ground = new Entity[100][100];
     public static LandControl[][] CtrLand = new LandControl[ground.length][ground[0].length];
 
     public static ArrayList<String> in = new ArrayList(); //Inventory ArrayList
@@ -103,6 +103,7 @@ public class MotherLoadApp extends GameApplication {
             @Override
             protected void onAction() {
                 CtrPlayer.moveToMouse(input.getMousePositionWorld());
+                System.out.println(in);
             }
         }, MouseButton.PRIMARY);
         
@@ -137,7 +138,7 @@ public class MotherLoadApp extends GameApplication {
         //Create ground
         for (int x = 0; x < ground.length; x++) { //X For loop
             for (int y = 0; y < ground[x].length; y++) { //Y For loop
-                int TierSize = 3;
+                int TierSize = 5;
                 
                 boolean hasPickedGround = false;
                 for (int z = 1; z < TierSize + 1; z++) {
