@@ -71,7 +71,7 @@ public class MotherLoadApp extends GameApplication {
     private Entity player;
     private PlayerControl CtrPlayer;
 
-    public static Entity[][] ground = new Entity[50][200];
+    public static Entity[][] ground = new Entity[25][25];
     private LandControl[][] CtrLand = new LandControl[ground.length][ground[0].length];
 
     public static ArrayList<String> in = new ArrayList(); //Inventory ArrayList
@@ -101,9 +101,15 @@ public class MotherLoadApp extends GameApplication {
             @Override
             protected void onAction() {
                 CtrPlayer.moveToMouse(input.getMousePositionWorld());
-
             }
         }, MouseButton.PRIMARY);
+        
+        input.addAction(new UserAction("Move up") {
+            @Override
+            protected void onAction() {
+                CtrPlayer.moveToMouse(input.getMousePositionWorld());
+            }
+        }, KeyCode.W);
 
         // Opens on any key you want (right now 'O') it's shop-idea
         input.addInputMapping(new InputMapping("Open", KeyCode.O));
@@ -132,9 +138,9 @@ public class MotherLoadApp extends GameApplication {
                 int TierSize = 3;
                 boolean hasPickedGround = false;
                 for (int z = 1; z < TierSize + 1; z++) {
-                    System.out.println(getDirtType(z, x));
+//                    System.out.println(getDirtType(z, x));
                     if (getDirtType(z, y) > Math.random() && !hasPickedGround) {
-                        System.out.print("ye boi");
+//                        System.out.print("ye boi");
                         ground[x][y] = EntityFactory.newGround(64 * x + groundStartX, 64 * y + groundStartY, x, y, z);//dirt
                         getGameWorld().addEntity(ground[x][y]);
                         hasPickedGround = true;
