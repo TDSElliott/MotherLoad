@@ -100,9 +100,9 @@ public class MotherLoadApp extends GameApplication {
         gs.setHeight(700);
         gs.setTitle("MotherLoad");
         gs.setVersion("0.01 [ALPHA]");
-        gs.setIntroEnabled(true); 
-        gs.setMenuEnabled(true); 
-        gs.setMenuStyle(MenuStyle.WARCRAFT3);
+        gs.setIntroEnabled(false); 
+        gs.setMenuEnabled(false); //Change later
+        gs.setMenuStyle(MenuStyle.GTA5);
         gs.setProfilingEnabled(true); // Profiing enabled/disabled (dev/release)
         gs.setCloseConfirmation(false); // Close warning enabled/disabled
         gs.setApplicationMode(ApplicationMode.DEVELOPER); // Dev, Debug, or Release
