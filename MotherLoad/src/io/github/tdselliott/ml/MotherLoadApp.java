@@ -103,7 +103,6 @@ public class MotherLoadApp extends GameApplication {
             @Override
             protected void onAction() {
                 CtrPlayer.moveToMouse(input.getMousePositionWorld());
-                System.out.println(in);
             }
         }, MouseButton.PRIMARY);
         
@@ -138,14 +137,14 @@ public class MotherLoadApp extends GameApplication {
         //Create ground
         for (int x = 0; x < ground.length; x++) { //X For loop
             for (int y = 0; y < ground[x].length; y++) { //Y For loop
-                int TierSize = 5;
+                int TierSize = 5; //Amount of ores in the game
                 
                 boolean hasPickedGround = false;
                 for (int z = 1; z < TierSize + 1; z++) {
 //                    System.out.println(getDirtType(z, x));
                     if (getDirtType(z, y) > Math.random() && !hasPickedGround) {
 //                        System.out.print("ye boi");
-                        ground[x][y] = EntityFactory.newGround(64 * x + groundStartX, 64 * y + groundStartY, x, y, z);//dirt
+                        ground[x][y] = EntityFactory.newGround(64 * x + groundStartX, 64 * y + groundStartY, x, y, z);//Ore
                         CtrLand[x][y] = ground[x][y].getControlUnsafe(LandControl.class);
                         getGameWorld().addEntity(ground[x][y]);
                         hasPickedGround = true;

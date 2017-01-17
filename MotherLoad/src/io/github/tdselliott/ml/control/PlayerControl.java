@@ -142,7 +142,6 @@ public class PlayerControl extends AbstractControl {
     }
 
     public void moveToMouse(Point2D mouse) {
-        System.out.println(mouse == mouseXY);
         if(mouse == mouseXY){
             simMouseXY.add(velocityX, velocityY);
         } else {
@@ -203,11 +202,9 @@ public class PlayerControl extends AbstractControl {
             if (MotherLoadApp.ground[arrX][arrY + 1].isActive()) {
                 groundDown = true;
                 if (isPointDown) {
+                    oreType(arrX, arrY); //Works
                     MotherLoadApp.ground[arrX][arrY + 1].removeAllComponents();
                     MotherLoadApp.ground[arrX][arrY + 1].removeFromWorld();
-                
-                    
-                    oreType(arrX, arrY);
                 }
             }
 
@@ -219,10 +216,10 @@ public class PlayerControl extends AbstractControl {
                     if ((int) (Math.floor(tempX / 64)) != arrX) {
                         groundLeft = true;
                         if (isPointLeft && groundDown) {
+                            oreType(arrX, arrY); //Doesent work
                             MotherLoadApp.ground[arrX - 1][arrY].removeAllComponents();
                             MotherLoadApp.ground[arrX - 1][arrY].removeFromWorld();
-          
-                            oreType(arrX, arrY);
+  
                         }
                     }
                 }
@@ -232,11 +229,9 @@ public class PlayerControl extends AbstractControl {
 
                         groundRight = true;
                         if (isPointRight && groundDown) {
+                            oreType(arrX, arrY); //Doesent work
                             MotherLoadApp.ground[arrX + 1][arrY].removeAllComponents();
                             MotherLoadApp.ground[arrX + 1][arrY].removeFromWorld();
-
-                            oreType(arrX, arrY);
-
                         }
                     }
                 }
@@ -267,6 +262,15 @@ public class PlayerControl extends AbstractControl {
             System.out.println(MotherLoadApp.in);
         } else if(MotherLoadApp.CtrLand[arrX][arrY + 1].Tier == 2) {
             MotherLoadApp.in.add("Bronze");
+            System.out.println(MotherLoadApp.in);
+        } else if(MotherLoadApp.CtrLand[arrX][arrY + 1].Tier == 3) {
+            MotherLoadApp.in.add("Silver");
+            System.out.println(MotherLoadApp.in);
+        } else if(MotherLoadApp.CtrLand[arrX][arrY + 1].Tier == 4) {
+            MotherLoadApp.in.add("Gold");
+            System.out.println(MotherLoadApp.in);
+        } else if(MotherLoadApp.CtrLand[arrX][arrY + 1].Tier == 5) {
+            MotherLoadApp.in.add("Titanium");
             System.out.println(MotherLoadApp.in);
         }
     }

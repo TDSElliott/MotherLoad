@@ -21,7 +21,6 @@ public class LandControl extends AbstractControl {
     
     public LandControl(int x) {
         Tier = x;
-        System.out.println(Tier);
     }
     
     @Override
