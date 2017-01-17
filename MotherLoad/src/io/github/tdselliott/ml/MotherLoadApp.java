@@ -163,17 +163,16 @@ public class MotherLoadApp extends GameApplication {
         
         // QUICKTIME EVENTS CODE BELOW, for reference, currently timed
         // Uncomment to use as is, take away the timer to use as a once-off
-        getMasterTimer().runAtInterval(() -> {
-            // 1. get QTE service
-            QTE qte = getQTE();
-            
-            // 2. start event with duration and keys to be pressed
-            qte.start(yes -> {
-                // This is the example, 'yes' is used to determine success/failure
-                System.out.println("Successful? " + yes);
-            }, Duration.seconds(25), KeyCode.T, KeyCode.Y, KeyCode.L, KeyCode.E, KeyCode.R);
-        }, Duration.seconds(5));
-
+//        getMasterTimer().runAtInterval(() -> {
+//            // 1. get QTE service
+//            QTE qte = getQTE();
+//            
+//            // 2. start event with duration and keys to be pressed
+//            qte.start(yes -> {
+//                // This is the example, 'yes' is used to determine success/failure
+//                System.out.println("Successful? " + yes);
+//            }, Duration.seconds(25), KeyCode.T, KeyCode.Y, KeyCode.L, KeyCode.E, KeyCode.R);
+//        }, Duration.seconds(5));
     }
 //------------------------------------------------------------------------------
 
