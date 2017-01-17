@@ -199,11 +199,11 @@ public class PlayerControl extends AbstractControl {
 
         if (arrX >= 0 && arrY >= -1) {
             //Colliding down
-            if (MotherLoadApp.arrGround.get(arrX).get(arrY + 1).isActive()) {
+            if (MotherLoadApp.ground[arrX][arrY + 1].isActive()) {
                 groundDown = true;
                 if (isPointDown) {
                     oreType(arrX, arrY+1); //Works
-                    MotherLoadApp.arrGround.get(arrX).get(arrY + 1).removeFromWorld();
+                    MotherLoadApp.ground[arrX][arrY + 1].removeFromWorld();
                 }
             }
 
@@ -211,24 +211,24 @@ public class PlayerControl extends AbstractControl {
             if (arrY >= 0 && arrX > 0) {
                 double tempX = xOffSet - imageWidth / 2;
                 //left
-                if (MotherLoadApp.arrGround.get(arrX - 1).get(arrY).isActive()) {
+                if (MotherLoadApp.ground[arrX - 1][arrY].isActive()) {
                     if ((int) (Math.floor(tempX / 64)) != arrX) {
                         groundLeft = true;
                         if (isPointLeft && groundDown) {
                             oreType(arrX-1, arrY); //Doesent work
-                            MotherLoadApp.arrGround.get(arrX - 1).get(arrY).removeFromWorld();
+                            MotherLoadApp.ground[arrX - 1][arrY].removeFromWorld();
   
                         }
                     }
                 }
                 //right
-                if (MotherLoadApp.arrGround.get(arrX + 1).get(arrY).isActive()) {
+                if (MotherLoadApp.ground[arrX + 1][arrY].isActive()) {
                     if ((int) (Math.floor((tempX + imageWidth) / 64)) != arrX) {
 
                         groundRight = true;
                         if (isPointRight && groundDown) {
                             oreType(arrX+1, arrY); //Doesent work
-                            MotherLoadApp.arrGround.get(arrX + 1).get(arrY).removeFromWorld();
+                            MotherLoadApp.ground[arrX + 1][arrY].removeFromWorld();
                         }
                     }
                 }
@@ -236,7 +236,7 @@ public class PlayerControl extends AbstractControl {
             //Colliding Up
             if (arrY > 0) {
                 int tmpArrY = (int) Math.floor((yOffSet + imageHight) / 64);
-                if (MotherLoadApp.arrGround.get(arrX).get(arrY - 1).isActive()) {
+                if (MotherLoadApp.ground[arrX][arrY].isActive()) {
                     groundUp = true;
                 }
             }
@@ -254,19 +254,19 @@ public class PlayerControl extends AbstractControl {
 
     public void oreType(int arrX, int arrY) {
         
-        if (MotherLoadApp.arrCtrLand.get(arrX).get(arrY).Tier == 1) {
+        if (MotherLoadApp.ctrLand[arrX][arrY].Tier == 1) {
             MotherLoadApp.in.add("Iron");
             System.out.println(MotherLoadApp.in);
-        } else if(MotherLoadApp.arrCtrLand.get(arrX).get(arrY).Tier == 2) {
+        } else if(MotherLoadApp.ctrLand[arrX][arrY].Tier == 2) {
             MotherLoadApp.in.add("Bronze");
             System.out.println(MotherLoadApp.in);
-        } else if(MotherLoadApp.arrCtrLand.get(arrX).get(arrY).Tier == 3) {
+        } else if(MotherLoadApp.ctrLand[arrX][arrY].Tier == 3) {
             MotherLoadApp.in.add("Silver");
             System.out.println(MotherLoadApp.in);
-        } else if(MotherLoadApp.arrCtrLand.get(arrX).get(arrY).Tier == 4) {
+        } else if(MotherLoadApp.ctrLand[arrX][arrY].Tier == 4) {
             MotherLoadApp.in.add("Gold");
             System.out.println(MotherLoadApp.in);
-        } else if(MotherLoadApp.arrCtrLand.get(arrX).get(arrY).Tier == 5) {
+        } else if(MotherLoadApp.ctrLand[arrX][arrY].Tier == 5) {
             MotherLoadApp.in.add("Titanium");
             System.out.println(MotherLoadApp.in);
         }
