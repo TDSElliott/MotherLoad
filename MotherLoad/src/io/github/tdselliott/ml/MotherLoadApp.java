@@ -114,7 +114,8 @@ public class MotherLoadApp extends GameApplication {
         }, KeyCode.W);
 
         // Opens on any key you want (right now 'O') it's shop-idea
-        input.addInputMapping(new InputMapping("Open", KeyCode.O));
+        input.addInputMapping(new InputMapping("Open Fuel Shop", KeyCode.DIGIT1));
+        input.addInputMapping(new InputMapping("Open Sell", KeyCode.DIGIT2));
     }
 //------------------------------------------------------------------------------
 
@@ -235,7 +236,7 @@ public class MotherLoadApp extends GameApplication {
         getGameScene().getViewport().bindToEntity(player, 400, 350);
     }
 
-    @OnUserAction(name = "Open", type = ActionType.ON_ACTION_BEGIN)
+    @OnUserAction(name = "Open Fuel Shop", type = ActionType.ON_ACTION_BEGIN)
     public void openWindow() {
         
         // Create in-game window
@@ -245,6 +246,22 @@ public class MotherLoadApp extends GameApplication {
         window.setPrefSize(300, 200);
         window.setPosition(400, 300);
         window.setBackgroundColor(Color.ORANGE);
+        
+        // Attach to the game scene as a UI node
+        getGameScene().addUINode(window);
+    }
+    
+    @OnUserAction(name = "Open Sell", type = ActionType.ON_ACTION_BEGIN)
+    public void openWindow2() {
+        
+        // Create in-game window
+        InGameWindow window = new InGameWindow("Sell", WindowDecor.CLOSE);
+
+        // Set properties
+        window.setPrefSize(300, 200);
+        window.setPosition(400, 300);
+        window.setBackgroundColor(Color.BLUE);
+//        window.accessibleTextProperty();
         
         // Attach to the game scene as a UI node
         getGameScene().addUINode(window);
