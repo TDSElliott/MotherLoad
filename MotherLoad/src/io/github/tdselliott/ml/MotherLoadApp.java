@@ -28,6 +28,7 @@ import com.almasb.fxgl.app.ApplicationMode;
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.entity.GameEntity;
 import com.almasb.fxgl.entity.ScrollingBackgroundView;
+import com.almasb.fxgl.gameplay.qte.QTE;
 import com.almasb.fxgl.input.ActionType;
 import com.almasb.fxgl.input.Input;
 import com.almasb.fxgl.input.InputMapping;
@@ -51,6 +52,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.util.Duration;
 
 // Joke/Reference List -- To be deleted only if you wish to incure the WRATH OF GOD
 // Seriously I will kill you if you delete these - Tyler
@@ -71,7 +73,7 @@ public class MotherLoadApp extends GameApplication {
     private Entity player;
     private PlayerControl CtrPlayer;
 
-    public static Entity[][] ground = new Entity[50][200];
+    public static Entity[][] ground = new Entity[25][25];
     private LandControl[][] CtrLand = new LandControl[ground.length][ground[0].length];
 
     public static ArrayList<String> in = new ArrayList(); //Inventory ArrayList
@@ -101,9 +103,15 @@ public class MotherLoadApp extends GameApplication {
             @Override
             protected void onAction() {
                 CtrPlayer.moveToMouse(input.getMousePositionWorld());
-
             }
         }, MouseButton.PRIMARY);
+        
+        input.addAction(new UserAction("Move up") {
+            @Override
+            protected void onAction() {
+                CtrPlayer.moveToMouse(input.getMousePositionWorld());
+            }
+        }, KeyCode.W);
 
         // Opens on any key you want (right now 'O') it's shop-idea
         input.addInputMapping(new InputMapping("Open", KeyCode.O));
@@ -132,9 +140,9 @@ public class MotherLoadApp extends GameApplication {
                 int TierSize = 3;
                 boolean hasPickedGround = false;
                 for (int z = 1; z < TierSize + 1; z++) {
-                    System.out.println(getDirtType(z, x));
+//                    System.out.println(getDirtType(z, x));
                     if (getDirtType(z, y) > Math.random() && !hasPickedGround) {
-                        System.out.print("ye boi");
+//                        System.out.print("ye boi");
                         ground[x][y] = EntityFactory.newGround(64 * x + groundStartX, 64 * y + groundStartY, x, y, z);//dirt
                         getGameWorld().addEntity(ground[x][y]);
                         hasPickedGround = true;
@@ -151,7 +159,20 @@ public class MotherLoadApp extends GameApplication {
         // 1. load texture to be the background and specify orientation (horizontal or vertical) 
         //getGameScene().addGameView(new ScrollingBackgroundView(getAssetLoader().loadTexture("Background.png", 1066, 600),
         //        Orientation.HORIZONTAL));
-
+        
+        
+        // QUICKTIME EVENTS CODE BELOW, for reference, currently timed
+        // Uncomment to use as is, take away the timer to use as a once-off
+//        getMasterTimer().runAtInterval(() -> {
+//            // 1. get QTE service
+//            QTE qte = getQTE();
+//            
+//            // 2. start event with duration and keys to be pressed
+//            qte.start(yes -> {
+//                // This is the example, 'yes' is used to determine success/failure
+//                System.out.println("Successful? " + yes);
+//            }, Duration.seconds(25), KeyCode.T, KeyCode.Y, KeyCode.L, KeyCode.E, KeyCode.R);
+//        }, Duration.seconds(5));
     }
 //------------------------------------------------------------------------------
 
