@@ -42,18 +42,30 @@ import com.almasb.fxgl.scene.menu.MenuStyle;
 import com.almasb.fxgl.settings.GameSettings;
 import com.almasb.fxgl.ui.InGameWindow;
 import com.almasb.fxgl.ui.InGameWindow.WindowDecor;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 import io.github.tdselliott.ml.control.LandControl;
 import io.github.tdselliott.ml.control.PlayerControl;
 import java.util.ArrayList;
 import java.util.Random;
 import static javafx.application.Application.launch;
+import javafx.geometry.NodeOrientation;
 import javafx.geometry.Orientation;
 import javafx.geometry.Point2D;
+
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
+
+
 import javafx.util.Duration;
+
+import javafx.scene.control.Button;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
 
 // Joke/Reference List -- To be deleted only if you wish to incure the WRATH OF GOD
 // Seriously I will kill you if you delete these - Tyler
@@ -88,14 +100,16 @@ public class MotherLoadApp extends GameApplication {
         gs.setHeight(700);
         gs.setTitle("MotherLoad");
         gs.setVersion("0.01 [ALPHA]");
-        gs.setIntroEnabled(false); // FXGL intro disabled (there is another mandatory load screen)
-        gs.setMenuEnabled(false); // Disables initial menu
+        gs.setIntroEnabled(true); 
+        gs.setMenuEnabled(true); 
         gs.setMenuStyle(MenuStyle.WARCRAFT3);
         gs.setProfilingEnabled(true); // Profiing enabled/disabled (dev/release)
         gs.setCloseConfirmation(false); // Close warning enabled/disabled
         gs.setApplicationMode(ApplicationMode.DEVELOPER); // Dev, Debug, or Release
     }
 //------------------------------------------------------------------------------
+    
+    
 
     @Override
     protected void initInput() {
@@ -125,9 +139,13 @@ public class MotherLoadApp extends GameApplication {
     protected void initAssets() {
     }
 //------------------------------------------------------------------------------
+    
+    
 
     @Override
     protected void initGame() {
+        Pane t = new Pane();
+        initMainMenu(t);
 
         //Create player
         player = EntityFactory.newPlayer(2000, 100); //Adds player at (100, 100)
@@ -295,8 +313,8 @@ public class MotherLoadApp extends GameApplication {
         // Set properties
         window.setPrefSize(300, 200);
         window.setPosition(400, 300);
-        window.setBackgroundColor(Color.BLUE);
-//        window.accessibleTextProperty();
+//        window.setBackgroundColor(Color.BLUE);
+//        window.set
 
         // Attach to the game scene as a UI node
         getGameScene().addUINode(window);
