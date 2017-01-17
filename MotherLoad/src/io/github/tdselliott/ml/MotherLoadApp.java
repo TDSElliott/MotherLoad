@@ -144,8 +144,6 @@ public class MotherLoadApp extends GameApplication {
 
     @Override
     protected void initGame() {
-        Pane t = new Pane();
-        initMainMenu(t);
 
         //Create player
         player = EntityFactory.newPlayer(2000, 100); //Adds player at (100, 100)
