@@ -205,10 +205,9 @@ public class PlayerControl extends AbstractControl {
                 if (isPointDown) {
                     MotherLoadApp.ground[arrX][arrY + 1].removeAllComponents();
                     MotherLoadApp.ground[arrX][arrY + 1].removeFromWorld();
-
-                    System.out.println(MotherLoadApp.CtrLand[arrX][arrY + 1].Tier);
                 
-//                    oreType(MotherLoadApp.ground[arrX][arrY + 1].toString(), arrX, arrY);
+                    
+                    oreType(arrX, arrY);
                 }
             }
 
@@ -222,9 +221,8 @@ public class PlayerControl extends AbstractControl {
                         if (isPointLeft && groundDown) {
                             MotherLoadApp.ground[arrX - 1][arrY].removeAllComponents();
                             MotherLoadApp.ground[arrX - 1][arrY].removeFromWorld();
-
-                            
-//                            oreType(MotherLoadApp.CtrLand[arrX][arrY + 1].toString(), arrX, arrY);
+          
+                            oreType(arrX, arrY);
                         }
                     }
                 }
@@ -237,8 +235,7 @@ public class PlayerControl extends AbstractControl {
                             MotherLoadApp.ground[arrX + 1][arrY].removeAllComponents();
                             MotherLoadApp.ground[arrX + 1][arrY].removeFromWorld();
 
-                            
-//                            oreType(MotherLoadApp.ground[arrX][arrY + 1].toString(), arrX, arrY);
+                            oreType(arrX, arrY);
 
                         }
                     }
@@ -263,15 +260,13 @@ public class PlayerControl extends AbstractControl {
         return positionXY;
     }
 
-    public void oreType(String type, int arrX, int arrY) {
-
-        String oreType;
-
-        if (MotherLoadApp.ground[arrX][arrY + 1].toString().contains("IRON")) {
+    public void oreType(int arrX, int arrY) {
+        
+        if (MotherLoadApp.CtrLand[arrX][arrY + 1].Tier == 1) {
             MotherLoadApp.in.add("Iron");
             System.out.println(MotherLoadApp.in);
-        } else {
-            MotherLoadApp.in.add("Other");
+        } else if(MotherLoadApp.CtrLand[arrX][arrY + 1].Tier == 2) {
+            MotherLoadApp.in.add("Bronze");
             System.out.println(MotherLoadApp.in);
         }
     }
