@@ -50,6 +50,8 @@ import io.github.tdselliott.ml.ui.InventoryView;
 import java.util.ArrayList;
 import java.util.Random;
 import static javafx.application.Application.launch;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -71,6 +73,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 
 /**
  *
@@ -83,6 +86,7 @@ public class MotherLoadApp extends GameApplication {
 
     private Entity player;
     private PlayerControl CtrPlayer;
+    private IntegerProperty fuel, armour, credits;
 
     public static Entity[][] ground = new Entity[5000][5000];
     public static LandControl[][] ctrLand = new LandControl[5000][5000];
@@ -161,6 +165,10 @@ public class MotherLoadApp extends GameApplication {
 //                System.out.println("Successful? " + yes);
 //            }, Duration.seconds(25), KeyCode.T, KeyCode.Y, KeyCode.L, KeyCode.E, KeyCode.R);
 //        }, Duration.seconds(5));
+
+        getMasterTimer().runAtInterval(() -> { // lambda (calling a method with parameters and code seperated by ->)
+            fuel.set(fuel.get() - 10); // Set the counter down
+        }, Duration.millis(250)); // Every second (250 millis == 1/4 second)
     }
 //------------------------------------------------------------------------------
     @Override
@@ -172,6 +180,31 @@ public class MotherLoadApp extends GameApplication {
     @Override
     protected void initUI() {
         getGameScene().addUINode(new InventoryView(player, getWidth(), getHeight()));
+        
+        // The fuel counter being added to the UI
+        this.fuel = new SimpleIntegerProperty(1000);
+        Text fuelCounter = getUIFactory().newText("", Color.CADETBLUE, 20);
+        fuelCounter.setTranslateX(10);
+        fuelCounter.setTranslateY(25);
+        fuelCounter.textProperty().bind(fuel.asString("Fuel Remaining: %d"));
+        getGameScene().addUINode(fuelCounter);
+        
+        // The armour counter being added to the UI
+        this.armour = new SimpleIntegerProperty(10);
+        Text armourCounter = getUIFactory().newText("", Color.CRIMSON, 20);
+        armourCounter.setTranslateX(300);
+        armourCounter.setTranslateY(25);
+        armourCounter.textProperty().bind(armour.asString("Armour Level: %d"));
+        getGameScene().addUINode(armourCounter);
+        
+        // The credits counter being added to the UI
+        this.credits = new SimpleIntegerProperty(100);
+        Text creditsCounter = getUIFactory().newText("", Color.LIME, 20);
+        creditsCounter.setTranslateX(590);
+        creditsCounter.setTranslateY(25);
+        creditsCounter.textProperty().bind(credits.asString("Credits: %d"));
+        getGameScene().addUINode(creditsCounter);
+        
 //        Texture texture = getAssetLoader().loadTexture("Background.png");
 //
 //        //Creates a new EntityView called "bg" and sets it to the texure previously created
@@ -185,6 +218,8 @@ public class MotherLoadApp extends GameApplication {
     protected void onUpdate(double d) {
         setCamera();
         upDateLand();
+        
+        
     }
 //------------------------------------------------------------------------------
     /**
@@ -208,13 +243,18 @@ public class MotherLoadApp extends GameApplication {
         // Create in-game window
         InGameWindow window = new InGameWindow("Fuel Shop", WindowDecor.CLOSE);
         
-        Button fuel = new Button();
-        fuel.setText("Add Fuel");
-        fuel.setOnAction(new EventHandler<ActionEvent>() {
- 
+        Button btnFuel = new Button();
+        btnFuel.setText("Add Fuel");
+        
+        
+        btnFuel.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                System.out.println("Fuel refilled!");
+                if(credits.get() > 0) {
+                    System.out.println("Fuel refilled!");
+                    fuel.set(fuel.get() + 100);
+                    credits.set(credits.get() - 10);
+                }
             }
         });
         
@@ -242,7 +282,7 @@ public class MotherLoadApp extends GameApplication {
         flow.setPadding(new Insets(10, 10, 10, 10));
         flow.setStyle("-fx-background-color: DAE6F3;");
         flow.setHgap(5);
-        flow.getChildren().addAll(fuel, armour, sellOre);
+        flow.getChildren().addAll(btnFuel, armour, sellOre);
        
         
         window.setContentPane(flow);
