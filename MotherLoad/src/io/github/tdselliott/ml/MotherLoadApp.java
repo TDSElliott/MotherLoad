@@ -50,6 +50,9 @@ import io.github.tdselliott.ml.ui.InventoryView;
 import java.util.ArrayList;
 import java.util.Random;
 import static javafx.application.Application.launch;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.NodeOrientation;
 import javafx.geometry.Orientation;
 import javafx.geometry.Point2D;
@@ -63,6 +66,7 @@ import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
 import javafx.scene.control.Button;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
@@ -202,8 +206,47 @@ public class MotherLoadApp extends GameApplication {
     public void openWindow() {
 
         // Create in-game window
-        InGameWindow window = new InGameWindow("Feul Shop", WindowDecor.CLOSE);
-
+        InGameWindow window = new InGameWindow("Fuel Shop", WindowDecor.CLOSE);
+        
+        Button fuel = new Button();
+        fuel.setText("Add Fuel");
+        fuel.setOnAction(new EventHandler<ActionEvent>() {
+ 
+            @Override
+            public void handle(ActionEvent event) {
+                System.out.println("Fuel refilled!");
+            }
+        });
+        
+        Button armour = new Button();
+        armour.setText("Repair Armour");
+        armour.setOnAction(new EventHandler<ActionEvent>() {
+ 
+            @Override
+            public void handle(ActionEvent event) {
+                System.out.println("Armour repaired!");
+            }
+        });
+        
+        Button sellOre = new Button();
+        sellOre.setText("Sell your Ore");
+        sellOre.setOnAction(new EventHandler<ActionEvent>() {
+ 
+            @Override
+            public void handle(ActionEvent event) {
+                System.out.println("Ore Sold!");
+            }
+        });
+        
+        FlowPane flow = new FlowPane();
+        flow.setPadding(new Insets(10, 10, 10, 10));
+        flow.setStyle("-fx-background-color: DAE6F3;");
+        flow.setHgap(5);
+        flow.getChildren().addAll(fuel, armour, sellOre);
+       
+        
+        window.setContentPane(flow);
+        
         // Set properties
         window.setPrefSize(300, 200);
         window.setPosition(400, 300);
