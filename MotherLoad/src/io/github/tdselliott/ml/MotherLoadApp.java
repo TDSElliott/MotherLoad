@@ -67,6 +67,17 @@ import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 
+import com.almasb.fxgl.app.ApplicationMode;
+import com.almasb.fxgl.app.GameApplication;
+import com.almasb.fxgl.scene.FXGLMenu;
+import com.almasb.fxgl.scene.SceneFactory;
+import com.almasb.fxgl.scene.menu.FXGLDefaultMenu;
+import com.almasb.fxgl.scene.menu.MenuType;
+import com.almasb.fxgl.settings.GameSettings;
+import javafx.scene.Node;
+import javafx.scene.text.Text;
+import org.jetbrains.annotations.NotNull;
+
 // Joke/Reference List -- To be deleted only if you wish to incure the WRATH OF GOD
 // Seriously I will kill you if you delete these - Tyler
 // These to be inserted randomly around the code
@@ -101,14 +112,50 @@ public class MotherLoadApp extends GameApplication {
         gs.setTitle("MotherLoad");
         gs.setVersion("0.01 [ALPHA]");
         gs.setIntroEnabled(false); 
-        gs.setMenuEnabled(false); //Change later
-        gs.setMenuStyle(MenuStyle.GTA5);
+        gs.setMenuEnabled(true); //Change later
+        gs.setMenuStyle(MenuStyle.FXGL_DEFAULT);
         gs.setProfilingEnabled(true); // Profiing enabled/disabled (dev/release)
         gs.setCloseConfirmation(false); // Close warning enabled/disabled
         gs.setApplicationMode(ApplicationMode.DEVELOPER); // Dev, Debug, or Release
     }
 //------------------------------------------------------------------------------
-    
+    @Override
+    protected SceneFactory initSceneFactory() {
+        return new SceneFactory() {
+
+            // 2. override main menu and things you need
+
+            @NotNull
+            @Override
+            public FXGLMenu newMainMenu(@NotNull GameApplication app) {
+                return new FXGLDefaultMenu(app, MenuType.MAIN_MENU) {
+                    @Override
+                    protected Node createBackground(double width, double height) {
+                        return getAssetLoader().loadTexture("Menu Image.png");
+                    }
+                    
+                    
+                    
+                };
+            }
+
+            // 4. override game menu
+
+            @NotNull
+            @Override
+            public FXGLMenu newGameMenu(@NotNull GameApplication app) {
+                return new FXGLDefaultMenu(app, MenuType.GAME_MENU) {
+                    @Override
+                    protected Node createBackground(double width, double height) {
+                        return getAssetLoader().loadTexture("Menu Image.png");
+                    }
+
+                    
+                    
+                };
+            }
+        };
+    }
     
 
     @Override
