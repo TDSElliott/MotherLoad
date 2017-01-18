@@ -46,6 +46,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 import io.github.tdselliott.ml.control.LandControl;
 import io.github.tdselliott.ml.control.PlayerControl;
+import io.github.tdselliott.ml.ui.InventoryView;
 import java.util.ArrayList;
 import java.util.Random;
 import static javafx.application.Application.launch;
@@ -67,13 +68,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 
-// Joke/Reference List -- To be deleted only if you wish to incure the WRATH OF GOD
-// Seriously I will kill you if you delete these - Tyler
-// These to be inserted randomly around the code
-// 867-5309
-// Dr. D. Lerious
-// Mr F
-// more to follow...
 /**
  *
  * @author Tyler Elliott
@@ -86,9 +80,9 @@ public class MotherLoadApp extends GameApplication {
     private Entity player;
     private PlayerControl CtrPlayer;
 
-    public static Entity[][] ground = new Entity[20000][5000];
-    public static LandControl[][] ctrLand = new LandControl[20000][5000];
-    public static byte[][] arrTier = new byte[20000][5000];
+    public static Entity[][] ground = new Entity[5000][5000];
+    public static LandControl[][] ctrLand = new LandControl[5000][5000];
+    public static byte[][] arrTier = new byte[5000][5000];
     
     public static ArrayList<String> in = new ArrayList(); //Inventory ArrayList
 
@@ -108,9 +102,6 @@ public class MotherLoadApp extends GameApplication {
         gs.setApplicationMode(ApplicationMode.DEVELOPER); // Dev, Debug, or Release
     }
 //------------------------------------------------------------------------------
-    
-    
-
     @Override
     protected void initInput() {
         Input input = getInput(); // get input service
@@ -134,14 +125,10 @@ public class MotherLoadApp extends GameApplication {
         input.addInputMapping(new InputMapping("Open Sell", KeyCode.DIGIT2));
     }
 //------------------------------------------------------------------------------
-
     @Override
     protected void initAssets() {
     }
 //------------------------------------------------------------------------------
-    
-    
-
     @Override
     protected void initGame() {
 
@@ -172,22 +159,15 @@ public class MotherLoadApp extends GameApplication {
 //        }, Duration.seconds(5));
     }
 //------------------------------------------------------------------------------
-
-    public double getDirtType(int Tier, int x) {
-
-        double chance = -.00002 * (x + 40 - (20 * Tier)) * (x - 60 - (20 * Tier));
-        return chance;
-    }
-
     @Override
     protected void initPhysics() {
         PhysicsWorld physicsWorld = getPhysicsWorld();
         physicsWorld.setGravity(0, 5);
     }
 //------------------------------------------------------------------------------
-
     @Override
     protected void initUI() {
+        getGameScene().addUINode(new InventoryView(player, getWidth(), getHeight()));
 //        Texture texture = getAssetLoader().loadTexture("Background.png");
 //
 //        //Creates a new EntityView called "bg" and sets it to the texure previously created
@@ -195,17 +175,14 @@ public class MotherLoadApp extends GameApplication {
 //
 //        //Adds the "bg" entityview to the game
 //        getGameScene().addGameView(bg);
-
     }
 //------------------------------------------------------------------------------
-
     @Override
     protected void onUpdate(double d) {
         setCamera();
         upDateLand();
     }
 //------------------------------------------------------------------------------
-
     /**
      * Contains FXGL code to launch the window. Nothing else will need to be
      * added in here.
@@ -216,13 +193,11 @@ public class MotherLoadApp extends GameApplication {
         launch(args);
     }
 //------------------------------------------------------------------------------
-
     public void setCamera() {
         // attach gameworld to object
         //getGameScene().getViewport().bindToEntity(player, 400, 350);
     }
 //------------------------------------------------------------------------------
-
     @OnUserAction(name = "Open Fuel Shop", type = ActionType.ON_ACTION_BEGIN)
     public void openWindow() {
 
@@ -238,7 +213,6 @@ public class MotherLoadApp extends GameApplication {
         getGameScene().addUINode(window);
     }
 //------------------------------------------------------------------------------
-
     public void upDateLand() {
         double camX = getGameScene().getViewport().getX();
         double camY = getGameScene().getViewport().getY() - 400;
@@ -301,7 +275,6 @@ public class MotherLoadApp extends GameApplication {
         }
     }
 //------------------------------------------------------------------------------
-
     @OnUserAction(name = "Open Sell", type = ActionType.ON_ACTION_BEGIN)
     public void openWindow2() {
 
@@ -318,5 +291,10 @@ public class MotherLoadApp extends GameApplication {
         getGameScene().addUINode(window);
     }
 //------------------------------------------------------------------------------
+    public double getDirtType(int Tier, int x) {
+
+        double chance = -.00002 * (x + 40 - (20 * Tier)) * (x - 60 - (20 * Tier));
+        return chance;
+    }
 }
 ////////////////////////////////////////////////////////////////////////////////
