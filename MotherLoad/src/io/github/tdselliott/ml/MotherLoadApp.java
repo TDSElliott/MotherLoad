@@ -58,7 +58,6 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
-
 import javafx.util.Duration;
 
 import javafx.scene.control.Button;
@@ -69,11 +68,13 @@ import javafx.scene.text.Font;
 
 import com.almasb.fxgl.app.ApplicationMode;
 import com.almasb.fxgl.app.GameApplication;
+import com.almasb.fxgl.io.DataFile;
 import com.almasb.fxgl.scene.FXGLMenu;
 import com.almasb.fxgl.scene.SceneFactory;
 import com.almasb.fxgl.scene.menu.FXGLDefaultMenu;
 import com.almasb.fxgl.scene.menu.MenuType;
 import com.almasb.fxgl.settings.GameSettings;
+import java.io.Serializable;
 import javafx.scene.Node;
 import javafx.scene.text.Text;
 import org.jetbrains.annotations.NotNull;
@@ -98,9 +99,9 @@ public class MotherLoadApp extends GameApplication {
     private PlayerControl CtrPlayer;
 
     public static Entity[][] ground = new Entity[20000][5000];
-    public static LandControl[][] ctrLand = new LandControl[20000][5000];
+    //public static LandControl[][] ctrLand = new LandControl[20000][5000];
     public static byte[][] arrTier = new byte[20000][5000];
-    
+
     public static ArrayList<String> in = new ArrayList(); //Inventory ArrayList
 
 //------------------------------------------------------------------------------
@@ -111,7 +112,7 @@ public class MotherLoadApp extends GameApplication {
         gs.setHeight(700);
         gs.setTitle("MotherLoad");
         gs.setVersion("0.01 [ALPHA]");
-        gs.setIntroEnabled(false); 
+        gs.setIntroEnabled(false);
         gs.setMenuEnabled(true); //Change later
         gs.setMenuStyle(MenuStyle.FXGL_DEFAULT);
         gs.setProfilingEnabled(true); // Profiing enabled/disabled (dev/release)
@@ -119,12 +120,12 @@ public class MotherLoadApp extends GameApplication {
         gs.setApplicationMode(ApplicationMode.DEVELOPER); // Dev, Debug, or Release
     }
 //------------------------------------------------------------------------------
+
     @Override
     protected SceneFactory initSceneFactory() {
         return new SceneFactory() {
 
             // 2. override main menu and things you need
-
             @NotNull
             @Override
             public FXGLMenu newMainMenu(@NotNull GameApplication app) {
@@ -133,14 +134,11 @@ public class MotherLoadApp extends GameApplication {
                     protected Node createBackground(double width, double height) {
                         return getAssetLoader().loadTexture("Menu Image.png");
                     }
-                    
-                    
-                    
+
                 };
             }
 
             // 4. override game menu
-
             @NotNull
             @Override
             public FXGLMenu newGameMenu(@NotNull GameApplication app) {
@@ -150,13 +148,27 @@ public class MotherLoadApp extends GameApplication {
                         return getAssetLoader().loadTexture("Menu Image.png");
                     }
 
-                    
-                    
                 };
             }
         };
     }
-    
+
+    @Override
+    public DataFile saveState() {
+        // save state into `data`
+        Serializable data = arrTier;
+
+    return new DataFile(data);
+    }
+
+    @Override
+    public void loadState(DataFile dataFile) {
+        // SomeType is the actual type of the object serialized
+        // e.g. String, Bundle, HashMap, etc.
+        byte[][] data = (byte[][]) dataFile.getData();
+        data = arrTier;
+        // do something with `data`
+    }
 
     @Override
     protected void initInput() {
@@ -186,8 +198,6 @@ public class MotherLoadApp extends GameApplication {
     protected void initAssets() {
     }
 //------------------------------------------------------------------------------
-    
-    
 
     @Override
     protected void initGame() {
@@ -205,6 +215,7 @@ public class MotherLoadApp extends GameApplication {
 //        getGameScene().addGameView(new ScrollingBackgroundView(getAssetLoader().loadTexture("Background.png", 1066, 600),
 //                Orientation.HORIZONTAL));
         getGameScene().getViewport().bindToEntity(player, 400, 350);
+        //getGameScene().getViewport().setZoom(.5);
         // QUICKTIME EVENTS CODE BELOW, for reference, currently timed
         // Uncomment to use as is, take away the timer to use as a once-off
 //        getMasterTimer().runAtInterval(() -> {
@@ -299,20 +310,20 @@ public class MotherLoadApp extends GameApplication {
                 int TierSize = 5; //Amount of ores in the game
                 boolean hasPickedGround = false;
 
-                if (y >= 0 && x >= 0 && ground[x][y] == null) {
-                    for (int z = 1; z < TierSize + 1; z++) {
+                if (y >= 0 && x >= 0 && arrTier[x][y] == 0) {
+                    for (int z = 2; z < TierSize + 2; z++) {
                         if (getDirtType(z, y) > Math.random() && !hasPickedGround) {
                             ground[x][y] = EntityFactory.newGround(64 * x + groundStartX, 64 * y + groundStartY, x, y, z);
-                            arrTier[x][y] = (byte)z;
-                            ctrLand[x][y] = ground[x][y].getControlUnsafe(LandControl.class);
+                            arrTier[x][y] = (byte) z;
+                            //ctrLand[x][y] = ground[x][y].getControlUnsafe(LandControl.class);
                             getGameWorld().addEntity(ground[x][y]);
                             hasPickedGround = true;
                         }
                     }
                     if (!hasPickedGround) {
-                        ground[x][y] = EntityFactory.newGround(64 * x + groundStartX, 64 * y + groundStartY, x, y, 0);
-                        arrTier[x][y] = 0;
-                        ctrLand[x][y] = ground[x][y].getControlUnsafe(LandControl.class);
+                        ground[x][y] = EntityFactory.newGround(64 * x + groundStartX, 64 * y + groundStartY, x, y, 1);
+                        arrTier[x][y] = 1;
+                        //ctrLand[x][y] = ground[x][y].getControlUnsafe(LandControl.class);
                         getGameWorld().addEntity(ground[x][y]);
                     }
                 }
@@ -321,11 +332,11 @@ public class MotherLoadApp extends GameApplication {
         for (int y = posY - 1; y < posY + 16; y++) { //X For loop
             for (int x = posX - 1; x < posX + 16; x++) { //Y For loop
                 if (y >= 0 && x >= 0) {
-                    if ((y == posY - 1 || y == posY + 16) || (x == posX - 1 || x == posX + 15)) {
+                    if ((y == posY - 1 || y == posY + 15) || (x == posX - 1 || x == posX + 15)) {
                         if (ground[x][y] != null) {
-                            if (!ground[x][y].isActive() && !ctrLand[x][y].Mined) {
+                            if (!ground[x][y].isActive() && arrTier[x][y] > 0) {
                                 ground[x][y] = EntityFactory.newGround(64 * x + groundStartX, 64 * y + groundStartY, x, y, arrTier[x][y]);
-                                ctrLand[x][y] = ground[x][y].getControlUnsafe(LandControl.class);
+                                //ctrLand[x][y] = ground[x][y].getControlUnsafe(LandControl.class);
                                 getGameWorld().addEntity(ground[x][y]);
                             }
                         }
@@ -333,11 +344,11 @@ public class MotherLoadApp extends GameApplication {
                 }
             }
         }
-        for (int y = posY - 2; y < posY + 17; y++) { //X For loop
-            for (int x = posX - 2; x < posX + 17; x++) { //Y For loop
+        for (int y = posY - 2; y < posY + 18; y++) { //X For loop
+            for (int x = posX - 2; x < posX + 18; x++) { //Y For loop
                 if (y >= 0 && x >= 0) {
                     if ((y == posY - 2 || y == posY + 17) || (x == posX - 2 || x == posX + 17)) {
-                        if (ground[x][y] != null) {
+                        if (arrTier[x][y] > 0) {
                             if (ground[x][y].isActive()) {
                                 getGameWorld().removeEntity(ground[x][y]);
                             }

@@ -202,9 +202,10 @@ public class PlayerControl extends AbstractControl {
             if (MotherLoadApp.ground[arrX][arrY + 1].isActive()) {
                 groundDown = true;
                 if (isPointDown) {
-                    oreType(arrX, arrY + 1); //Works
+                    oreType(arrX, arrY + 1); 
                     MotherLoadApp.ground[arrX][arrY + 1].removeFromWorld();
-                    MotherLoadApp.ctrLand[arrX][arrY + 1].Mined = true;
+                    //MotherLoadApp.ctrLand[arrX][arrY + 1].Mined = true;
+                    MotherLoadApp.arrTier[arrX][arrY + 1] = -1;
                 }
             }
 
@@ -216,9 +217,10 @@ public class PlayerControl extends AbstractControl {
                     if ((int) (Math.floor(tempX / 64)) != arrX) {
                         groundLeft = true;
                         if (isPointLeft && groundDown) {
-                            oreType(arrX - 1, arrY); //Doesent work
+                            oreType(arrX - 1, arrY); 
                             MotherLoadApp.ground[arrX - 1][arrY].removeFromWorld();
-                            MotherLoadApp.ctrLand[arrX - 1][arrY].Mined = true;
+                            //MotherLoadApp.ctrLand[arrX - 1][arrY].Mined = true;
+                            MotherLoadApp.arrTier[arrX - 1][arrY] = -1;
                         }
                     }
                 }
@@ -228,9 +230,10 @@ public class PlayerControl extends AbstractControl {
 
                         groundRight = true;
                         if (isPointRight && groundDown) {
-                            oreType(arrX + 1, arrY); //Doesent work
+                            oreType(arrX + 1, arrY); 
                             MotherLoadApp.ground[arrX + 1][arrY].removeFromWorld();
-                            MotherLoadApp.ctrLand[arrX + 1][arrY].Mined = true;
+                            //MotherLoadApp.ctrLand[arrX + 1][arrY].Mined = true;
+                            MotherLoadApp.arrTier[arrX + 1][arrY] = -1;
                         }
                     }
                 }
@@ -256,19 +259,19 @@ public class PlayerControl extends AbstractControl {
 
     public void oreType(int arrX, int arrY) {
 
-        if (MotherLoadApp.ctrLand[arrX][arrY].Tier == 1) {
+        if (MotherLoadApp.arrTier[arrX][arrY] == 2) {
             MotherLoadApp.in.add("Iron");
             System.out.println(MotherLoadApp.in);
-        } else if (MotherLoadApp.ctrLand[arrX][arrY].Tier == 2) {
+        } else if (MotherLoadApp.arrTier[arrX][arrY] == 3) {
             MotherLoadApp.in.add("Bronze");
             System.out.println(MotherLoadApp.in);
-        } else if (MotherLoadApp.ctrLand[arrX][arrY].Tier == 3) {
+        } else if (MotherLoadApp.arrTier[arrX][arrY] == 4) {
             MotherLoadApp.in.add("Silver");
             System.out.println(MotherLoadApp.in);
-        } else if (MotherLoadApp.ctrLand[arrX][arrY].Tier == 4) {
+        } else if (MotherLoadApp.arrTier[arrX][arrY] == 5) {
             MotherLoadApp.in.add("Gold");
             System.out.println(MotherLoadApp.in);
-        } else if (MotherLoadApp.ctrLand[arrX][arrY].Tier == 5) {
+        } else if (MotherLoadApp.arrTier[arrX][arrY] == 6) {
             MotherLoadApp.in.add("Titanium");
             System.out.println(MotherLoadApp.in);
         }
