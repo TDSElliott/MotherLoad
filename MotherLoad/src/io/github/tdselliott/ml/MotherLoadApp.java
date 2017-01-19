@@ -26,6 +26,11 @@ import io.github.tdselliott.ml.control.PlayerControl;
 import java.util.ArrayList;
 import java.util.Random;
 import static javafx.application.Application.launch;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.NodeOrientation;
 import javafx.geometry.Orientation;
 import javafx.geometry.Point2D;
@@ -38,10 +43,12 @@ import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
 import javafx.scene.control.Button;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 
 import com.almasb.fxgl.app.ApplicationMode;
 import com.almasb.fxgl.app.GameApplication;
