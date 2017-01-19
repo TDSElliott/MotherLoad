@@ -72,9 +72,10 @@ public class PlayerControl extends AbstractControl {
     }
 
     private void updatePosition() {
-
-        velocityY += gravity; //Adds the gravity value to the velocityY variable
-
+        
+        if (Math.abs(velocityY) < velocityCapY) {
+            velocityY += gravity; //Adds the gravity value to the velocityY variable
+        }
         if (groundDown) {
             if (velocityY > 0) {
                 velocityY = 0;
@@ -138,6 +139,8 @@ public class PlayerControl extends AbstractControl {
                 velocityY += Math.sin(angleTemp) * accelerationY;
             }
 
+            
+            
             if (angleTemp > Math.PI / 4 && angleTemp < 3 * Math.PI / 4) {
                 isPointDown = true;
             } else if (angleTemp > 5 * Math.PI / 4 && angleTemp < 7 * Math.PI / 4) {
@@ -180,7 +183,7 @@ public class PlayerControl extends AbstractControl {
             if (MotherLoadApp.ground[arrX][arrY + 1].isActive()) {
                 groundDown = true;
                 if (isPointDown) {
-                    oreType(arrX, arrY + 1); 
+                    oreType(arrX, arrY + 1);
                     MotherLoadApp.ground[arrX][arrY + 1].removeFromWorld();
                     //MotherLoadApp.ctrLand[arrX][arrY + 1].Mined = true;
                     MotherLoadApp.arrTier[arrX][arrY + 1] = -1;
@@ -195,7 +198,7 @@ public class PlayerControl extends AbstractControl {
                     if ((int) (Math.floor(tempX / 64)) != arrX) {
                         groundLeft = true;
                         if (isPointLeft && groundDown) {
-                            oreType(arrX - 1, arrY); 
+                            oreType(arrX - 1, arrY);
                             MotherLoadApp.ground[arrX - 1][arrY].removeFromWorld();
                             //MotherLoadApp.ctrLand[arrX - 1][arrY].Mined = true;
                             MotherLoadApp.arrTier[arrX - 1][arrY] = -1;
@@ -209,7 +212,7 @@ public class PlayerControl extends AbstractControl {
 
                         groundRight = true;
                         if (isPointRight && groundDown) {
-                            oreType(arrX + 1, arrY); 
+                            oreType(arrX + 1, arrY);
                             MotherLoadApp.ground[arrX + 1][arrY].removeFromWorld();
                             //MotherLoadApp.ctrLand[arrX + 1][arrY].Mined = true;
                             MotherLoadApp.arrTier[arrX + 1][arrY] = -1;

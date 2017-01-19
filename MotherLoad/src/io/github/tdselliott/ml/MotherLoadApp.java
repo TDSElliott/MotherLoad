@@ -86,9 +86,9 @@ public class MotherLoadApp extends GameApplication {
     //    Music m;
     private AudioClip music;
 
-    public static Entity[][] ground = new Entity[20000][5000];
+    public static Entity[][] ground = new Entity[1000][15000];
     //public static LandControl[][] ctrLand = new LandControl[20000][5000];
-    public static byte[][] arrTier = new byte[20000][5000];
+    public static byte[][] arrTier = new byte[1000][15000];
 
     public static ArrayList<String> in = new ArrayList(); //Inventory ArrayList
 
@@ -166,7 +166,7 @@ public class MotherLoadApp extends GameApplication {
             @Override
             protected void onAction() {
                 CtrPlayer.moveToMouse(input.getMousePositionWorld());
-                getAudioPlayer().playSound("Rev.wav");
+                //getAudioPlayer().playSound("Rev.wav");
             }
         }, MouseButton.PRIMARY);
 
@@ -193,10 +193,9 @@ public class MotherLoadApp extends GameApplication {
         
         //        ap.playMusic("test.mp3");
         //        m.start$fxgl();
-         getAudioPlayer().setGlobalMusicVolume(0.3);
-         getAudioPlayer().setGlobalSoundVolume(0.5);
-         
-         getAudioPlayer().playMusic("Music.mp3");
+        getAudioPlayer().setGlobalMusicVolume(0.3);
+        getAudioPlayer().setGlobalSoundVolume(0.5);
+        getAudioPlayer().playMusic("29 BONUS Horror.mp3");
 
         //Create player
         player = EntityFactory.newPlayer(2000, 100); //Adds player at (100, 100)
@@ -437,7 +436,7 @@ public class MotherLoadApp extends GameApplication {
 //------------------------------------------------------------------------------
     public double getDirtType(int Tier, int x) {
 
-        double chance = -.00002 * (x + 40 - (20 * Tier)) * (x - 60 - (20 * Tier));
+        double chance = -.00002 * (x + 20 - (20 * Tier)) * (x - 40 - (20 * Tier));
         return chance;
     }
 //------------------------------------------------------------------------------
