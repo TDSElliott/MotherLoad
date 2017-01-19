@@ -1,26 +1,3 @@
-/*
- * The MIT License
- *
- * Copyright 2016 Mackenzie G.
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
 package io.github.tdselliott.ml;
 
 import com.almasb.ents.Entity;
@@ -79,13 +56,6 @@ import javafx.scene.Node;
 import javafx.scene.text.Text;
 import org.jetbrains.annotations.NotNull;
 
-// Joke/Reference List -- To be deleted only if you wish to incure the WRATH OF GOD
-// Seriously I will kill you if you delete these - Tyler
-// These to be inserted randomly around the code
-// 867-5309
-// Dr. D. Lerious
-// Mr F
-// more to follow...
 /**
  *
  * @author Tyler Elliott
@@ -97,6 +67,7 @@ public class MotherLoadApp extends GameApplication {
 
     private Entity player;
     private PlayerControl CtrPlayer;
+    private IntegerProperty fuel, armour, credits;
 
     public static Entity[][] ground = new Entity[20000][5000];
     //public static LandControl[][] ctrLand = new LandControl[20000][5000];
@@ -111,7 +82,7 @@ public class MotherLoadApp extends GameApplication {
         gs.setWidth(800);
         gs.setHeight(700);
         gs.setTitle("MotherLoad");
-        gs.setVersion("0.01 [ALPHA]");
+        gs.setVersion("0.5 [BETA]");
         gs.setIntroEnabled(false);
         gs.setMenuEnabled(true); //Change later
         gs.setMenuStyle(MenuStyle.FXGL_DEFAULT);
@@ -228,24 +199,43 @@ public class MotherLoadApp extends GameApplication {
 //                System.out.println("Successful? " + yes);
 //            }, Duration.seconds(25), KeyCode.T, KeyCode.Y, KeyCode.L, KeyCode.E, KeyCode.R);
 //        }, Duration.seconds(5));
+        
+        getMasterTimer().runAtInterval(() -> { // lambda (calling a method with parameters and code seperated by ->)
+            fuel.set(fuel.get() - 10); // Set the counter down
+        }, Duration.millis(250)); // Every second (250 millis == 1/4 second)
     }
 //------------------------------------------------------------------------------
-
-    public double getDirtType(int Tier, int x) {
-
-        double chance = -.00002 * (x + 40 - (20 * Tier)) * (x - 60 - (20 * Tier));
-        return chance;
-    }
-
     @Override
     protected void initPhysics() {
         PhysicsWorld physicsWorld = getPhysicsWorld();
         physicsWorld.setGravity(0, 5);
     }
 //------------------------------------------------------------------------------
-
     @Override
     protected void initUI() {
+        // The fuel counter being added to the UI
+        this.fuel = new SimpleIntegerProperty(1000);
+        Text fuelCounter = getUIFactory().newText("", Color.CADETBLUE, 20);
+        fuelCounter.setTranslateX(10);
+        fuelCounter.setTranslateY(25);
+        fuelCounter.textProperty().bind(fuel.asString("Fuel Remaining: %d"));
+        getGameScene().addUINode(fuelCounter);
+        
+        // The armour counter being added to the UI
+        this.armour = new SimpleIntegerProperty(10);
+        Text armourCounter = getUIFactory().newText("", Color.CRIMSON, 20);
+        armourCounter.setTranslateX(300);
+        armourCounter.setTranslateY(25);
+        armourCounter.textProperty().bind(armour.asString("Armour Level: %d"));
+        getGameScene().addUINode(armourCounter);
+        
+        // The credits counter being added to the UI
+        this.credits = new SimpleIntegerProperty(100);
+        Text creditsCounter = getUIFactory().newText("", Color.LIME, 20);
+        creditsCounter.setTranslateX(590);
+        creditsCounter.setTranslateY(25);
+        creditsCounter.textProperty().bind(credits.asString("Credits: %d"));
+        getGameScene().addUINode(creditsCounter);
 //        Texture texture = getAssetLoader().loadTexture("Background.png");
 //
 //        //Creates a new EntityView called "bg" and sets it to the texure previously created
@@ -285,8 +275,52 @@ public class MotherLoadApp extends GameApplication {
     public void openWindow() {
 
         // Create in-game window
-        InGameWindow window = new InGameWindow("Feul Shop", WindowDecor.CLOSE);
-
+        InGameWindow window = new InGameWindow("Fuel Shop", WindowDecor.CLOSE);
+        
+        Button btnFuel = new Button();
+        btnFuel.setText("Add Fuel");
+        
+        
+        btnFuel.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if(credits.get() > 0) {
+                    System.out.println("Fuel refilled!");
+                    fuel.set(fuel.get() + 100);
+                    credits.set(credits.get() - 10);
+                }
+            }
+        });
+        
+        Button armour = new Button();
+        armour.setText("Repair Armour");
+        armour.setOnAction(new EventHandler<ActionEvent>() {
+ 
+            @Override
+            public void handle(ActionEvent event) {
+                System.out.println("Armour repaired!");
+            }
+        });
+        
+        Button sellOre = new Button();
+        sellOre.setText("Sell your Ore");
+        sellOre.setOnAction(new EventHandler<ActionEvent>() {
+ 
+            @Override
+            public void handle(ActionEvent event) {
+                System.out.println("Ore Sold!");
+            }
+        });
+        
+        FlowPane flow = new FlowPane();
+        flow.setPadding(new Insets(10, 10, 10, 10));
+        flow.setStyle("-fx-background-color: DAE6F3;");
+        flow.setHgap(5);
+        flow.getChildren().addAll(btnFuel, armour, sellOre);
+       
+        
+        window.setContentPane(flow);
+        
         // Set properties
         window.setPrefSize(300, 200);
         window.setPosition(400, 300);
@@ -374,6 +408,12 @@ public class MotherLoadApp extends GameApplication {
 
         // Attach to the game scene as a UI node
         getGameScene().addUINode(window);
+    }
+//------------------------------------------------------------------------------
+    public double getDirtType(int Tier, int x) {
+
+        double chance = -.00002 * (x + 40 - (20 * Tier)) * (x - 60 - (20 * Tier));
+        return chance;
     }
 //------------------------------------------------------------------------------
 }
