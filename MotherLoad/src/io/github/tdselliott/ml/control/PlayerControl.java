@@ -25,6 +25,7 @@ package io.github.tdselliott.ml.control;
 
 import com.almasb.ents.AbstractControl;
 import com.almasb.ents.Entity;
+import static com.almasb.fxgl.app.FXGL.getAudioPlayer;
 import com.almasb.fxgl.entity.component.PositionComponent;
 import io.github.tdselliott.ml.MotherLoadApp;
 import javafx.geometry.Point2D;
@@ -206,6 +207,7 @@ public class PlayerControl extends AbstractControl {
                     MotherLoadApp.ground[arrX][arrY + 1].removeFromWorld();
                     //MotherLoadApp.ctrLand[arrX][arrY + 1].Mined = true;
                     MotherLoadApp.arrTier[arrX][arrY + 1] = -1;
+                    getAudioPlayer().playSound("Dig.wav");
                 }
             }
 
@@ -221,6 +223,7 @@ public class PlayerControl extends AbstractControl {
                             MotherLoadApp.ground[arrX - 1][arrY].removeFromWorld();
                             //MotherLoadApp.ctrLand[arrX - 1][arrY].Mined = true;
                             MotherLoadApp.arrTier[arrX - 1][arrY] = -1;
+                            getAudioPlayer().playSound("Dig.wav");
                         }
                     }
                 }
@@ -234,6 +237,7 @@ public class PlayerControl extends AbstractControl {
                             MotherLoadApp.ground[arrX + 1][arrY].removeFromWorld();
                             //MotherLoadApp.ctrLand[arrX + 1][arrY].Mined = true;
                             MotherLoadApp.arrTier[arrX + 1][arrY] = -1;
+                            getAudioPlayer().playSound("Dig.wav");
                         }
                     }
                 }

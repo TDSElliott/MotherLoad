@@ -24,60 +24,38 @@
 package io.github.tdselliott.ml;
 
 import com.almasb.ents.Entity;
-import com.almasb.fxgl.app.ApplicationMode;
-import com.almasb.fxgl.app.GameApplication;
-import com.almasb.fxgl.entity.EntityView;
-import com.almasb.fxgl.entity.GameEntity;
-import com.almasb.fxgl.entity.ScrollingBackgroundView;
-import com.almasb.fxgl.gameplay.qte.QTE;
 import com.almasb.fxgl.input.ActionType;
 import com.almasb.fxgl.input.Input;
 import com.almasb.fxgl.input.InputMapping;
 import com.almasb.fxgl.input.OnUserAction;
 import com.almasb.fxgl.input.UserAction;
-import com.almasb.fxgl.physics.CollisionHandler;
 import com.almasb.fxgl.physics.PhysicsWorld;
-import com.almasb.fxgl.scene.SceneFactory;
 import com.almasb.fxgl.scene.menu.MenuStyle;
-import com.almasb.fxgl.settings.GameSettings;
 import com.almasb.fxgl.ui.InGameWindow;
 import com.almasb.fxgl.ui.InGameWindow.WindowDecor;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonFormat.Shape;
-import io.github.tdselliott.ml.control.LandControl;
 import io.github.tdselliott.ml.control.PlayerControl;
 import java.util.ArrayList;
-import java.util.Random;
 import static javafx.application.Application.launch;
-import javafx.geometry.NodeOrientation;
-import javafx.geometry.Orientation;
-import javafx.geometry.Point2D;
-
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-
-import javafx.util.Duration;
-
-import javafx.scene.control.Button;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Font;
-
 import com.almasb.fxgl.app.ApplicationMode;
 import com.almasb.fxgl.app.GameApplication;
+import com.almasb.fxgl.audio.AudioPlayer;
+import com.almasb.fxgl.audio.Music;
+import com.almasb.fxgl.event.NotificationEvent;
 import com.almasb.fxgl.io.DataFile;
 import com.almasb.fxgl.scene.FXGLMenu;
 import com.almasb.fxgl.scene.SceneFactory;
 import com.almasb.fxgl.scene.menu.FXGLDefaultMenu;
 import com.almasb.fxgl.scene.menu.MenuType;
 import com.almasb.fxgl.settings.GameSettings;
+import com.almasb.fxgl.settings.UserProfile;
+import com.almasb.fxgl.time.UpdateEvent;
 import java.io.Serializable;
 import javafx.scene.Node;
-import javafx.scene.text.Text;
 import org.jetbrains.annotations.NotNull;
+import javafx.scene.media.AudioClip;
 
 // Joke/Reference List -- To be deleted only if you wish to incure the WRATH OF GOD
 // Seriously I will kill you if you delete these - Tyler
@@ -97,7 +75,14 @@ public class MotherLoadApp extends GameApplication {
 
     private Entity player;
     private PlayerControl CtrPlayer;
+    
+//    AudioPlayer ap;
+//    Music m;
+    
+    private AudioClip music;
 
+//     Assets assets;
+   
     public static Entity[][] ground = new Entity[20000][5000];
     //public static LandControl[][] ctrLand = new LandControl[20000][5000];
     public static byte[][] arrTier = new byte[20000][5000];
@@ -178,6 +163,8 @@ public class MotherLoadApp extends GameApplication {
             @Override
             protected void onAction() {
                 CtrPlayer.moveToMouse(input.getMousePositionWorld());
+                
+                
             }
         }, MouseButton.PRIMARY);
 
@@ -196,12 +183,20 @@ public class MotherLoadApp extends GameApplication {
 
     @Override
     protected void initAssets() {
+        
     }
 //------------------------------------------------------------------------------
 
     @Override
     protected void initGame() {
 
+//        ap.playMusic("test.mp3");
+//        m.start$fxgl();
+        getAudioPlayer().setGlobalMusicVolume(0.3);
+        getAudioPlayer().setGlobalSoundVolume(0.5);
+        
+        getAudioPlayer().playMusic("Music.mp3");
+        
         //Create player
         player = EntityFactory.newPlayer(2000, 100); //Adds player at (100, 100)
         getGameWorld().addEntity(player); //Adds player to the world
@@ -215,6 +210,7 @@ public class MotherLoadApp extends GameApplication {
 //        getGameScene().addGameView(new ScrollingBackgroundView(getAssetLoader().loadTexture("Background.png", 1066, 600),
 //                Orientation.HORIZONTAL));
         getGameScene().getViewport().bindToEntity(player, 400, 350);
+        
         //getGameScene().getViewport().setZoom(.5);
         // QUICKTIME EVENTS CODE BELOW, for reference, currently timed
         // Uncomment to use as is, take away the timer to use as a once-off
