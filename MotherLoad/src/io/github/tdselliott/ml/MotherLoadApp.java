@@ -52,16 +52,22 @@ import javafx.scene.text.Text;
 
 import com.almasb.fxgl.app.ApplicationMode;
 import com.almasb.fxgl.app.GameApplication;
+import com.almasb.fxgl.audio.AudioPlayer;
+import com.almasb.fxgl.audio.Music;
+import com.almasb.fxgl.event.NotificationEvent;
 import com.almasb.fxgl.io.DataFile;
 import com.almasb.fxgl.scene.FXGLMenu;
 import com.almasb.fxgl.scene.SceneFactory;
 import com.almasb.fxgl.scene.menu.FXGLDefaultMenu;
 import com.almasb.fxgl.scene.menu.MenuType;
 import com.almasb.fxgl.settings.GameSettings;
+import com.almasb.fxgl.settings.UserProfile;
+import com.almasb.fxgl.time.UpdateEvent;
 import java.io.Serializable;
 import javafx.scene.Node;
 import javafx.scene.text.Text;
 import org.jetbrains.annotations.NotNull;
+import javafx.scene.media.AudioClip;
 
 /**
  *
@@ -75,6 +81,10 @@ public class MotherLoadApp extends GameApplication {
     private Entity player;
     private PlayerControl CtrPlayer;
     private IntegerProperty fuel, armour, credits;
+    
+    //    AudioPlayer ap;
+    //    Music m;
+    private AudioClip music;
 
     public static Entity[][] ground = new Entity[20000][5000];
     //public static LandControl[][] ctrLand = new LandControl[20000][5000];
@@ -156,6 +166,7 @@ public class MotherLoadApp extends GameApplication {
             @Override
             protected void onAction() {
                 CtrPlayer.moveToMouse(input.getMousePositionWorld());
+                getAudioPlayer().playSound("Rev.wav");
             }
         }, MouseButton.PRIMARY);
 
@@ -179,6 +190,13 @@ public class MotherLoadApp extends GameApplication {
 
     @Override
     protected void initGame() {
+        
+        //        ap.playMusic("test.mp3");
+        //        m.start$fxgl();
+         getAudioPlayer().setGlobalMusicVolume(0.3);
+         getAudioPlayer().setGlobalSoundVolume(0.5);
+         
+         getAudioPlayer().playMusic("Music.mp3");
 
         //Create player
         player = EntityFactory.newPlayer(2000, 100); //Adds player at (100, 100)
