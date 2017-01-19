@@ -163,7 +163,7 @@ public class MotherLoadApp extends GameApplication {
             @Override
             protected void onAction() {
                 CtrPlayer.moveToMouse(input.getMousePositionWorld());
-                
+                getAudioPlayer().playSound("Rev.wav");
                 
             }
         }, MouseButton.PRIMARY);
