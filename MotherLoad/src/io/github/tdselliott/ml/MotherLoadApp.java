@@ -78,9 +78,12 @@ import javafx.scene.media.AudioClip;
  */
 public class MotherLoadApp extends GameApplication {
 
-    private Entity player;
+    private Entity player, fuelShop, oreShop, repairShop, upgradeShop;
     private PlayerControl CtrPlayer;
     private IntegerProperty fuel, armour, credits;
+    private InGameWindow fuelWindow, armourWindow, shopWindow;
+    
+    public static int ironOre, bronzeOre, silverOre, goldOre, titOre;
     
     //    AudioPlayer ap;
     //    Music m;
@@ -101,14 +104,13 @@ public class MotherLoadApp extends GameApplication {
         gs.setTitle("MotherLoad");
         gs.setVersion("0.5 [BETA]");
         gs.setIntroEnabled(false);
-        gs.setMenuEnabled(true); //Change later
+        gs.setMenuEnabled(false); //Change later
         gs.setMenuStyle(MenuStyle.FXGL_DEFAULT);
         gs.setProfilingEnabled(true); // Profiing enabled/disabled (dev/release)
         gs.setCloseConfirmation(false); // Close warning enabled/disabled
         gs.setApplicationMode(ApplicationMode.DEVELOPER); // Dev, Debug, or Release
     }
 //------------------------------------------------------------------------------
-
     @Override
     protected SceneFactory initSceneFactory() {
         return new SceneFactory() {
@@ -140,7 +142,7 @@ public class MotherLoadApp extends GameApplication {
             }
         };
     }
-
+//------------------------------------------------------------------------------
     @Override
     public DataFile saveState() {
         // save state into `data`
@@ -148,7 +150,7 @@ public class MotherLoadApp extends GameApplication {
 
     return new DataFile(data);
     }
-
+//------------------------------------------------------------------------------
     @Override
     public void loadState(DataFile dataFile) {
         // SomeType is the actual type of the object serialized
@@ -157,7 +159,7 @@ public class MotherLoadApp extends GameApplication {
         data = arrTier;
         // do something with `data`
     }
-
+//------------------------------------------------------------------------------
     @Override
     protected void initInput() {
         Input input = getInput(); // get input service
@@ -166,7 +168,7 @@ public class MotherLoadApp extends GameApplication {
             @Override
             protected void onAction() {
                 CtrPlayer.moveToMouse(input.getMousePositionWorld());
-                //getAudioPlayer().playSound("Rev.wav");
+//                getAudioPlayer().playSound("Rev.wav");
             }
         }, MouseButton.PRIMARY);
 
@@ -179,18 +181,16 @@ public class MotherLoadApp extends GameApplication {
 
         // Opens on any key you want (right now 'O') it's shop-idea
         input.addInputMapping(new InputMapping("Open Fuel Shop", KeyCode.DIGIT1));
-        input.addInputMapping(new InputMapping("Open Sell", KeyCode.DIGIT2));
+        input.addInputMapping(new InputMapping("Open Selling Shop", KeyCode.DIGIT2));
+        input.addInputMapping(new InputMapping("Open Armour Repair", KeyCode.DIGIT3));
     }
 //------------------------------------------------------------------------------
-
     @Override
     protected void initAssets() {
     }
 //------------------------------------------------------------------------------
-
     @Override
     protected void initGame() {
-        
         //        ap.playMusic("test.mp3");
         //        m.start$fxgl();
         getAudioPlayer().setGlobalMusicVolume(0.3);
@@ -227,12 +227,68 @@ public class MotherLoadApp extends GameApplication {
         getMasterTimer().runAtInterval(() -> { // lambda (calling a method with parameters and code seperated by ->)
             fuel.set(fuel.get() - 10); // Set the counter down
         }, Duration.millis(250)); // Every second (250 millis == 1/4 second)
+        
+        fuelShop = EntityFactory.newFuelShop(1000, 164); //Adds player at (100, 100)
+        oreShop = EntityFactory.newOreShop(1500, 164); //Adds player at (100, 100)
+        repairShop = EntityFactory.newRepairShop(2000, 164); //Adds player at (100, 100)
+        upgradeShop = EntityFactory.newUpgradeShop(2500, 164); //Adds player at (100, 100)
+        getGameWorld().addEntities(fuelShop, repairShop, oreShop, upgradeShop); //Adds player to the world
     }
 //------------------------------------------------------------------------------
     @Override
     protected void initPhysics() {
         PhysicsWorld physicsWorld = getPhysicsWorld();
         physicsWorld.setGravity(0, 5);
+        
+        physicsWorld.addCollisionHandler(new CollisionHandler(EntityType.PLAYER, EntityType.FUELSHOP) {
+            // Open on begin, close on end
+            @Override
+            protected void onCollisionBegin(Entity player, Entity fuelshop) {
+                openFuelWindow();
+            }
+            @Override
+            protected void onCollisionEnd(Entity player, Entity fuelshop) {
+                closeFuelWindow();
+            }
+        });
+        
+        physicsWorld.addCollisionHandler(new CollisionHandler(EntityType.PLAYER, EntityType.ORESHOP) {
+            // Open on begin, close on end
+            @Override
+            protected void onCollisionBegin(Entity player, Entity oreshop) {
+                openSellWindow();
+            }
+            @Override
+            protected void onCollisionEnd(Entity player, Entity oreshop) {
+                closeSellWindow();
+            }
+        });
+        
+        physicsWorld.addCollisionHandler(new CollisionHandler(EntityType.PLAYER, EntityType.REPAIRSHOP) {
+            // Open on begin, close on end
+            @Override
+            protected void onCollisionBegin(Entity player, Entity armourShop) {
+                openArmourWindow();
+            }
+            @Override
+            protected void onCollisionEnd(Entity player, Entity armourShop) {
+                closeArmourWindow();
+            }
+        });
+        
+        // Setting the zone for opening shop menu 
+//        physicsWorld.addCollisionHandler(new CollisionHandler(EntityType.PLAYER, EntityType.FUELSHOP) {
+//            @Override
+//            protected void onCollisionBegin(Entity player, Entity fuelshop) {
+//                System.out.print("Open fuel:");
+//                openFuelWindow();
+//            }  
+//            protected void onCollisonEnd(Entity player, Entity fuelshop) {
+//                System.out.print("Close fuel:");
+//                closeFuelWindow();
+//            }
+//            
+//        });
     }
 //------------------------------------------------------------------------------
     @Override
@@ -270,14 +326,12 @@ public class MotherLoadApp extends GameApplication {
 
     }
 //------------------------------------------------------------------------------
-
     @Override
     protected void onUpdate(double d) {
         setCamera();
         upDateLand();
     }
 //------------------------------------------------------------------------------
-
     /**
      * Contains FXGL code to launch the window. Nothing else will need to be
      * added in here.
@@ -288,73 +342,11 @@ public class MotherLoadApp extends GameApplication {
         launch(args);
     }
 //------------------------------------------------------------------------------
-
     public void setCamera() {
         // attach gameworld to object
         //getGameScene().getViewport().bindToEntity(player, 400, 350);
     }
 //------------------------------------------------------------------------------
-
-    @OnUserAction(name = "Open Fuel Shop", type = ActionType.ON_ACTION_BEGIN)
-    public void openWindow() {
-
-        // Create in-game window
-        InGameWindow window = new InGameWindow("Fuel Shop", WindowDecor.CLOSE);
-        
-        Button btnFuel = new Button();
-        btnFuel.setText("Add Fuel");
-        
-        
-        btnFuel.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                if(credits.get() > 0) {
-                    System.out.println("Fuel refilled!");
-                    fuel.set(fuel.get() + 100);
-                    credits.set(credits.get() - 10);
-                }
-            }
-        });
-        
-        Button armour = new Button();
-        armour.setText("Repair Armour");
-        armour.setOnAction(new EventHandler<ActionEvent>() {
- 
-            @Override
-            public void handle(ActionEvent event) {
-                System.out.println("Armour repaired!");
-            }
-        });
-        
-        Button sellOre = new Button();
-        sellOre.setText("Sell your Ore");
-        sellOre.setOnAction(new EventHandler<ActionEvent>() {
- 
-            @Override
-            public void handle(ActionEvent event) {
-                System.out.println("Ore Sold!");
-            }
-        });
-        
-        FlowPane flow = new FlowPane();
-        flow.setPadding(new Insets(10, 10, 10, 10));
-        flow.setStyle("-fx-background-color: DAE6F3;");
-        flow.setHgap(5);
-        flow.getChildren().addAll(btnFuel, armour, sellOre);
-       
-        
-        window.setContentPane(flow);
-        
-        // Set properties
-        window.setPrefSize(300, 200);
-        window.setPosition(400, 300);
-        window.setBackgroundColor(Color.ORANGE);
-
-        // Attach to the game scene as a UI node
-        getGameScene().addUINode(window);
-    }
-//------------------------------------------------------------------------------
-
     public void upDateLand() {
         double camX = getGameScene().getViewport().getX();
         double camY = getGameScene().getViewport().getY() - 400;
@@ -417,21 +409,135 @@ public class MotherLoadApp extends GameApplication {
         }
     }
 //------------------------------------------------------------------------------
-
-    @OnUserAction(name = "Open Sell", type = ActionType.ON_ACTION_BEGIN)
-    public void openWindow2() {
+    @OnUserAction(name = "Open Fuel Shop", type = ActionType.ON_ACTION_BEGIN)
+    public void openFuelWindow() {
 
         // Create in-game window
-        InGameWindow window = new InGameWindow("Sell", WindowDecor.CLOSE);
-
+        fuelWindow = new InGameWindow("Fuel Shop", WindowDecor.CLOSE);
+        
+        Button btnFuel = new Button();
+        btnFuel.setText("Add Fuel");
+        
+        btnFuel.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if(credits.get() > 0) {
+                    System.out.println("Fuel refilled!");
+                    fuel.set(fuel.get() + 100);
+                    credits.set(credits.get() - 10);
+                }
+            }
+        });
+        
+        FlowPane flow = new FlowPane();
+        flow.setPadding(new Insets(10, 10, 10, 10));
+        flow.setStyle("-fx-background-color: #33cc33;");
+        flow.setHgap(5);
+        flow.getChildren().addAll(btnFuel);
+       
+        
+        fuelWindow.setContentPane(flow);
+        
         // Set properties
-        window.setPrefSize(300, 200);
-        window.setPosition(400, 300);
-//        window.setBackgroundColor(Color.BLUE);
-//        window.set
+        fuelWindow.setPrefSize(150, 50);
+        fuelWindow.setPosition(0, 600);
+        fuelWindow.setBackgroundColor(Color.ORANGE);
 
         // Attach to the game scene as a UI node
-        getGameScene().addUINode(window);
+        getGameScene().addUINode(fuelWindow);
+    }
+//------------------------------------------------------------------------------
+    @OnUserAction(name = "Open Selling Shop", type = ActionType.ON_ACTION_BEGIN)
+    public void openSellWindow() {
+
+        // Create in-game window
+        shopWindow = new InGameWindow("Sell Ore", WindowDecor.CLOSE);
+        
+        Button sellOre = new Button();
+        sellOre.setText("Sell your Ore");
+        sellOre.setOnAction(new EventHandler<ActionEvent>() {
+ 
+            @Override
+            public void handle(ActionEvent event) {
+                int bank = 0;
+                bank += ironOre *   10;
+                bank += bronzeOre * 100;
+                bank += silverOre * 1000;
+                bank += goldOre *   10000;
+                bank += titOre *    100000;
+                
+                credits.set(credits.get() + bank);
+                bank = 0;
+                ironOre = 0; bronzeOre = 0; silverOre = 0; goldOre = 0; titOre = 0;
+            }
+        });
+        
+        FlowPane flow = new FlowPane();
+        flow.setPadding(new Insets(10, 10, 10, 10));
+        flow.setStyle("-fx-background-color: #6600ff;");
+        flow.setHgap(5);
+        flow.getChildren().addAll(sellOre);
+       
+        
+        shopWindow.setContentPane(flow);
+        
+        // Set properties
+        shopWindow.setPrefSize(150, 50);
+        shopWindow.setPosition(325, 600);
+        shopWindow.setBackgroundColor(Color.ORANGE);
+
+        // Attach to the game scene as a UI node
+        getGameScene().addUINode(shopWindow);
+    }
+//------------------------------------------------------------------------------
+    @OnUserAction(name = "Open Armour Repair", type = ActionType.ON_ACTION_BEGIN)
+    public void openArmourWindow() {
+
+        // Create in-game window
+        armourWindow = new InGameWindow("Armour Repair", WindowDecor.CLOSE);
+        
+        Button armour = new Button();
+        armour.setText("Repair Armour");
+        armour.setOnAction(new EventHandler<ActionEvent>() {
+ 
+            @Override
+            public void handle(ActionEvent event) {
+                System.out.println("Armour repaired!");
+            }
+        });
+        
+        
+        FlowPane flow = new FlowPane();
+        flow.setPadding(new Insets(10, 10, 10, 10));
+        flow.setStyle("-fx-background-color: #DAE6F3;");
+        flow.setHgap(5);
+        flow.getChildren().addAll(armour);
+       
+        
+        armourWindow.setContentPane(flow);
+        
+        // Set properties
+        armourWindow.setPrefSize(150, 50);
+        armourWindow.setPosition(650, 600);
+        armourWindow.setBackgroundColor(Color.ORANGE);
+
+        // Attach to the game scene as a UI node
+        getGameScene().addUINode(armourWindow);
+    }
+//------------------------------------------------------------------------------
+    public void closeFuelWindow() {
+        System.out.println("run");
+        getGameScene().removeUINodes(fuelWindow);
+    }
+//------------------------------------------------------------------------------
+    public void closeSellWindow() {
+        System.out.println("run");
+        getGameScene().removeUINodes(shopWindow);
+    }
+//------------------------------------------------------------------------------
+    public void closeArmourWindow() {
+        System.out.println("run");
+        getGameScene().removeUINodes(armourWindow);
     }
 //------------------------------------------------------------------------------
     public double getDirtType(int Tier, int x) {

@@ -9,8 +9,10 @@ import javafx.geometry.Point2D;
 
 /**
  *
+ * @author Tyler Elliott
  * @author Mackenzie Guy
- * @author The Rooski
+ * @author The Roooski
+ * @author Logan laird
  */
 public class PlayerControl extends AbstractControl {
 
@@ -187,6 +189,7 @@ public class PlayerControl extends AbstractControl {
                     MotherLoadApp.ground[arrX][arrY + 1].removeFromWorld();
                     //MotherLoadApp.ctrLand[arrX][arrY + 1].Mined = true;
                     MotherLoadApp.arrTier[arrX][arrY + 1] = -1;
+                    getAudioPlayer().playSound("Dig.wav");
                 }
             }
 
@@ -242,21 +245,29 @@ public class PlayerControl extends AbstractControl {
 
     public void oreType(int arrX, int arrY) {
 
-        if (MotherLoadApp.arrTier[arrX][arrY] == 2) {
-            MotherLoadApp.in.add("Iron");
-            System.out.println(MotherLoadApp.in);
-        } else if (MotherLoadApp.arrTier[arrX][arrY] == 3) {
-            MotherLoadApp.in.add("Bronze");
-            System.out.println(MotherLoadApp.in);
-        } else if (MotherLoadApp.arrTier[arrX][arrY] == 4) {
-            MotherLoadApp.in.add("Silver");
-            System.out.println(MotherLoadApp.in);
-        } else if (MotherLoadApp.arrTier[arrX][arrY] == 5) {
-            MotherLoadApp.in.add("Gold");
-            System.out.println(MotherLoadApp.in);
-        } else if (MotherLoadApp.arrTier[arrX][arrY] == 6) {
-            MotherLoadApp.in.add("Titanium");
-            System.out.println(MotherLoadApp.in);
+        switch (MotherLoadApp.arrTier[arrX][arrY]) {
+            case 2:
+                MotherLoadApp.ironOre++;
+                System.out.println("Iron: " + MotherLoadApp.ironOre);
+                break;
+            case 3:
+                MotherLoadApp.bronzeOre++;
+                System.out.println("Bronze: " + MotherLoadApp.bronzeOre);
+                break;
+            case 4:
+                MotherLoadApp.silverOre++;
+                System.out.println("Silver: " + MotherLoadApp.silverOre);
+                break;
+            case 5:
+                MotherLoadApp.goldOre++;
+                System.out.println("Gold: " + MotherLoadApp.goldOre);
+                break;
+            case 6:
+                MotherLoadApp.titOre++;
+                System.out.println("Titanium: " + MotherLoadApp.titOre);
+                break;
+            default:
+                break;
         }
     }
 
