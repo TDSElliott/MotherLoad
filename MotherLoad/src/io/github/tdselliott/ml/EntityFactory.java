@@ -71,12 +71,56 @@ public class EntityFactory {
     public static Entity newGround(double x, double y, int arrX, int arrY, int Tier) {
         GameEntity ground = new GameEntity(); //Creates a new grounf GameEntity
         ground.getTypeComponent().setValue(EntityType.GROUND); //Sets it to the GROUND EntityType
-        ground.getMainViewComponent().setView(new EntityView(assetLoader.loadTexture("Ground" + Tier + ".png")), false); //Sets the image
+        ground.getMainViewComponent().setView(new EntityView(assetLoader.loadTexture("Ground" + Tier + ".png", 64, 64)), false); //Sets the image
         ground.getPositionComponent().setValue(x, y);
 
         //Control
         ground.addControl(new LandControl(Tier));
 
         return ground;
+    }
+
+    public static Entity newFuelShop(int x, int y) {
+        GameEntity fuelShop = new GameEntity();
+        // This sets physics to enabled, it allows the collision detection to work
+        fuelShop.addComponent(new CollidableComponent(true));
+        fuelShop.getTypeComponent().setValue(EntityType.FUELSHOP);
+        fuelShop.getMainViewComponent().setView(new EntityView(assetLoader.loadTexture("fuelshop.png", 256, 256)), true);
+        
+        fuelShop.getPositionComponent().setValue(x, y);
+        return fuelShop;
+    }
+    
+    public static Entity newOreShop(int x, int y) {
+        GameEntity oreShop = new GameEntity();
+        // This sets physics to enabled, it allows the collision detection to work
+        oreShop.addComponent(new CollidableComponent(true));
+        oreShop.getTypeComponent().setValue(EntityType.ORESHOP);
+        oreShop.getMainViewComponent().setView(new EntityView(assetLoader.loadTexture("oreshop.png", 256, 256)), true);
+        
+        oreShop.getPositionComponent().setValue(x, y);
+        return oreShop;
+    }
+    
+    public static Entity newRepairShop(int x, int y) {
+        GameEntity repairShop = new GameEntity();
+        // This sets physics to enabled, it allows the collision detection to work
+        repairShop.addComponent(new CollidableComponent(true));
+        repairShop.getTypeComponent().setValue(EntityType.REPAIRSHOP);
+        repairShop.getMainViewComponent().setView(new EntityView(assetLoader.loadTexture("repairShop.png", 256, 256)), true);
+        
+        repairShop.getPositionComponent().setValue(x, y);
+        return repairShop;
+    }
+    
+    public static Entity newUpgradeShop(int x, int y) {
+        GameEntity upgradeShop = new GameEntity();
+        // This sets physics to enabled, it allows the collision detection to work
+        upgradeShop.addComponent(new CollidableComponent(true));
+        upgradeShop.getTypeComponent().setValue(EntityType.UPGRADE);
+        upgradeShop.getMainViewComponent().setView(new EntityView(assetLoader.loadTexture("upgrade.png", 256, 256)), true);
+        
+        upgradeShop.getPositionComponent().setValue(x, y);
+        return upgradeShop;
     }
 }

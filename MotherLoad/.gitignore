@@ -1,0 +1,11 @@
+### NetBeans ###
+/MotherLoad/nbproject/private
+/MotherLoad/build
+/MotherLoad/logs
+/MotherLoad/profiles
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
