@@ -434,6 +434,7 @@ public class MotherLoadApp extends GameApplication {
         getGameScene().addUINode(window);
     }
 //------------------------------------------------------------------------------
+    
     public double getDirtType(int Tier, int x) {
 
         double chance = -.00002 * (x + 20 - (20 * Tier)) * (x - 40 - (20 * Tier));
