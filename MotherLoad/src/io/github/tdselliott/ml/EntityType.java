@@ -28,5 +28,5 @@ package io.github.tdselliott.ml;
  * @author Mack
  */
 public enum EntityType {
-    PLAYER, GROUND
+    PLAYER, GROUND, FUELSHOP, ORESHOP, REPAIRSHOP, UPGRADE,
 }

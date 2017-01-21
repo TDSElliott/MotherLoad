@@ -9,8 +9,10 @@ import javafx.geometry.Point2D;
 
 /**
  *
+ * @author Tyler Elliott
  * @author Mackenzie Guy
- * @author The Rooski
+ * @author The Roooski
+ * @author Logan laird
  */
 public class PlayerControl extends AbstractControl {
 
@@ -72,8 +74,8 @@ public class PlayerControl extends AbstractControl {
     }
 
     private void updatePosition() {
-        
-        if (Math.abs(velocityY) < velocityCapY) {
+
+        if (velocityY < velocityCapY) {
             velocityY += gravity; //Adds the gravity value to the velocityY variable
         }
         if (groundDown) {
@@ -126,21 +128,21 @@ public class PlayerControl extends AbstractControl {
         } else {
             simMouseXY = mouse;
         }
-
+        
         mouseHeld = true;
         if (!isInMenu) {
             hKeyDown = true;
             double angleTemp = getAngle(positionXY.add(imageHight / 2, imageWidth / 2), simMouseXY);
-
+            
             if (Math.abs(velocityX) < velocityCapX) {
                 velocityX += Math.cos(angleTemp) * accelerationX;
-            }
+            }  velocityY += Math.sin(angleTemp) * accelerationY;
             if (Math.abs(velocityY) < velocityCapY) {
+                velocityY += Math.sin(angleTemp) * accelerationY;
+            } else if (velocityY > velocityCapY && Math.sin(angleTemp) * accelerationY < 0) {
                 velocityY += Math.sin(angleTemp) * accelerationY;
             }
 
-            
-            
             if (angleTemp > Math.PI / 4 && angleTemp < 3 * Math.PI / 4) {
                 isPointDown = true;
             } else if (angleTemp > 5 * Math.PI / 4 && angleTemp < 7 * Math.PI / 4) {
@@ -173,58 +175,68 @@ public class PlayerControl extends AbstractControl {
 
         //Point2D landStart = LandControl.landPos;
         Point2D landStart = new Point2D(0, 400);
-        double xOffSet = -landStart.getX() + positionXY.getX() + imageWidth / 2;
-        double yOffSet = -landStart.getY() + positionXY.getY();
-        int arrX = (int) Math.floor(xOffSet / 64);
-        int arrY = (int) Math.floor(yOffSet / 64);
+        double xOffSet1 = -landStart.getX() + positionXY.getX();
+        double yOffSet1 = -landStart.getY() + positionXY.getY();
+        double xOffSet2 = -landStart.getX() + positionXY.getX() + imageWidth;
+        double yOffSet2 = -landStart.getY() + positionXY.getY() + imageWidth;
+        double xOffSet3 = -landStart.getX() + positionXY.getX() + imageWidth / 2;
+        double yOffSet3 = -landStart.getY() + positionXY.getY() + imageWidth / 2;
+        int arrX1 = (int) Math.floor(xOffSet1 / 64);
+        int arrY1 = (int) Math.floor(yOffSet1 / 64);
+        int arrX2 = (int) Math.floor(xOffSet2 / 64);
+        int arrY2 = (int) Math.floor(yOffSet2 / 64);
+        int arrX3 = (int) Math.floor(xOffSet3 / 64);
+        int arrY3 = (int) Math.floor(yOffSet3 / 64);
 
-        if (arrX >= 0 && arrY >= -1) {
+        if (arrX1 >= 0 && arrY1 >= -1) {
             //Colliding down
-            if (MotherLoadApp.ground[arrX][arrY + 1].isActive()) {
+            if (MotherLoadApp.ground[arrX1][arrY1 + 1].isActive()) {
                 groundDown = true;
-                if (isPointDown) {
-                    oreType(arrX, arrY + 1);
-                    MotherLoadApp.ground[arrX][arrY + 1].removeFromWorld();
-                    //MotherLoadApp.ctrLand[arrX][arrY + 1].Mined = true;
-                    MotherLoadApp.arrTier[arrX][arrY + 1] = -1;
-                }
+            } else if (MotherLoadApp.ground[arrX2][arrY1 + 1].isActive()) {
+                groundDown = true;
             }
-
-            //Colliding Left/Right
-            if (arrY >= 0 && arrX > 0) {
-                double tempX = xOffSet - imageWidth / 2;
+            if (isPointDown && MotherLoadApp.ground[arrX3][arrY1 + 1].isActive()) {
+                oreType(arrX3, arrY1 + 1);
+                MotherLoadApp.ground[arrX3][arrY1 + 1].removeFromWorld();
+                MotherLoadApp.arrTier[arrX3][arrY1 + 1] = -1;
+            }
+            if (arrX1 >= 1 && arrY2 >= 0) {
                 //left
-                if (MotherLoadApp.ground[arrX - 1][arrY].isActive()) {
-                    if ((int) (Math.floor(tempX / 64)) != arrX) {
+                if (arrY1 >= 0) {
+                    if (MotherLoadApp.ground[arrX2 - 1][arrY1].isActive()) {
                         groundLeft = true;
-                        if (isPointLeft && groundDown) {
-                            oreType(arrX - 1, arrY);
-                            MotherLoadApp.ground[arrX - 1][arrY].removeFromWorld();
-                            //MotherLoadApp.ctrLand[arrX - 1][arrY].Mined = true;
-                            MotherLoadApp.arrTier[arrX - 1][arrY] = -1;
-                            getAudioPlayer().playSound("Dig.wav");
-                        }
+                    }
+                    if (isPointLeft && MotherLoadApp.ground[arrX2 - 1][arrY3].isActive() && groundDown) {
+                        oreType(arrX2 - 1, arrY3);
+                        MotherLoadApp.ground[arrX2 - 1][arrY3].removeFromWorld();
+                        MotherLoadApp.arrTier[arrX2 - 1][arrY3] = -1;
                     }
                 }
-                //right
-                if (MotherLoadApp.ground[arrX + 1][arrY].isActive()) {
-                    if ((int) (Math.floor((tempX + imageWidth) / 64)) != arrX) {
-
-                        groundRight = true;
-                        if (isPointRight && groundDown) {
-                            oreType(arrX + 1, arrY);
-                            MotherLoadApp.ground[arrX + 1][arrY].removeFromWorld();
-                            //MotherLoadApp.ctrLand[arrX + 1][arrY].Mined = true;
-                            MotherLoadApp.arrTier[arrX + 1][arrY] = -1;
-                            getAudioPlayer().playSound("Dig.wav");
-                        }
-                    }
+                if (MotherLoadApp.ground[arrX2 - 1][arrY2].isActive()) {
+                    groundLeft = true;
                 }
             }
-            //Colliding Up
-            if (arrY > 0) {
-                int tmpArrY = (int) Math.floor((yOffSet + imageHight) / 64);
-                if (MotherLoadApp.ground[arrX][arrY].isActive()) {
+            if (arrX1 >= -1 && arrY2 >= 0) {
+                //right
+                if (arrY1 >= 0) {
+                    if (MotherLoadApp.ground[arrX1 + 1][arrY1].isActive()) {
+                        groundRight = true;
+                    }
+                    if (isPointRight && MotherLoadApp.ground[arrX1 + 1][arrY3].isActive() && groundDown) {
+                        oreType(arrX1 + 1, arrY3);
+                        MotherLoadApp.ground[arrX1 + 1][arrY3].removeFromWorld();
+                        MotherLoadApp.arrTier[arrX1 + 1][arrY3] = -1;
+                    }
+                }
+                if (MotherLoadApp.ground[arrX1 + 1][arrY2].isActive()) {
+                    groundRight = true;
+                }
+            }
+            if (arrX1 >= 0 && arrY1 >= 1) {
+                //up
+                if (MotherLoadApp.ground[arrX1][arrY2 - 1].isActive()) {
+                    groundUp = true;
+                } else if (MotherLoadApp.ground[arrX2][arrY2 - 1].isActive()) {
                     groundUp = true;
                 }
             }
@@ -233,7 +245,6 @@ public class PlayerControl extends AbstractControl {
         isPointUp = false;
         isPointLeft = false;
         isPointRight = false;
-
     }
 
     public Point2D rtnPosition() {
@@ -242,21 +253,29 @@ public class PlayerControl extends AbstractControl {
 
     public void oreType(int arrX, int arrY) {
 
-        if (MotherLoadApp.arrTier[arrX][arrY] == 2) {
-            MotherLoadApp.in.add("Iron");
-            System.out.println(MotherLoadApp.in);
-        } else if (MotherLoadApp.arrTier[arrX][arrY] == 3) {
-            MotherLoadApp.in.add("Bronze");
-            System.out.println(MotherLoadApp.in);
-        } else if (MotherLoadApp.arrTier[arrX][arrY] == 4) {
-            MotherLoadApp.in.add("Silver");
-            System.out.println(MotherLoadApp.in);
-        } else if (MotherLoadApp.arrTier[arrX][arrY] == 5) {
-            MotherLoadApp.in.add("Gold");
-            System.out.println(MotherLoadApp.in);
-        } else if (MotherLoadApp.arrTier[arrX][arrY] == 6) {
-            MotherLoadApp.in.add("Titanium");
-            System.out.println(MotherLoadApp.in);
+        switch (MotherLoadApp.arrTier[arrX][arrY]) {
+            case 2:
+                MotherLoadApp.ironOre++;
+                System.out.println("Iron: " + MotherLoadApp.ironOre);
+                break;
+            case 3:
+                MotherLoadApp.bronzeOre++;
+                System.out.println("Bronze: " + MotherLoadApp.bronzeOre);
+                break;
+            case 4:
+                MotherLoadApp.silverOre++;
+                System.out.println("Silver: " + MotherLoadApp.silverOre);
+                break;
+            case 5:
+                MotherLoadApp.goldOre++;
+                System.out.println("Gold: " + MotherLoadApp.goldOre);
+                break;
+            case 6:
+                MotherLoadApp.titOre++;
+                System.out.println("Titanium: " + MotherLoadApp.titOre);
+                break;
+            default:
+                break;
         }
     }
 
