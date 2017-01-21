@@ -181,7 +181,6 @@ public class MotherLoadApp extends GameApplication {
             protected void onAction() {
                 CtrPlayer.moveToMouse(input.getMousePositionWorld());
                 mouseDown = true;
-//                getAudioPlayer().playSound("Rev.wav");
             }
             @Override
             protected void onActionEnd() {
