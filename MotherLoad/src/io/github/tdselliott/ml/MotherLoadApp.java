@@ -336,10 +336,8 @@ public class MotherLoadApp extends GameApplication {
 //------------------------------------------------------------------------------
     @Override
     protected void onUpdate(double d) {
-        setCamera();
         upDateLand();
         // Fuel consumption increase if moving (if mouse held down) 
-        // Boolean for checking if held down is in PlayerControl.java
         if(mouseDown) {
             fuelLoss = fuelLossDynamic; // 10
         } else {
