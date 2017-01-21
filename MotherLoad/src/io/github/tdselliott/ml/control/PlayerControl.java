@@ -74,8 +74,8 @@ public class PlayerControl extends AbstractControl {
     }
 
     private void updatePosition() {
-        
-        if (Math.abs(velocityY) < velocityCapY) {
+
+        if (velocityY < velocityCapY) {
             velocityY += gravity; //Adds the gravity value to the velocityY variable
         }
         if (groundDown) {
@@ -136,13 +136,13 @@ public class PlayerControl extends AbstractControl {
             
             if (Math.abs(velocityX) < velocityCapX) {
                 velocityX += Math.cos(angleTemp) * accelerationX;
-            }
+            }  velocityY += Math.sin(angleTemp) * accelerationY;
             if (Math.abs(velocityY) < velocityCapY) {
+                velocityY += Math.sin(angleTemp) * accelerationY;
+            } else if (velocityY > velocityCapY && Math.sin(angleTemp) * accelerationY < 0) {
                 velocityY += Math.sin(angleTemp) * accelerationY;
             }
 
-            
-            
             if (angleTemp > Math.PI / 4 && angleTemp < 3 * Math.PI / 4) {
                 isPointDown = true;
             } else if (angleTemp > 5 * Math.PI / 4 && angleTemp < 7 * Math.PI / 4) {
@@ -166,7 +166,7 @@ public class PlayerControl extends AbstractControl {
         return angle;
     }
 
-public void isColliding() {
+    public void isColliding() {
 
         groundDown = false;
         groundUp = false;
@@ -200,7 +200,7 @@ public void isColliding() {
                 MotherLoadApp.ground[arrX3][arrY1 + 1].removeFromWorld();
                 MotherLoadApp.arrTier[arrX3][arrY1 + 1] = -1;
             }
-if (arrX1 >= 1 && arrY2 >= 0) {
+            if (arrX1 >= 1 && arrY2 >= 0) {
                 //left
                 if (arrY1 >= 0) {
                     if (MotherLoadApp.ground[arrX2 - 1][arrY1].isActive()) {
@@ -232,7 +232,7 @@ if (arrX1 >= 1 && arrY2 >= 0) {
                     groundRight = true;
                 }
             }
-if (arrX1 >= 0 && arrY1 >= 1) {
+            if (arrX1 >= 0 && arrY1 >= 1) {
                 //up
                 if (MotherLoadApp.ground[arrX1][arrY2 - 1].isActive()) {
                     groundUp = true;
@@ -246,7 +246,6 @@ if (arrX1 >= 0 && arrY1 >= 1) {
         isPointLeft = false;
         isPointRight = false;
     }
-
 
     public Point2D rtnPosition() {
         return positionXY;
