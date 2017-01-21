@@ -69,6 +69,14 @@ import javafx.scene.text.Text;
 import org.jetbrains.annotations.NotNull;
 import javafx.scene.media.AudioClip;
 
+import com.almasb.fxgl.app.ApplicationMode;
+import com.almasb.fxgl.app.GameApplication;
+import com.almasb.fxgl.scene.IntroScene;
+import com.almasb.fxgl.scene.SceneFactory;
+import com.almasb.fxgl.scene.intro.VideoIntroScene;
+import com.almasb.fxgl.settings.GameSettings;
+import org.jetbrains.annotations.NotNull;
+
 /**
  *
  * @author Tyler Elliott
@@ -96,7 +104,7 @@ public class MotherLoadApp extends GameApplication {
     //public static LandControl[][] ctrLand = new LandControl[20000][5000];
     public static byte[][] arrTier = new byte[1000][15000];
 
-    public static ArrayList<String> in = new ArrayList(); //Inventory ArrayList
+    public static byte[] inventory = new byte[10]; //Inventory
 
 //------------------------------------------------------------------------------
     @Override
@@ -107,13 +115,14 @@ public class MotherLoadApp extends GameApplication {
         gs.setTitle("MotherLoad");
         gs.setVersion("0.5 [BETA]");
         gs.setIntroEnabled(false);
-        gs.setMenuEnabled(false); //Change later
-        gs.setMenuStyle(MenuStyle.FXGL_DEFAULT);
+        gs.setMenuEnabled(true); //Change later
+        gs.setMenuStyle(MenuStyle.WARCRAFT3);
         gs.setProfilingEnabled(true); // Profiing enabled/disabled (dev/release)
         gs.setCloseConfirmation(false); // Close warning enabled/disabled
         gs.setApplicationMode(ApplicationMode.DEVELOPER); // Dev, Debug, or Release
     }
 //------------------------------------------------------------------------------
+
     @Override
     protected SceneFactory initSceneFactory() {
         return new SceneFactory() {
@@ -199,8 +208,6 @@ public class MotherLoadApp extends GameApplication {
 //------------------------------------------------------------------------------
     @Override
     protected void initGame() {
-        //        ap.playMusic("test.mp3");
-        //        m.start$fxgl();
         getAudioPlayer().setGlobalMusicVolume(0.3);
         getAudioPlayer().setGlobalSoundVolume(0.5);
         getAudioPlayer().playMusic("29 BONUS Horror.mp3");
