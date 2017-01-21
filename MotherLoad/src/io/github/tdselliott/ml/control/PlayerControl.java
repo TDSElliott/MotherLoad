@@ -199,6 +199,7 @@ public class PlayerControl extends AbstractControl {
                 oreType(arrX3, arrY1 + 1);
                 MotherLoadApp.ground[arrX3][arrY1 + 1].removeFromWorld();
                 MotherLoadApp.arrTier[arrX3][arrY1 + 1] = -1;
+                getAudioPlayer().playSound("Dig.wav");
             }
             if (arrX1 >= 1 && arrY2 >= 0) {
                 //left
@@ -210,6 +211,7 @@ public class PlayerControl extends AbstractControl {
                         oreType(arrX2 - 1, arrY3);
                         MotherLoadApp.ground[arrX2 - 1][arrY3].removeFromWorld();
                         MotherLoadApp.arrTier[arrX2 - 1][arrY3] = -1;
+                        getAudioPlayer().playSound("Dig.wav");
                     }
                 }
                 if (MotherLoadApp.ground[arrX2 - 1][arrY2].isActive()) {
@@ -226,6 +228,7 @@ public class PlayerControl extends AbstractControl {
                         oreType(arrX1 + 1, arrY3);
                         MotherLoadApp.ground[arrX1 + 1][arrY3].removeFromWorld();
                         MotherLoadApp.arrTier[arrX1 + 1][arrY3] = -1;
+                        getAudioPlayer().playSound("Dig.wav");
                     }
                 }
                 if (MotherLoadApp.ground[arrX1 + 1][arrY2].isActive()) {
