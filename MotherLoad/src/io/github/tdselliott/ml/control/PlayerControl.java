@@ -128,12 +128,12 @@ public class PlayerControl extends AbstractControl {
         } else {
             simMouseXY = mouse;
         }
-
+        
         mouseHeld = true;
         if (!isInMenu) {
             hKeyDown = true;
             double angleTemp = getAngle(positionXY.add(imageHight / 2, imageWidth / 2), simMouseXY);
-
+            
             if (Math.abs(velocityX) < velocityCapX) {
                 velocityX += Math.cos(angleTemp) * accelerationX;
             }

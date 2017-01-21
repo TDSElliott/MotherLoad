@@ -82,8 +82,11 @@ public class MotherLoadApp extends GameApplication {
     private PlayerControl CtrPlayer;
     private IntegerProperty fuel, armour, credits;
     private InGameWindow fuelWindow, armourWindow, shopWindow;
+    private boolean mouseDown = false;
     
     public static int ironOre, bronzeOre, silverOre, goldOre, titOre;
+    // fuelLoss and fuelLossStatic will be the same, but it cleans up lower code
+    private int fuelLoss = 1, fuelLossStatic = 1, fuelLossDynamic = 10;
     
     //    AudioPlayer ap;
     //    Music m;
@@ -163,12 +166,17 @@ public class MotherLoadApp extends GameApplication {
     @Override
     protected void initInput() {
         Input input = getInput(); // get input service
-
+        
         input.addAction(new UserAction("Move With Mouse") {
             @Override
             protected void onAction() {
                 CtrPlayer.moveToMouse(input.getMousePositionWorld());
+                mouseDown = true;
 //                getAudioPlayer().playSound("Rev.wav");
+            }
+            @Override
+            protected void onActionEnd() {
+                mouseDown = false;
             }
         }, MouseButton.PRIMARY);
 
@@ -179,7 +187,7 @@ public class MotherLoadApp extends GameApplication {
             }
         }, KeyCode.W);
 
-        // Opens on any key you want (right now 'O') it's shop-idea
+        // Dev-code, the end-user should open by moving to shop 1- fuel 2 - ore 3 - armour
         input.addInputMapping(new InputMapping("Open Fuel Shop", KeyCode.DIGIT1));
         input.addInputMapping(new InputMapping("Open Selling Shop", KeyCode.DIGIT2));
         input.addInputMapping(new InputMapping("Open Armour Repair", KeyCode.DIGIT3));
@@ -225,14 +233,14 @@ public class MotherLoadApp extends GameApplication {
 //        }, Duration.seconds(5));
         
         getMasterTimer().runAtInterval(() -> { // lambda (calling a method with parameters and code seperated by ->)
-            fuel.set(fuel.get() - 10); // Set the counter down
+            fuel.set(fuel.get() - fuelLoss); // Set the counter down
         }, Duration.millis(250)); // Every second (250 millis == 1/4 second)
         
         fuelShop = EntityFactory.newFuelShop(1000, 164); //Adds player at (100, 100)
         oreShop = EntityFactory.newOreShop(1500, 164); //Adds player at (100, 100)
         repairShop = EntityFactory.newRepairShop(2000, 164); //Adds player at (100, 100)
         upgradeShop = EntityFactory.newUpgradeShop(2500, 164); //Adds player at (100, 100)
-        getGameWorld().addEntities(fuelShop, repairShop, oreShop, upgradeShop); //Adds player to the world
+        getGameWorld().addEntities(fuelShop, repairShop, oreShop, upgradeShop); //Adds player to the world  
     }
 //------------------------------------------------------------------------------
     @Override
@@ -330,6 +338,13 @@ public class MotherLoadApp extends GameApplication {
     protected void onUpdate(double d) {
         setCamera();
         upDateLand();
+        // Fuel consumption increase if moving (if mouse held down) 
+        // Boolean for checking if held down is in PlayerControl.java
+        if(mouseDown) {
+            fuelLoss = fuelLossDynamic; // 10
+        } else {
+            fuelLoss = fuelLossStatic; // 1
+        }
     }
 //------------------------------------------------------------------------------
     /**
