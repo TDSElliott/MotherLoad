@@ -115,7 +115,7 @@ public class MotherLoadApp extends GameApplication {
         gs.setTitle("MotherLoad");
         gs.setVersion("0.5 [BETA]");
         gs.setIntroEnabled(false);
-        gs.setMenuEnabled(true); //Change later
+        gs.setMenuEnabled(false); //Change later
         gs.setMenuStyle(MenuStyle.WARCRAFT3);
         gs.setProfilingEnabled(true); // Profiing enabled/disabled (dev/release)
         gs.setCloseConfirmation(false); // Close warning enabled/disabled
@@ -567,7 +567,7 @@ public class MotherLoadApp extends GameApplication {
 //------------------------------------------------------------------------------
     public double getDirtType(int Tier, int x) {
 
-        double chance = -.00002 * (x + 20 - (20 * Tier)) * (x - 40 - (20 * Tier));
+        double chance = -0.00003 * (x + 60 - (20 * Tier-1)) * (x - 40 - (20 * Tier-1));
         return chance;
     }
 //------------------------------------------------------------------------------
