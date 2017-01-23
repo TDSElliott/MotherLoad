@@ -441,7 +441,7 @@ public class MotherLoadApp extends GameApplication {
         fuelWindow = new InGameWindow("Fuel Shop", WindowDecor.CLOSE);
         
         Button btnFuel = new Button();
-        btnFuel.setText("Add Fuel");
+        btnFuel.setText("Add Some Fuel");
         
         btnFuel.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -456,17 +456,16 @@ public class MotherLoadApp extends GameApplication {
         
         FlowPane flow = new FlowPane();
         flow.setPadding(new Insets(10, 10, 10, 10));
-        flow.setStyle("-fx-background-color: #33cc33;");
+        flow.setStyle("-fx-background-color: #454545;");
         flow.setHgap(5);
         flow.getChildren().addAll(btnFuel);
-       
         
         fuelWindow.setContentPane(flow);
         
         // Set properties
         fuelWindow.setPrefSize(150, 50);
-        fuelWindow.setPosition(0, 600);
-        fuelWindow.setBackgroundColor(Color.ORANGE);
+        fuelWindow.setPosition(350, 350);
+        //fuelWindow.setBackgroundColor(Color.ORANGE);
 
         // Attach to the game scene as a UI node
         getGameScene().addUINode(fuelWindow);
@@ -499,7 +498,7 @@ public class MotherLoadApp extends GameApplication {
         
         FlowPane flow = new FlowPane();
         flow.setPadding(new Insets(10, 10, 10, 10));
-        flow.setStyle("-fx-background-color: #6600ff;");
+        flow.setStyle("-fx-background-color: #D8D8D8;");
         flow.setHgap(5);
         flow.getChildren().addAll(sellOre);
        
@@ -508,8 +507,8 @@ public class MotherLoadApp extends GameApplication {
         
         // Set properties
         shopWindow.setPrefSize(150, 50);
-        shopWindow.setPosition(325, 600);
-        shopWindow.setBackgroundColor(Color.ORANGE);
+        shopWindow.setPosition(350, 350);
+        //shopWindow.setBackgroundColor(Color.ORANGE);
 
         // Attach to the game scene as a UI node
         getGameScene().addUINode(shopWindow);
@@ -534,7 +533,7 @@ public class MotherLoadApp extends GameApplication {
         
         FlowPane flow = new FlowPane();
         flow.setPadding(new Insets(10, 10, 10, 10));
-        flow.setStyle("-fx-background-color: #DAE6F3;");
+        flow.setStyle("-fx-background-color: #007458;");
         flow.setHgap(5);
         flow.getChildren().addAll(armour);
        
@@ -543,8 +542,8 @@ public class MotherLoadApp extends GameApplication {
         
         // Set properties
         armourWindow.setPrefSize(150, 50);
-        armourWindow.setPosition(650, 600);
-        armourWindow.setBackgroundColor(Color.ORANGE);
+        armourWindow.setPosition(350, 350);
+        //armourWindow.setBackgroundColor(Color.ORANGE);
 
         // Attach to the game scene as a UI node
         getGameScene().addUINode(armourWindow);
