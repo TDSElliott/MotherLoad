@@ -259,10 +259,12 @@ public class MotherLoadApp extends GameApplication {
             @Override
             protected void onCollisionBegin(Entity player, Entity fuelshop) {
                 openFuelWindow();
+                getAudioPlayer().playSound("Store Open.wav");
             }
             @Override
             protected void onCollisionEnd(Entity player, Entity fuelshop) {
                 closeFuelWindow();
+                getAudioPlayer().playSound("Store Close.wav");
             }
         });
         
@@ -271,10 +273,12 @@ public class MotherLoadApp extends GameApplication {
             @Override
             protected void onCollisionBegin(Entity player, Entity oreshop) {
                 openSellWindow();
+                getAudioPlayer().playSound("Store Open.wav");
             }
             @Override
             protected void onCollisionEnd(Entity player, Entity oreshop) {
                 closeSellWindow();
+                getAudioPlayer().playSound("Store Close.wav");
             }
         });
         
@@ -283,10 +287,12 @@ public class MotherLoadApp extends GameApplication {
             @Override
             protected void onCollisionBegin(Entity player, Entity armourShop) {
                 openArmourWindow();
+                getAudioPlayer().playSound("Store Open.wav");
             }
             @Override
             protected void onCollisionEnd(Entity player, Entity armourShop) {
                 closeArmourWindow();
+                getAudioPlayer().playSound("Store Close.wav");
             }
         });
         
