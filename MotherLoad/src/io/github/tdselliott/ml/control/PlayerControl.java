@@ -27,8 +27,8 @@ public class PlayerControl extends AbstractControl {
     private double accelerationX = .06;
     private double accelerationY = .12;
 
-    private int imageWidth = 60;
-    private int imageHight = 60;
+    private int imageWidth = 20;
+    private int imageHight = 20;
 
     private double gravity = 0.06;
 
@@ -128,15 +128,16 @@ public class PlayerControl extends AbstractControl {
         } else {
             simMouseXY = mouse;
         }
-        
+
         mouseHeld = true;
         if (!isInMenu) {
             hKeyDown = true;
             double angleTemp = getAngle(positionXY.add(imageHight / 2, imageWidth / 2), simMouseXY);
-            
+
             if (Math.abs(velocityX) < velocityCapX) {
                 velocityX += Math.cos(angleTemp) * accelerationX;
-            }  velocityY += Math.sin(angleTemp) * accelerationY;
+            }
+            velocityY += Math.sin(angleTemp) * accelerationY;
             if (Math.abs(velocityY) < velocityCapY) {
                 velocityY += Math.sin(angleTemp) * accelerationY;
             } else if (velocityY > velocityCapY && Math.sin(angleTemp) * accelerationY < 0) {
@@ -174,80 +175,234 @@ public class PlayerControl extends AbstractControl {
         groundRight = false;
 
         //Point2D landStart = LandControl.landPos;
-        Point2D landStart = new Point2D(0, 400);
-        double xOffSet1 = -landStart.getX() + positionXY.getX();
-        double yOffSet1 = -landStart.getY() + positionXY.getY();
-        double xOffSet2 = -landStart.getX() + positionXY.getX() + imageWidth;
-        double yOffSet2 = -landStart.getY() + positionXY.getY() + imageWidth;
-        double xOffSet3 = -landStart.getX() + positionXY.getX() + imageWidth / 2;
-        double yOffSet3 = -landStart.getY() + positionXY.getY() + imageWidth / 2;
-        int arrX1 = (int) Math.floor(xOffSet1 / 64);
-        int arrY1 = (int) Math.floor(yOffSet1 / 64);
-        int arrX2 = (int) Math.floor(xOffSet2 / 64);
-        int arrY2 = (int) Math.floor(yOffSet2 / 64);
-        int arrX3 = (int) Math.floor(xOffSet3 / 64);
-        int arrY3 = (int) Math.floor(yOffSet3 / 64);
+//        Point2D landStart = new Point2D(0, 400);
+//        double xOffSet1 = -landStart.getX() + positionXY.getX();
+//        double yOffSet1 = -landStart.getY() + positionXY.getY();
+//        double xOffSet2 = -landStart.getX() + positionXY.getX() + imageWidth;
+//        double yOffSet2 = -landStart.getY() + positionXY.getY() + imageHight;
+//        double xOffSet3 = -landStart.getX() + positionXY.getX() + imageWidth / 2;
+//        double yOffSet3 = -landStart.getY() + positionXY.getY() + imageHight / 2;
+//        int arrX1 = (int) Math.floor(xOffSet1 / 64);
+//        int arrY1 = (int) Math.floor(yOffSet1 / 64);
+//        int arrX2 = (int) Math.floor(xOffSet2 / 64);
+//        int arrY2 = (int) Math.floor(yOffSet2 / 64);
+//        int arrX3 = (int) Math.floor(xOffSet3 / 64);
+//        int arrY3 = (int) Math.floor(yOffSet3 / 64);
+//        int arrY20 = (int) Math.floor(yOffSet2 - 1 / 64);
+        int arrXDown1 = getPosLandX(0, false, true);
+        int arrXDown2 = getPosLandX(1, false, true);
+        int arrXDown3 = getPosLandX(2, false, true);
+        int arrYDown = getPosLandY(1, true, true);
 
-        if (arrX1 >= 0 && arrY1 >= -1) {
-            //Colliding down
-            if (MotherLoadApp.ground[arrX1][arrY1 + 1].isActive()) {
+        if (arrYDown >= 0) {
+            if (MotherLoadApp.ground[arrXDown1][arrYDown].isActive()) {
                 groundDown = true;
-            } else if (MotherLoadApp.ground[arrX2][arrY1 + 1].isActive()) {
+                positionXY = positionXY.add(0, -velocityY);
+            } else if (MotherLoadApp.ground[arrXDown2][arrYDown].isActive()) {
                 groundDown = true;
+                positionXY = positionXY.add(0, -velocityY);
             }
-            if (isPointDown && MotherLoadApp.ground[arrX3][arrY1 + 1].isActive()) {
-                oreType(arrX3, arrY1 + 1);
-                MotherLoadApp.ground[arrX3][arrY1 + 1].removeFromWorld();
-                MotherLoadApp.arrTier[arrX3][arrY1 + 1] = -1;
+            if (isPointDown && MotherLoadApp.ground[arrXDown3][arrYDown].isActive()) {
+                oreType(arrXDown3, arrYDown);
+                MotherLoadApp.ground[arrXDown3][arrYDown].removeFromWorld();
+                MotherLoadApp.arrTier[arrXDown3][arrYDown] = -1;
                 getAudioPlayer().playSound("Dig.wav");
             }
-            if (arrX1 >= 1 && arrY2 >= 0) {
-                //left
-                if (arrY1 >= 0) {
-                    if (MotherLoadApp.ground[arrX2 - 1][arrY1].isActive()) {
-                        groundLeft = true;
-                    }
-                    if (isPointLeft && MotherLoadApp.ground[arrX2 - 1][arrY3].isActive() && groundDown) {
-                        oreType(arrX2 - 1, arrY3);
-                        MotherLoadApp.ground[arrX2 - 1][arrY3].removeFromWorld();
-                        MotherLoadApp.arrTier[arrX2 - 1][arrY3] = -1;
-                        getAudioPlayer().playSound("Dig.wav");
-                    }
-                }
-                if (MotherLoadApp.ground[arrX2 - 1][arrY2].isActive()) {
+
+        }
+        //left / right
+
+        int arrYLR1 = getPosLandY(0, false, true);
+        int arrYLR2 = getPosLandY(1, false, true);
+        int arrYLR3 = getPosLandY(2, false, true);
+
+        //left
+        int arrXLeft = getPosLandX(0, true, true);
+        //right
+        int arrXRight = getPosLandX(1, true, false);
+
+        if (arrYLR2 >= 0) {
+            //left
+            if (MotherLoadApp.ground[arrXLeft][arrYLR2].isActive()) {
+                groundLeft = true;
+                positionXY = positionXY.add(-velocityX, 0);
+            }
+            if (arrYLR1 >= 0) {
+                System.out.println(MotherLoadApp.ground[arrXLeft][arrYLR3].isActive() && groundDown);
+                if (MotherLoadApp.ground[arrXLeft][arrYLR1].isActive()) {
                     groundLeft = true;
+                    if (!groundLeft) {
+                        positionXY = positionXY.add(-velocityX, 0);
+                    }
+                }
+                if (isPointLeft && MotherLoadApp.ground[arrXLeft][arrYLR3].isActive() && groundDown) {
+                    oreType(arrXLeft, arrYLR3);
+                    MotherLoadApp.ground[arrXLeft][arrYLR3].removeFromWorld();
+                    MotherLoadApp.arrTier[arrXLeft][arrYLR3] = -1;
+                    getAudioPlayer().playSound("Dig.wav");
                 }
             }
-            if (arrX1 >= -1 && arrY2 >= 0) {
-                //right
-                if (arrY1 >= 0) {
-                    if (MotherLoadApp.ground[arrX1 + 1][arrY1].isActive()) {
-                        groundRight = true;
-                    }
-                    if (isPointRight && MotherLoadApp.ground[arrX1 + 1][arrY3].isActive() && groundDown) {
-                        oreType(arrX1 + 1, arrY3);
-                        MotherLoadApp.ground[arrX1 + 1][arrY3].removeFromWorld();
-                        MotherLoadApp.arrTier[arrX1 + 1][arrY3] = -1;
-                        getAudioPlayer().playSound("Dig.wav");
-                    }
-                }
-                if (MotherLoadApp.ground[arrX1 + 1][arrY2].isActive()) {
+            //right
+            if (MotherLoadApp.ground[arrXRight][arrYLR2].isActive()) {
+                groundRight = true;
+                positionXY = positionXY.add(-velocityX, 0);
+            }
+            if (arrYLR1 >= 0) {
+                if (MotherLoadApp.ground[arrXRight][arrYLR1].isActive()) {
                     groundRight = true;
+                    if (!groundRight) {
+                        positionXY = positionXY.add(-velocityX, 0);
+                    }
                 }
-            }
-            if (arrX1 >= 0 && arrY1 >= 1) {
-                //up
-                if (MotherLoadApp.ground[arrX1][arrY2 - 1].isActive()) {
-                    groundUp = true;
-                } else if (MotherLoadApp.ground[arrX2][arrY2 - 1].isActive()) {
-                    groundUp = true;
+                if (isPointRight && MotherLoadApp.ground[arrXRight][arrYLR3].isActive() && groundDown) {
+                    oreType(arrXRight, arrYLR3);
+                    MotherLoadApp.ground[arrXRight][arrYLR3].removeFromWorld();
+                    MotherLoadApp.arrTier[arrXRight][arrYLR3] = -1;
+                    getAudioPlayer().playSound("Dig.wav");
                 }
             }
         }
-        isPointDown = false;
-        isPointUp = false;
-        isPointLeft = false;
-        isPointRight = false;
+//        if (arrX1 >= 0 && arrY1 >= 1) {
+//             //up
+//            if (MotherLoadApp.ground[arrX1][arrY1].isActive()) {
+//                groundUp = true;
+//            } else if (MotherLoadApp.ground[arrX2][arrY1].isActive()) {
+//                groundUp = true;
+//            }
+//        }
+        
+//        if (arrX1 >= 0 && arrY2 >= 0) {
+//            //Colliding down
+//            if (MotherLoadApp.ground[arrX1][arrY2].isActive()) {
+//                groundDown = true;
+//                positionXY.add(0, -velocityY);
+//            } else if (MotherLoadApp.ground[arrX2][arrY2].isActive()) {
+//                groundDown = true;
+//                positionXY.add(0, -velocityY);
+//            }
+//            if (isPointDown && MotherLoadApp.ground[arrX3][arrY2].isActive()) {
+//                oreType(arrX3, arrY2);
+//                MotherLoadApp.ground[arrX3][arrY2].removeFromWorld();
+//                MotherLoadApp.arrTier[arrX3][arrY2] = -1;
+//                getAudioPlayer().playSound("Dig.wav");
+//            }
+//            if (arrX1 >= 1) {
+//                //left
+//                int arrX4 = (int) Math.floor((xOffSet1 - 1) / 64);
+//                if (arrY20 >= 0) {
+//                    if (MotherLoadApp.ground[arrX4][arrY20].isActive()) {
+//                        groundLeft = true;
+//                        positionXY.add(-velocityX, 0);
+//                    }
+//                    if (arrY2 > 0) {
+//                        if (MotherLoadApp.ground[arrX4][arrY1].isActive()) {
+//                            groundLeft = true;
+//                            if (!groundLeft) {
+//                                positionXY.add(-velocityX, 0);
+//                            }
+//                        }
+//                        if (isPointLeft && MotherLoadApp.ground[arrX4][arrY3].isActive() && groundDown) {
+//                            oreType(arrX4, arrY3);
+//                            MotherLoadApp.ground[arrX4][arrY3].removeFromWorld();
+//                            MotherLoadApp.arrTier[arrX4][arrY3] = -1;
+//                            getAudioPlayer().playSound("Dig.wav");
+//                        }
+//                    }
+//                }
+//            }
+//            if (arrX1 >= -1) {
+//                //right
+//                int arrX5 = (int) Math.floor((xOffSet2 + 1) / 64);
+//                if (arrY20 >= 0) {
+//
+//                    if (MotherLoadApp.ground[arrX5][arrY20].isActive()) {
+//                        groundRight = true;
+//                    }
+//                    if (arrY2 > 0) {
+//                        if (MotherLoadApp.ground[arrX5][arrY1].isActive()) {
+//                            groundRight = true;
+//                        }
+//                        if (isPointRight && MotherLoadApp.ground[arrX5][arrY3].isActive() && groundDown) {
+//                            oreType(arrX5, arrY3);
+//                            MotherLoadApp.ground[arrX5][arrY3].removeFromWorld();
+//                            MotherLoadApp.arrTier[arrX5][arrY3] = -1;
+//                            getAudioPlayer().playSound("Dig.wav");
+//                        }
+//                    }
+//                }
+//
+//            }
+//            if (arrX1 >= 0 && arrY1 >= 1) {
+//                //up
+//                if (MotherLoadApp.ground[arrX1][arrY1].isActive()) {
+//                    groundUp = true;
+//                } else if (MotherLoadApp.ground[arrX2][arrY1].isActive()) {
+//                    groundUp = true;
+//                }
+//            }
+//        }
+            isPointDown = false;
+            isPointUp = false;
+            isPointLeft = false;
+            isPointRight = false;
+        }
+
+    
+
+    public int getPosLandX(int point, boolean isSide, boolean Left) {
+        Point2D landStart = new Point2D(0, 400);
+        double offset;
+        switch (point) {
+            case 0:
+                offset = -landStart.getX() + positionXY.getX();
+                break;
+            case 1:
+                offset = -landStart.getX() + positionXY.getX() + imageWidth;
+                break;
+            case 2:
+                offset = -landStart.getX() + positionXY.getX() + imageWidth / 2;
+                break;
+            default:
+                offset = 0;
+        }
+        if (isSide) {
+            if (Left) {
+                offset -= 1;
+            } else {
+                offset += 1;
+            }
+        }
+
+        int posX = (int) Math.floor(offset / 64);
+        return posX;
+    }
+
+    public int getPosLandY(int point, boolean isSide, boolean Down) {
+        Point2D landStart = new Point2D(0, 400);
+        double offset;
+        switch (point) {
+            case 0:
+                offset = -landStart.getY() + positionXY.getY();
+                break;
+            case 1:
+                offset = -landStart.getY() + positionXY.getY() + imageWidth;
+                break;
+            case 2:
+                offset = -landStart.getY() + positionXY.getY() + imageWidth / 2;
+                break;
+            default:
+                offset = 0;
+        }
+        if (isSide) {
+            if (Down) {
+                offset += 1;
+            } else {
+                offset -= 1;
+            }
+        }
+
+        int posY = (int) Math.floor(offset / 64);
+        return posY;
     }
 
     public Point2D rtnPosition() {
