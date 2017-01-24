@@ -260,27 +260,38 @@ public class PlayerControl extends AbstractControl {
             case 2:
                 MotherLoadApp.ironOre++;
                 getAudioPlayer().playSound("Iron Ore.wav");
-                System.out.println("Iron: " + MotherLoadApp.ironOre);
                 break;
             case 3:
                 MotherLoadApp.bronzeOre++;
                 getAudioPlayer().playSound("Bronze Ore.wav");
-                System.out.println("Bronze: " + MotherLoadApp.bronzeOre);
                 break;
             case 4:
                 MotherLoadApp.silverOre++;
                 getAudioPlayer().playSound("Silver Ore.wav");
-                System.out.println("Silver: " + MotherLoadApp.silverOre);
                 break;
             case 5:
                 MotherLoadApp.goldOre++;
                 getAudioPlayer().playSound("Gold Ore.wav");
-                System.out.println("Gold: " + MotherLoadApp.goldOre);
                 break;
             case 6:
                 MotherLoadApp.titOre++;
                 getAudioPlayer().playSound("Titanium Ore.wav");
-                System.out.println("Titanium: " + MotherLoadApp.titOre);
+                break;
+            case 7:
+                MotherLoadApp.estOre++;
+                getAudioPlayer().playSound("Est Ore.wav");
+                break;
+            case 8:
+                MotherLoadApp.emeraldOre++;
+                getAudioPlayer().playSound("Emerald Ore.wav");
+                break;
+            case 9:
+                MotherLoadApp.rubyOre++;
+                getAudioPlayer().playSound("Ruby Ore.wav");
+                break;
+            case 10:
+                MotherLoadApp.diamOre++;
+                getAudioPlayer().playSound("Diamond Ore.wav");
                 break;
             default:
                 break;
