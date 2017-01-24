@@ -92,7 +92,7 @@ public class MotherLoadApp extends GameApplication {
     private InGameWindow fuelWindow, armourWindow, shopWindow;
     private boolean mouseDown = false;
     
-    public static int ironOre, bronzeOre, silverOre, goldOre, titOre;
+    public static int ironOre, bronzeOre, silverOre, goldOre, titOre, estOre, emeraldOre, rubyOre, diamOre;
     // fuelLoss and fuelLossStatic will be the same, but it cleans up lower code
     private int fuelLoss = 1, fuelLossStatic = 1, fuelLossDynamic = 10;
     
@@ -382,7 +382,7 @@ public class MotherLoadApp extends GameApplication {
 
         for (int y = posY; y < posY + 15; y++) { //X For loop
             for (int x = posX; x < posX + 15; x++) { //Y For loop
-                int TierSize = 5; //Amount of ores in the game
+                int TierSize = 9; //Amount of ores in the game
                 boolean hasPickedGround = false;
 
                 if (y >= 0 && x >= 0 && arrTier[x][y] == 0) {
@@ -485,15 +485,19 @@ public class MotherLoadApp extends GameApplication {
             @Override
             public void handle(ActionEvent event) {
                 int bank = 0;
-                bank += ironOre *   10;
-                bank += bronzeOre * 100;
-                bank += silverOre * 1000;
-                bank += goldOre *   10000;
-                bank += titOre *    100000;
+                bank += ironOre *   1;
+                bank += bronzeOre * 5;
+                bank += silverOre * 10;
+                bank += goldOre *   50;
+                bank += titOre *    100;
+                bank += estOre *    500;
+                bank += emeraldOre *1000;
+                bank += rubyOre *   5000;
+                bank += diamOre *   10000;
                 
                 credits.set(credits.get() + bank);
                 bank = 0;
-                ironOre = 0; bronzeOre = 0; silverOre = 0; goldOre = 0; titOre = 0;
+                ironOre = 0; bronzeOre = 0; silverOre = 0; goldOre = 0; titOre = 0; estOre = 0; emeraldOre = 0; rubyOre = 0; diamOre = 0;
             }
         });
         
