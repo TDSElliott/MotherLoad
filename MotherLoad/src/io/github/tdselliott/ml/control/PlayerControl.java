@@ -21,11 +21,12 @@ public class PlayerControl extends AbstractControl {
 
     private Point2D positionXY;
     private Point2D mouseXY;
-    private Point2D simMouseXY;
+    private Point2D simMouseXY = new Point2D(0, 0);
     private double velocityX = 0;
     private double velocityY = 0;
     private double accelerationX = .06;
     private double accelerationY = .12;
+    private double lastAngle = 0;
 
     private int imageWidth = 20;
     private int imageHight = 20;
@@ -37,8 +38,7 @@ public class PlayerControl extends AbstractControl {
     private double velocityDecay = .1;
 
     private boolean isInMenu = false;
-    private boolean mouseHeld = false;
-
+    private boolean mouseDownBug = false;
     private boolean isPointDown = false;
     private boolean isPointUp = false;
     private boolean isPointLeft = false;
@@ -117,22 +117,29 @@ public class PlayerControl extends AbstractControl {
         hKeyDown = false;
     }
 
-    public void mouseDown(Point2D mouse) {
-        mouseXY = mouse;
-        mouseHeld = true;
+    public void mouseDown(Point2D mouse2) {
+        mouseXY = mouse2;
     }
 
     public void moveToMouse(Point2D mouse) {
-        if (mouse == mouseXY) {
-            simMouseXY.add(velocityX, velocityY);
+        if ((int) mouse.getX() == (int) simMouseXY.getX() && (int) mouse.getY() == (int) simMouseXY.getY()) {
+            mouseDownBug = true;
         } else {
-            simMouseXY = mouse;
+            mouseDownBug = false;
         }
 
-        mouseHeld = true;
         if (!isInMenu) {
             hKeyDown = true;
-            double angleTemp = getAngle(positionXY.add(imageHight / 2, imageWidth / 2), simMouseXY);
+            
+            double angleTemp;
+            if (mouseDownBug) {
+                angleTemp = lastAngle;
+                System.out.println("y");
+            } else {
+                angleTemp = getAngle(positionXY.add(imageHight / 2, imageWidth / 2), mouse);
+                lastAngle = angleTemp;
+                System.out.println("n");
+            }
 
             if (Math.abs(velocityX) < velocityCapX) {
                 velocityX += Math.cos(angleTemp) * accelerationX;
@@ -147,7 +154,7 @@ public class PlayerControl extends AbstractControl {
             if (angleTemp > Math.PI / 4 && angleTemp < 3 * Math.PI / 4) {
                 isPointDown = true;
             } else if (angleTemp > 5 * Math.PI / 4 && angleTemp < 7 * Math.PI / 4) {
-                isPointUp = true;
+                //break isPointUp = true;
             } else if (angleTemp > 3 * Math.PI / 4 && angleTemp < 5 * Math.PI / 4) {
                 isPointLeft = true;
             } else {
@@ -174,21 +181,6 @@ public class PlayerControl extends AbstractControl {
         groundLeft = false;
         groundRight = false;
 
-        //Point2D landStart = LandControl.landPos;
-//        Point2D landStart = new Point2D(0, 400);
-//        double xOffSet1 = -landStart.getX() + positionXY.getX();
-//        double yOffSet1 = -landStart.getY() + positionXY.getY();
-//        double xOffSet2 = -landStart.getX() + positionXY.getX() + imageWidth;
-//        double yOffSet2 = -landStart.getY() + positionXY.getY() + imageHight;
-//        double xOffSet3 = -landStart.getX() + positionXY.getX() + imageWidth / 2;
-//        double yOffSet3 = -landStart.getY() + positionXY.getY() + imageHight / 2;
-//        int arrX1 = (int) Math.floor(xOffSet1 / 64);
-//        int arrY1 = (int) Math.floor(yOffSet1 / 64);
-//        int arrX2 = (int) Math.floor(xOffSet2 / 64);
-//        int arrY2 = (int) Math.floor(yOffSet2 / 64);
-//        int arrX3 = (int) Math.floor(xOffSet3 / 64);
-//        int arrY3 = (int) Math.floor(yOffSet3 / 64);
-//        int arrY20 = (int) Math.floor(yOffSet2 - 1 / 64);
         int arrXDown1 = getPosLandX(0, false, true);
         int arrXDown2 = getPosLandX(1, false, true);
         int arrXDown3 = getPosLandX(2, false, true);
@@ -262,92 +254,26 @@ public class PlayerControl extends AbstractControl {
                 }
             }
         }
-//        if (arrX1 >= 0 && arrY1 >= 1) {
-//             //up
-//            if (MotherLoadApp.ground[arrX1][arrY1].isActive()) {
-//                groundUp = true;
-//            } else if (MotherLoadApp.ground[arrX2][arrY1].isActive()) {
-//                groundUp = true;
-//            }
-//        }
-        
-//        if (arrX1 >= 0 && arrY2 >= 0) {
-//            //Colliding down
-//            if (MotherLoadApp.ground[arrX1][arrY2].isActive()) {
-//                groundDown = true;
-//                positionXY.add(0, -velocityY);
-//            } else if (MotherLoadApp.ground[arrX2][arrY2].isActive()) {
-//                groundDown = true;
-//                positionXY.add(0, -velocityY);
-//            }
-//            if (isPointDown && MotherLoadApp.ground[arrX3][arrY2].isActive()) {
-//                oreType(arrX3, arrY2);
-//                MotherLoadApp.ground[arrX3][arrY2].removeFromWorld();
-//                MotherLoadApp.arrTier[arrX3][arrY2] = -1;
-//                getAudioPlayer().playSound("Dig.wav");
-//            }
-//            if (arrX1 >= 1) {
-//                //left
-//                int arrX4 = (int) Math.floor((xOffSet1 - 1) / 64);
-//                if (arrY20 >= 0) {
-//                    if (MotherLoadApp.ground[arrX4][arrY20].isActive()) {
-//                        groundLeft = true;
-//                        positionXY.add(-velocityX, 0);
-//                    }
-//                    if (arrY2 > 0) {
-//                        if (MotherLoadApp.ground[arrX4][arrY1].isActive()) {
-//                            groundLeft = true;
-//                            if (!groundLeft) {
-//                                positionXY.add(-velocityX, 0);
-//                            }
-//                        }
-//                        if (isPointLeft && MotherLoadApp.ground[arrX4][arrY3].isActive() && groundDown) {
-//                            oreType(arrX4, arrY3);
-//                            MotherLoadApp.ground[arrX4][arrY3].removeFromWorld();
-//                            MotherLoadApp.arrTier[arrX4][arrY3] = -1;
-//                            getAudioPlayer().playSound("Dig.wav");
-//                        }
-//                    }
-//                }
-//            }
-//            if (arrX1 >= -1) {
-//                //right
-//                int arrX5 = (int) Math.floor((xOffSet2 + 1) / 64);
-//                if (arrY20 >= 0) {
-//
-//                    if (MotherLoadApp.ground[arrX5][arrY20].isActive()) {
-//                        groundRight = true;
-//                    }
-//                    if (arrY2 > 0) {
-//                        if (MotherLoadApp.ground[arrX5][arrY1].isActive()) {
-//                            groundRight = true;
-//                        }
-//                        if (isPointRight && MotherLoadApp.ground[arrX5][arrY3].isActive() && groundDown) {
-//                            oreType(arrX5, arrY3);
-//                            MotherLoadApp.ground[arrX5][arrY3].removeFromWorld();
-//                            MotherLoadApp.arrTier[arrX5][arrY3] = -1;
-//                            getAudioPlayer().playSound("Dig.wav");
-//                        }
-//                    }
-//                }
-//
-//            }
-//            if (arrX1 >= 0 && arrY1 >= 1) {
-//                //up
-//                if (MotherLoadApp.ground[arrX1][arrY1].isActive()) {
-//                    groundUp = true;
-//                } else if (MotherLoadApp.ground[arrX2][arrY1].isActive()) {
-//                    groundUp = true;
-//                }
-//            }
-//        }
-            isPointDown = false;
-            isPointUp = false;
-            isPointLeft = false;
-            isPointRight = false;
+
+        //up
+        int arrYUp = getPosLandY(0, true, false);
+        int arrXup1 = getPosLandX(0, false, false);
+        int arrXup2 = getPosLandX(1, false, false);
+        if (arrYUp >= 0) {
+            if (MotherLoadApp.ground[arrXup1][arrYUp].isActive()) {
+                groundUp = true;
+                positionXY = positionXY.add(0, -velocityY);
+            } else if (MotherLoadApp.ground[arrXup2][arrYUp].isActive()) {
+                groundUp = true;
+                positionXY = positionXY.add(0, -velocityY);
+            }
         }
 
-    
+        isPointDown = false;
+        isPointUp = false;
+        isPointLeft = false;
+        isPointRight = false;
+    }
 
     public int getPosLandX(int point, boolean isSide, boolean Left) {
         Point2D landStart = new Point2D(0, 400);
@@ -436,5 +362,4 @@ public class PlayerControl extends AbstractControl {
                 break;
         }
     }
-
 }
