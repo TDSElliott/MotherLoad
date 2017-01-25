@@ -1,0 +1,21 @@
+12:20:39.170 [FXGL Launcher Thread     ] DEBUG FXGLLoggerFactory    - Service [LoggerFactory] initialized
+12:20:39.174 [FXGL Launcher Thread     ] DEBUG FXGL                 - FXGL configuration complete
+12:20:39.174 [FXGL Launcher Thread     ] DEBUG FXGL                 - Loading FXGL system data
+12:20:39.178 [FXGL Launcher Thread     ] DEBUG IOTask               - Executing task: readDataTask(system/fxgl.bundle)
+12:20:39.180 [FXGL Launcher Thread     ] DEBUG FS                   - Reading from: system\fxgl.bundle
+12:20:39.185 [FXGL Launcher Thread     ] DEBUG IOTask               - Task succeeded: readDataTask(system/fxgl.bundle)
+12:20:39.185 [FXGL Launcher Thread     ] DEBUG Bundle               - Logging bundle: FXGL
+12:20:39.187 [FXGL Launcher Thread     ] DEBUG Bundle               - FXGL.offline.timer.version.check=2017-01-20T14:05:01.750
+12:20:39.196 [FXGL Launcher Thread     ] DEBUG GameApplication      - Configuring GameApplication
+12:20:39.200 [FXGL Launcher Thread     ] DEBUG FXGLExceptionHandler - Service [ExceptionHandler] initialized
+12:20:39.200 [FXGL Launcher Thread     ] DEBUG FXGLEventBus         - Service [EventBus] initialized
+12:20:39.203 [FXGL Launcher Thread     ] DEBUG FXGLExecutor         - Service [Executor] initialized
+12:20:39.203 [FXGL Launcher Thread     ] DEBUG PreInitTask          - Injecting gameWorld & physicsWorld
+12:20:39.207 [FXGL Launcher Thread     ] DEBUG GameWorld            - Game world initialized
+12:20:39.240 [FXGL Launcher Thread     ] DEBUG FXGLPooler           - Service [Pooler] initialized with default size = 128
+12:20:39.240 [FXGL Launcher Thread     ] DEBUG PhysicsWorld         - Physics world initialized: appHeight=700.0, physics.ppm=50.0
+12:20:39.241 [FXGL Launcher Thread     ] DEBUG FXGLInput            - Service [Input] initialized
+12:20:39.257 [FXGL Launcher Thread     ] DEBUG FXGLInput            - Registered new binding: Screenshot - P
+12:20:39.257 [FXGL Launcher Thread     ] DEBUG FXGLInput            - Registered new binding: Dev Options - CTRL+0
+12:20:39.258 [FXGL Launcher Thread     ] DEBUG FXGLInput            - Registered new binding: Move With Mouse - PRIMARY
+12:20:39.258 [FXGL Launcher Thread     ] DEBUG FXGLInput            - Registered new binding: Move up - W
