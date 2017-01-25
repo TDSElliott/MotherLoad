@@ -132,7 +132,7 @@ public class EntityFactory {
         GameEntity upgradeShop = new GameEntity();
         // This sets physics to enabled, it allows the collision detection to work
         upgradeShop.addComponent(new CollidableComponent(true));
-        upgradeShop.getTypeComponent().setValue(EntityType.UPGRADE);
+        upgradeShop.getTypeComponent().setValue(EntityType.UPGRADESHOP);
         upgradeShop.getMainViewComponent().setView(new EntityView(assetLoader.loadTexture("upgrade.png", 256, 256)), true);
 
         upgradeShop.getPositionComponent().setValue(x, y);

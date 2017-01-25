@@ -30,7 +30,8 @@ public class BackgroundControl extends AbstractControl {
     protected MainViewComponent image;
     protected RotationComponent rotation;
 
-    private double screenSizeMulitply = 4;
+    private double screenSizeMulitply = 1;
+    public double screenSizeMin = 1;
     private int screenSizeX = 1600;
     private int screenSizeY = 1400;
     private int offsetX = 0;
@@ -42,7 +43,7 @@ public class BackgroundControl extends AbstractControl {
     private boolean radarEnabled = false;
 
     private static AssetLoader assetLoader;
-    
+
     MotherLoadApp app = (MotherLoadApp) FXGL.getApp();
 
     static {
@@ -68,14 +69,14 @@ public class BackgroundControl extends AbstractControl {
             if (radarEnabled) {
                 rotation.rotateBy(2);
             }
-            int posY = (int) Math.floor((400 +app.CtrPlayer.rtnPosition().getY()) / 64);
-            
+            int posY = (int) Math.floor((400 + app.CtrPlayer.rtnPosition().getY()) / 64);
+
             if (posY >= 10) {
                 screenSizeMulitply = (1 / (.02 * posY)) + 1;
             } else {
                 screenSizeMulitply = 4;
             }
-            
+
             if ((int) (screenSizeMulitply * 1600) != screenSizeX) {
                 screenSizeX = (int) (screenSizeMulitply * 1600);
                 screenSizeY = (int) (screenSizeMulitply * 1400);
@@ -88,9 +89,14 @@ public class BackgroundControl extends AbstractControl {
         }
     }
 
+    /**
+     * enables radar
+     */
     public void enableRadar() {
         scaledImage = assetLoader.loadTexture("Darkness_Radar.png", screenSizeX, screenSizeY);
         image.setView(scaledImage);
+    }
+        public void enableRadarSpin() {
         radarEnabled = true;
     }
 

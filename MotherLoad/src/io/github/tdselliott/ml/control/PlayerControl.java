@@ -26,8 +26,8 @@ public class PlayerControl extends AbstractControl {
     private Point2D simMouseXY = new Point2D(0, 0);
     private double velocityX = 0;
     private double velocityY = 0;
-    private double accelerationX = .06;
-    private double accelerationY = .12;
+    public double accelerationX = .06;
+    public double accelerationY = .12;
     private double lastAngle = 0;
 
     private final int imageWidth = 50;
@@ -35,11 +35,11 @@ public class PlayerControl extends AbstractControl {
 
     private double gravity = 0.06;
 
-    private final double velocityCapX = 5;
-    private final double velocityCapY = 5;
+    private final double velocityCapX = 7;
+    private final double velocityCapY = 10;
     private final double velocityDecay = .1;
 
-    private boolean isInMenu = false;
+    public boolean isInMenu = false;
     private boolean mouseDownBug = false;
 
     private boolean isPointDown = false;
@@ -59,7 +59,7 @@ public class PlayerControl extends AbstractControl {
     private boolean lessThenX = false;
     private boolean lessThenY = false;
 
-    private double drillSpeed = 10;
+    public double drillSpeed = 1;
 
     private int animateX;
     private int animateY;
@@ -77,7 +77,7 @@ public class PlayerControl extends AbstractControl {
     @Override
     public void onAdded(Entity entity) {
         position = entity.getComponentUnsafe(PositionComponent.class);
-    } 
+    }
 
     @Override
     public void onUpdate(Entity entity, double d) {
@@ -89,7 +89,7 @@ public class PlayerControl extends AbstractControl {
         } else {
             animateToBlock();
         }
-        
+
         app.CtrBackground.setPosition(positionXY.getX() - 400, positionXY.getY() - 350);
         app.CtrDarkness.setPosition(positionXY.getX() - 400, positionXY.getY() - 350);
 //        System.out.println("player Hight = " + getPosLandY(2, true, true));
@@ -122,19 +122,19 @@ public class PlayerControl extends AbstractControl {
         }
 
         int arrX = getPosLandX(0, false, true);
-        if(arrX < 10 || arrX > 990){
+        if (arrX < 10 || arrX > 990) {
             velocityX = -velocityX;
         }
-      
+
         if (velocityY > velocityCapY) {
-            velocityY = 5;
+            velocityY = 10;
         } else if (velocityY < -velocityCapY) {
-            velocityY = -5;
+            velocityY = -10;
         }
         if (velocityX > velocityCapX) {
-            velocityX = 5;
+            velocityX = 7;
         } else if (velocityX < -velocityCapX) {
-            velocityX = -5;
+            velocityX = -7;
         }
 
         positionXY = positionXY.add(velocityX, velocityY);
@@ -159,7 +159,7 @@ public class PlayerControl extends AbstractControl {
     public void moveToMouse(Point2D mouse) {
         mouseDownBug = (int) mouse.getX() == (int) simMouseXY.getX() && (int) mouse.getY() == (int) simMouseXY.getY();
 
-        if (!isInMenu && !isAnimating) {
+        if (!isAnimating) {
             hKeyDown = true;
 
             double angleTemp;
@@ -208,31 +208,33 @@ public class PlayerControl extends AbstractControl {
     }
 
     public void setAnimateStart(int x, int y, boolean side) {
-        double pointY;
+        if (!isInMenu) {
+            double pointY;
 
-        lessThenX = false;
-        lessThenY = false;
-        isAnimating = true;
+            lessThenX = false;
+            lessThenY = false;
+            isAnimating = true;
 
-        animateX = x;
-        animateY = y;
+            animateX = x;
+            animateY = y;
 
-        double pointX = (64 * x) + 32 - (imageWidth / 2);
-        if (side) {
-            pointY = (64 * y) + landStart.getY() + 62 - imageHight;
-        } else {
-            pointY = (64 * y) + landStart.getY() + 55 - imageHight;
-        }
+            double pointX = (64 * x) + 32 - (imageWidth / 2);
+            if (side) {
+                pointY = (64 * y) + landStart.getY() + 62 - imageHight;
+            } else {
+                pointY = (64 * y) + landStart.getY() + 55 - imageHight;
+            }
 
-        animateTargit = new Point2D(pointX, pointY);
+            animateTargit = new Point2D(pointX, pointY);
 
-        animateAngle = getAngle(positionXY, animateTargit);
+            animateAngle = getAngle(positionXY, animateTargit);
 
-        if (pointX < positionXY.getX()) {
-            lessThenX = true;
-        }
-        if (pointY < positionXY.getY()) {
-            lessThenY = true;
+            if (pointX < positionXY.getX()) {
+                lessThenX = true;
+            }
+            if (pointY < positionXY.getY()) {
+                lessThenY = true;
+            }
         }
     }
 
@@ -252,7 +254,7 @@ public class PlayerControl extends AbstractControl {
         groundUp = false;
         groundLeft = false;
         groundRight = false;
-        
+
         int arrXDown1 = getPosLandX(0, false, true);
         int arrXDown2 = getPosLandX(1, false, true);
         int arrXDown3 = getPosLandX(2, false, true);
@@ -261,11 +263,26 @@ public class PlayerControl extends AbstractControl {
         if (arrYDown >= 0) {
             if (MotherLoadApp.ground[arrXDown1][arrYDown].isActive()) {
                 groundDown = true;
+                if (velocityY > 9) {
+                    app.damagePlayer(25);
+                } else if (velocityY > 8) {
+                    app.damagePlayer(10);
+                } else if (velocityY > 7) {
+                    app.damagePlayer(10);
+                }
+
                 if (Math.abs(velocityY) > 1) {
                     positionXY = positionXY.add(0, -velocityY);
                 }
             } else if (MotherLoadApp.ground[arrXDown2][arrYDown].isActive()) {
                 groundDown = true;
+                if (velocityY > 9) {
+                    app.damagePlayer(25);
+                } else if (velocityY > 8) {
+                    app.damagePlayer(10);
+                } else if (velocityY > 7) {
+                    app.damagePlayer(10);
+                }
                 if (Math.abs(velocityY) > 1) {
                     positionXY = positionXY.add(0, -velocityY);
                 }
