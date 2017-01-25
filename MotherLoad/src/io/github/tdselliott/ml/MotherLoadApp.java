@@ -183,7 +183,6 @@ public class MotherLoadApp extends GameApplication {
         getAudioPlayer().setGlobalMusicVolume(0.3); //Sets the music volume to 30%
         getAudioPlayer().setGlobalSoundVolume(0.5); //Sets the sound volume to 50%
         getAudioPlayer().playMusic("29 BONUS Horror.mp3"); //Plays the background music
-
         //Create player
         player = EntityFactory.newPlayer(2000, 100); //Adds player at (100, 100)
         getGameWorld().addEntity(player); //Adds player to the world
