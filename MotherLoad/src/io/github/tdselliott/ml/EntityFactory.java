@@ -33,7 +33,6 @@ import com.almasb.fxgl.entity.component.CollidableComponent;
 import io.github.tdselliott.ml.control.LandControl;
 import io.github.tdselliott.ml.control.PlayerControl;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 
 /**
@@ -49,13 +48,11 @@ public class EntityFactory {
     }
 
     public static Entity newPlayer(double x, double y) {
-        //
+        //Creates a new game entity called Player
         GameEntity Player = new GameEntity();
 
-        //
-        Player.getTypeComponent().setValue(EntityType.PLAYER);
-        Player.getPositionComponent().setValue(x, y);
-        //Player.getMainViewComponent().setView(new EntityView(assetLoader.loadTexture("PlayerLeft.png")), true);
+        Player.getTypeComponent().setValue(EntityType.PLAYER); //Sets the Player EntityType to the player
+        Player.getPositionComponent().setValue(x, y); //Adds the player at the given coordinates
         Player.getMainViewComponent().setView(new Rectangle(20, 20, Color.BLACK), true);
 
         //Components
@@ -63,16 +60,15 @@ public class EntityFactory {
 
         //Control
         Player.addControl(new PlayerControl(x, y));
-
-        //
+        
         return Player;
     }
 
     public static Entity newGround(double x, double y, int arrX, int arrY, int Tier) {
-        GameEntity ground = new GameEntity(); //Creates a new grounf GameEntity
+        GameEntity ground = new GameEntity(); //Creates a new ground GameEntity
         ground.getTypeComponent().setValue(EntityType.GROUND); //Sets it to the GROUND EntityType
         ground.getMainViewComponent().setView(new EntityView(assetLoader.loadTexture("Ground" + Tier + ".png", 64, 64)), false); //Sets the image
-        ground.getPositionComponent().setValue(x, y);
+        ground.getPositionComponent().setValue(x, y); //Adds the ground at the given coordinates
 
         //Control
         ground.addControl(new LandControl(Tier));

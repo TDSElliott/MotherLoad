@@ -1,12 +1,6 @@
 package io.github.tdselliott.ml;
 
 import com.almasb.ents.Entity;
-import com.almasb.fxgl.app.ApplicationMode;
-import com.almasb.fxgl.app.GameApplication;
-import com.almasb.fxgl.entity.EntityView;
-import com.almasb.fxgl.entity.GameEntity;
-import com.almasb.fxgl.entity.ScrollingBackgroundView;
-import com.almasb.fxgl.gameplay.qte.QTE;
 import com.almasb.fxgl.input.ActionType;
 import com.almasb.fxgl.input.Input;
 import com.almasb.fxgl.input.InputMapping;
@@ -14,66 +8,33 @@ import com.almasb.fxgl.input.OnUserAction;
 import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.physics.CollisionHandler;
 import com.almasb.fxgl.physics.PhysicsWorld;
-import com.almasb.fxgl.scene.SceneFactory;
 import com.almasb.fxgl.scene.menu.MenuStyle;
-import com.almasb.fxgl.settings.GameSettings;
 import com.almasb.fxgl.ui.InGameWindow;
 import com.almasb.fxgl.ui.InGameWindow.WindowDecor;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonFormat.Shape;
-import io.github.tdselliott.ml.control.LandControl;
 import io.github.tdselliott.ml.control.PlayerControl;
-import java.util.ArrayList;
-import java.util.Random;
 import static javafx.application.Application.launch;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.geometry.NodeOrientation;
-import javafx.geometry.Orientation;
-import javafx.geometry.Point2D;
-
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-
 import javafx.util.Duration;
-
 import javafx.scene.control.Button;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
-
-import com.almasb.fxgl.app.ApplicationMode;
-import com.almasb.fxgl.app.GameApplication;
-import com.almasb.fxgl.audio.AudioPlayer;
-import com.almasb.fxgl.audio.Music;
-import com.almasb.fxgl.event.NotificationEvent;
 import com.almasb.fxgl.io.DataFile;
 import com.almasb.fxgl.scene.FXGLMenu;
-import com.almasb.fxgl.scene.SceneFactory;
 import com.almasb.fxgl.scene.menu.FXGLDefaultMenu;
 import com.almasb.fxgl.scene.menu.MenuType;
-import com.almasb.fxgl.settings.GameSettings;
-import com.almasb.fxgl.settings.UserProfile;
-import com.almasb.fxgl.time.UpdateEvent;
 import java.io.Serializable;
 import javafx.scene.Node;
 import javafx.scene.text.Text;
-import org.jetbrains.annotations.NotNull;
 import javafx.scene.media.AudioClip;
-
 import com.almasb.fxgl.app.ApplicationMode;
 import com.almasb.fxgl.app.GameApplication;
-import com.almasb.fxgl.scene.IntroScene;
 import com.almasb.fxgl.scene.SceneFactory;
-import com.almasb.fxgl.scene.intro.VideoIntroScene;
 import com.almasb.fxgl.settings.GameSettings;
 import org.jetbrains.annotations.NotNull;
 
@@ -127,7 +88,7 @@ public class MotherLoadApp extends GameApplication {
     protected SceneFactory initSceneFactory() {
         return new SceneFactory() {
 
-            // 2. override main menu and things you need
+            //Override main menu and things you need
             @NotNull
             @Override
             public FXGLMenu newMainMenu(@NotNull GameApplication app) {
@@ -140,7 +101,7 @@ public class MotherLoadApp extends GameApplication {
                 };
             }
 
-            // 4. override game menu
+            //Override game menu
             @NotNull
             @Override
             public FXGLMenu newGameMenu(@NotNull GameApplication app) {
@@ -174,7 +135,7 @@ public class MotherLoadApp extends GameApplication {
 //------------------------------------------------------------------------------
     @Override
     protected void initInput() {
-        Input input = getInput(); // get input service
+        Input input = getInput(); //Get input service
         
         input.addAction(new UserAction("Move With Mouse") {
             @Override
@@ -220,23 +181,7 @@ public class MotherLoadApp extends GameApplication {
         int groundStartX = 0;
         int groundStartY = 400;
 
-        // 1. load texture to be the background and specify orientation (horizontal or vertical) 
-//        getGameScene().addGameView(new ScrollingBackgroundView(getAssetLoader().loadTexture("Background.png", 1066, 600),
-//                Orientation.HORIZONTAL));
         getGameScene().getViewport().bindToEntity(player, 400, 350);
-        //getGameScene().getViewport().setZoom(.5);
-        // QUICKTIME EVENTS CODE BELOW, for reference, currently timed
-        // Uncomment to use as is, take away the timer to use as a once-off
-//        getMasterTimer().runAtInterval(() -> {
-//            // 1. get QTE service
-//            QTE qte = getQTE();
-//            
-//            // 2. start event with duration and keys to be pressed
-//            qte.start(yes -> {
-//                // This is the example, 'yes' is used to determine success/failure
-//                System.out.println("Successful? " + yes);
-//            }, Duration.seconds(25), KeyCode.T, KeyCode.Y, KeyCode.L, KeyCode.E, KeyCode.R);
-//        }, Duration.seconds(5));
         
         getMasterTimer().runAtInterval(() -> { // lambda (calling a method with parameters and code seperated by ->)
             fuel.set(fuel.get() - fuelLoss); // Set the counter down
@@ -295,20 +240,6 @@ public class MotherLoadApp extends GameApplication {
                 getAudioPlayer().playSound("Store Close.wav");
             }
         });
-        
-        // Setting the zone for opening shop menu 
-//        physicsWorld.addCollisionHandler(new CollisionHandler(EntityType.PLAYER, EntityType.FUELSHOP) {
-//            @Override
-//            protected void onCollisionBegin(Entity player, Entity fuelshop) {
-//                System.out.print("Open fuel:");
-//                openFuelWindow();
-//            }  
-//            protected void onCollisonEnd(Entity player, Entity fuelshop) {
-//                System.out.print("Close fuel:");
-//                closeFuelWindow();
-//            }
-//            
-//        });
     }
 //------------------------------------------------------------------------------
     @Override
@@ -336,13 +267,6 @@ public class MotherLoadApp extends GameApplication {
         creditsCounter.setTranslateY(25);
         creditsCounter.textProperty().bind(credits.asString("Credits: %d"));
         getGameScene().addUINode(creditsCounter);
-//        Texture texture = getAssetLoader().loadTexture("Background.png");
-//
-//        //Creates a new EntityView called "bg" and sets it to the texure previously created
-//        EntityView bg = new EntityView(texture);
-//
-//        //Adds the "bg" entityview to the game
-//        getGameScene().addGameView(bg);
 
     }
 //------------------------------------------------------------------------------
@@ -446,6 +370,7 @@ public class MotherLoadApp extends GameApplication {
         btnFuel.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                //Adds fuel to the player for 10 credits
                 if(credits.get() > 0) {
                     System.out.println("Fuel refilled!");
                     fuel.set(fuel.get() + 100);
@@ -484,6 +409,7 @@ public class MotherLoadApp extends GameApplication {
  
             @Override
             public void handle(ActionEvent event) {
+                //Creates a new bank int variable and sets add the value of each ore multipled by the number of each ores you have
                 int bank = 0;
                 bank += ironOre *   1;
                 bank += bronzeOre * 5;
@@ -495,8 +421,13 @@ public class MotherLoadApp extends GameApplication {
                 bank += rubyOre *   5000;
                 bank += diamOre *   10000;
                 
+                //Sets the creadits to the value of the bank
                 credits.set(credits.get() + bank);
+                
+                //Resets the bank value
                 bank = 0;
+                
+                //Resets the ores back to 0
                 ironOre = 0; bronzeOre = 0; silverOre = 0; goldOre = 0; titOre = 0; estOre = 0; emeraldOre = 0; rubyOre = 0; diamOre = 0;
             }
         });
