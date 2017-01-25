@@ -29,7 +29,9 @@ import com.almasb.fxgl.app.ServiceType;
 import com.almasb.fxgl.asset.AssetLoader;
 import com.almasb.fxgl.entity.EntityView;
 import com.almasb.fxgl.entity.GameEntity;
+import com.almasb.fxgl.entity.RenderLayer;
 import com.almasb.fxgl.entity.component.CollidableComponent;
+import io.github.tdselliott.ml.control.BackgroundControl;
 import io.github.tdselliott.ml.control.LandControl;
 import io.github.tdselliott.ml.control.PlayerControl;
 import javafx.scene.paint.Color;
@@ -57,9 +59,13 @@ public class EntityFactory {
         //Creates a new game entity called Player
         GameEntity Player = new GameEntity();
 
-        Player.getTypeComponent().setValue(EntityType.PLAYER); //Sets the Player EntityType to the player
-        Player.getPositionComponent().setValue(x, y); //Adds the player at the given coordinates
-        Player.getMainViewComponent().setView(new Rectangle(20, 20, Color.BLACK), true); 
+
+        //
+        Player.getTypeComponent().setValue(EntityType.PLAYER);
+        Player.getPositionComponent().setValue(x, y);
+        //Player.getMainViewComponent().setView(new EntityView(assetLoader.loadTexture("PlayerLeft.png")), true);
+        Player.getMainViewComponent().setView(new Rectangle(50, 50, Color.BLACK), true);
+
 
         //Components
         Player.addComponent(new CollidableComponent(true));
@@ -83,7 +89,10 @@ public class EntityFactory {
         GameEntity ground = new GameEntity(); //Creates a new ground GameEntity
         ground.getTypeComponent().setValue(EntityType.GROUND); //Sets it to the GROUND EntityType
         ground.getMainViewComponent().setView(new EntityView(assetLoader.loadTexture("Ground" + Tier + ".png", 64, 64)), false); //Sets the image
-        ground.getPositionComponent().setValue(x, y); //Adds the ground at the given coordinates
+
+        ground.getPositionComponent().setValue(x, y);
+        ground.getMainViewComponent().setRenderLayer(RenderLayer.BACKGROUND);
+
 
         //Control
         ground.addControl(new LandControl(Tier));
@@ -91,17 +100,34 @@ public class EntityFactory {
         return ground;
     }
 
+
+    public static Entity newFullScreenImage(boolean isBackground) {
+        GameEntity image = new GameEntity(); //Creates a new grounf GameEntity
+        if (isBackground) {
+            image.getMainViewComponent().setView(new EntityView(assetLoader.loadTexture("UG_Background.png", 800, 700)), false);
+            image.getMainViewComponent().setRenderLayer(RenderLayer.TOP);
+        } else {
+            image.getMainViewComponent().setView(new EntityView(assetLoader.loadTexture("Darkness.png", 800, 700)), false);
+            image.getMainViewComponent().setRenderLayer(RenderLayer.BACKGROUND);
+        }
+        image.addControl(new BackgroundControl(isBackground));
+        return image;
+    }
+
+
     /**
      * Creates the fuelShop.
      * @param x - The x coordinate
      * @param y - The y coordinate
      * @return - The fuelShop GameEntity
      */
+
     public static Entity newFuelShop(int x, int y) {
         GameEntity fuelShop = new GameEntity();
         // This sets physics to enabled, it allows the collision detection to work
         fuelShop.addComponent(new CollidableComponent(true));
         fuelShop.getTypeComponent().setValue(EntityType.FUELSHOP);
+
         fuelShop.getMainViewComponent().setView(new EntityView(assetLoader.loadTexture("fuelshop.png", 256, 256)), true); //Sets the image
         
         fuelShop.getPositionComponent().setValue(x, y);
@@ -114,11 +140,13 @@ public class EntityFactory {
      * @param y - The y coordinate
      * @return - The oreShop GameEntity
      */
+
     public static Entity newOreShop(int x, int y) {
         GameEntity oreShop = new GameEntity();
         // This sets physics to enabled, it allows the collision detection to work
         oreShop.addComponent(new CollidableComponent(true));
         oreShop.getTypeComponent().setValue(EntityType.ORESHOP);
+
         oreShop.getMainViewComponent().setView(new EntityView(assetLoader.loadTexture("oreshop.png", 256, 256)), true); //Sets the image
         
         oreShop.getPositionComponent().setValue(x, y);
@@ -131,16 +159,18 @@ public class EntityFactory {
      * @param y - The y coordinate
      * @return - The repairShop GameEntity
      */
+
     public static Entity newRepairShop(int x, int y) {
         GameEntity repairShop = new GameEntity();
         // This sets physics to enabled, it allows the collision detection to work
         repairShop.addComponent(new CollidableComponent(true));
         repairShop.getTypeComponent().setValue(EntityType.REPAIRSHOP);
         repairShop.getMainViewComponent().setView(new EntityView(assetLoader.loadTexture("repairShop.png", 256, 256)), true);
-        
+
         repairShop.getPositionComponent().setValue(x, y);
         return repairShop;
     }
+
     
     /**
      * Creates the upgradeShop.
@@ -148,13 +178,14 @@ public class EntityFactory {
      * @param y - The y coordinate
      * @return - The repairShop GameEntity.
      */
+
     public static Entity newUpgradeShop(int x, int y) {
         GameEntity upgradeShop = new GameEntity();
         // This sets physics to enabled, it allows the collision detection to work
         upgradeShop.addComponent(new CollidableComponent(true));
-        upgradeShop.getTypeComponent().setValue(EntityType.UPGRADE);
+        upgradeShop.getTypeComponent().setValue(EntityType.UPGRADESHOP);
         upgradeShop.getMainViewComponent().setView(new EntityView(assetLoader.loadTexture("upgrade.png", 256, 256)), true);
-        
+
         upgradeShop.getPositionComponent().setValue(x, y);
         return upgradeShop;
     }

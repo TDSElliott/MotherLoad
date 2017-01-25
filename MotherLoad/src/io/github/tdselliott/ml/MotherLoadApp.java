@@ -1,6 +1,7 @@
 package io.github.tdselliott.ml;
 
 import com.almasb.ents.Entity;
+import com.almasb.fxgl.entity.ScrollingBackgroundView;
 import com.almasb.fxgl.input.ActionType;
 import com.almasb.fxgl.input.Input;
 import com.almasb.fxgl.input.InputMapping;
@@ -18,6 +19,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Orientation;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.paint.Color;
@@ -29,10 +31,13 @@ import com.almasb.fxgl.scene.menu.FXGLDefaultMenu;
 import com.almasb.fxgl.scene.menu.MenuType;
 import javafx.scene.Node;
 import javafx.scene.text.Text;
+import javafx.scene.media.AudioClip;
 import com.almasb.fxgl.app.ApplicationMode;
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.scene.SceneFactory;
 import com.almasb.fxgl.settings.GameSettings;
+import io.github.tdselliott.ml.control.BackgroundControl;
+import javax.swing.JOptionPane;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -44,19 +49,29 @@ import org.jetbrains.annotations.NotNull;
  */
 public class MotherLoadApp extends GameApplication {
 
-    //Creates the required variables
-    private Entity player, fuelShop, oreShop, repairShop, upgradeShop;
-    private PlayerControl CtrPlayer;
-    private IntegerProperty fuel, armour, credits;
-    private InGameWindow fuelWindow, armourWindow, shopWindow;
-    
+
+    private Entity player, fuelShop, oreShop, repairShop, upgradeShop, underGroundBackground, darkness;
+    public PlayerControl CtrPlayer;
+    public BackgroundControl CtrBackground;
+    public BackgroundControl CtrDarkness;
+    public IntegerProperty fuel, armour, credits;
+    private InGameWindow fuelWindow, armourWindow, shopWindow, upgradesWindow;
+
     private boolean mouseDown = false;
-    
+
+    public int maxArmour = 10, maxFuel = 1000;
+
+    private int drillUpgardes = 0, lightUpgardes = 0, armorUpgardes = 0, engineUpgardes = 0, fuelUpgardes = 0;
+
     public static int ironOre, bronzeOre, silverOre, goldOre, titOre, estOre, emeraldOre, rubyOre, diamOre;
     private int fuelLoss = 1, fuelLossStatic = 1, fuelLossDynamic = 10;
-    
-    public static Entity[][] ground = new Entity[1000][15000];
-    public static byte[][] arrTier = new byte[1000][15000];
+
+    private AudioClip music;
+
+    public static Entity[][] ground = new Entity[2000][15000];
+    //public static LandControl[][] ctrLand = new LandControl[20000][5000];
+    public static byte[][] arrTier = new byte[2000][15000];
+
 
 //------------------------------------------------------------------------------
 
@@ -119,6 +134,7 @@ public class MotherLoadApp extends GameApplication {
     }  
 //------------------------------------------------------------------------------
 
+
     /**
      * Gets the input from the user. 
      * Moves th user with the mouse or with "W" key towards the mouse
@@ -133,6 +149,7 @@ public class MotherLoadApp extends GameApplication {
                 CtrPlayer.moveToMouse(input.getMousePositionWorld()); //Do the method 'moveToMouse' in the PlayerControl class. (Moves the player towards the mouse)
                 mouseDown = true; //Sets the mouseDown boolean to true
             }
+
             @Override
             protected void onActionEnd() { //When the mouse button is released
                 mouseDown = false; //Sets the mouseDown boolean to false
@@ -145,13 +162,9 @@ public class MotherLoadApp extends GameApplication {
                 CtrPlayer.moveToMouse(input.getMousePositionWorld()); //Do the method 'moveToMouse' in the PlayerControl class. (Moves the player towards the mouse)
             }
         }, KeyCode.W); //All this happens when the "W" button is pressed
-        
-        input.addInputMapping(new InputMapping("Open Fuel Shop", KeyCode.DIGIT1));
-        input.addInputMapping(new InputMapping("Open Selling Shop", KeyCode.DIGIT2));
-        input.addInputMapping(new InputMapping("Open Armour Repair", KeyCode.DIGIT3));
-        
     }
 //------------------------------------------------------------------------------
+
     @Override
     protected void initAssets() {
         
@@ -173,12 +186,33 @@ public class MotherLoadApp extends GameApplication {
         getGameWorld().addEntity(player); //Adds player to the world
         CtrPlayer = player.getControlUnsafe(PlayerControl.class); //Sets the CtrPLayer class to the PlayerControl class
 
-        getGameScene().getViewport().bindToEntity(player, 400, 350);
-        
+        //Ground start coordinates
+        int groundStartX = 0;
+        int groundStartY = 400;
+
+        //background
+        underGroundBackground = EntityFactory.newFullScreenImage(true);
+        getGameWorld().addEntity(underGroundBackground);
+        CtrDarkness = underGroundBackground.getControlUnsafe(BackgroundControl.class);
+
+        //darkness
+        darkness = EntityFactory.newFullScreenImage(false);
+        getGameWorld().addEntity(darkness);
+        CtrBackground = darkness.getControlUnsafe(BackgroundControl.class);
+        CtrBackground.enableRadar();
+
+        // 1. load texture to be the background and specify orientation (horizontal or vertical) 
+        getGameScene().addGameView(new ScrollingBackgroundView(getAssetLoader().loadTexture("Background.png", 1066, 600),
+                Orientation.HORIZONTAL));
+        getGameScene().getViewport().bindToEntity(player, 400 - 28, 350 - 28);
+
+        //getGameScene().getViewport().setZoom(.5); //uncomment to see macks magic
+
+
         getMasterTimer().runAtInterval(() -> { // lambda (calling a method with parameters and code seperated by ->)
             fuel.set(fuel.get() - fuelLoss); // Set the counter down
         }, Duration.millis(250)); // Every second (250 millis == 1/4 second)
-        
+
         fuelShop = EntityFactory.newFuelShop(1000, 164); //Adds player at (100, 100)
         oreShop = EntityFactory.newOreShop(1500, 164); //Adds player at (100, 100)
         repairShop = EntityFactory.newRepairShop(2000, 164); //Adds player at (100, 100)
@@ -194,48 +228,78 @@ public class MotherLoadApp extends GameApplication {
     protected void initPhysics() {
         PhysicsWorld physicsWorld = getPhysicsWorld(); //Creates a new PhysicsWorld
         physicsWorld.setGravity(0, 5);
+
         
         //Checks if the Player is colliding with the Fuelshop
         physicsWorld.addCollisionHandler(new CollisionHandler(EntityType.PLAYER, EntityType.FUELSHOP) {
             // Open on begin, close on end
             @Override
             protected void onCollisionBegin(Entity player, Entity fuelshop) {
-                openFuelWindow(); //Opens the fuelshop window
-                getAudioPlayer().playSound("Store Open.wav"); //Plays the opening sound
+                openFuelWindow();
+                getAudioPlayer().playSound("Store Open.wav");
+                CtrPlayer.isInMenu = true;
+
             }
+
             @Override
             protected void onCollisionEnd(Entity player, Entity fuelshop) {
-                closeFuelWindow(); //Closes the fuelshop window
-                getAudioPlayer().playSound("Store Close.wav"); //Plays the closing sound
+                closeFuelWindow();
+                getAudioPlayer().playSound("Store Close.wav");
+                CtrPlayer.isInMenu = false;
             }
         });
+
         
         //Checks if the player is colliding with the oreshop
         physicsWorld.addCollisionHandler(new CollisionHandler(EntityType.PLAYER, EntityType.ORESHOP) {
             // Open on begin, close on end
             @Override
             protected void onCollisionBegin(Entity player, Entity oreshop) {
-                openSellWindow(); //Opens the oreshop window
-                getAudioPlayer().playSound("Store Open.wav"); //Plays the opening sound
+                openSellWindow();
+                getAudioPlayer().playSound("Store Open.wav");
+                CtrPlayer.isInMenu = true;
             }
+
             @Override
             protected void onCollisionEnd(Entity player, Entity oreshop) {
-                closeSellWindow(); //Closes the oreshop window
-                getAudioPlayer().playSound("Store Close.wav"); //Plays the closing sound
+                closeSellWindow();
+                getAudioPlayer().playSound("Store Close.wav");
+                CtrPlayer.isInMenu = false;
             }
         });
-        
+
         physicsWorld.addCollisionHandler(new CollisionHandler(EntityType.PLAYER, EntityType.REPAIRSHOP) {
             // Open on begin, close on end
             @Override
             protected void onCollisionBegin(Entity player, Entity armourShop) {
                 openArmourWindow();
                 getAudioPlayer().playSound("Store Open.wav");
+                CtrPlayer.isInMenu = true;
             }
+
             @Override
             protected void onCollisionEnd(Entity player, Entity armourShop) {
                 closeArmourWindow();
                 getAudioPlayer().playSound("Store Close.wav");
+                CtrPlayer.isInMenu = false;
+            }
+        });
+
+        physicsWorld.addCollisionHandler(new CollisionHandler(EntityType.PLAYER, EntityType.UPGRADESHOP) {
+            // Open on begin, close on end
+            @Override
+            protected void onCollisionBegin(Entity player, Entity armourShop) {
+                openUpgradesWindow();
+                getAudioPlayer().playSound("Store Open.wav");
+                CtrPlayer.isInMenu = true;
+            }
+
+            @Override
+            protected void onCollisionEnd(Entity player, Entity armourShop) {
+                closeUpgradesWindow();
+                getAudioPlayer().playSound("Store Close.wav");
+                CtrPlayer.isInMenu = false;
+
             }
         });
     }
@@ -253,7 +317,7 @@ public class MotherLoadApp extends GameApplication {
         fuelCounter.setTranslateY(25);
         fuelCounter.textProperty().bind(fuel.asString("Fuel Remaining: %d"));
         getGameScene().addUINode(fuelCounter);
-        
+
         // The armour counter being added to the UI
         this.armour = new SimpleIntegerProperty(10);
         Text armourCounter = getUIFactory().newText("", Color.CRIMSON, 20);
@@ -261,9 +325,9 @@ public class MotherLoadApp extends GameApplication {
         armourCounter.setTranslateY(25);
         armourCounter.textProperty().bind(armour.asString("Armour Level: %d"));
         getGameScene().addUINode(armourCounter);
-        
+
         // The credits counter being added to the UI
-        this.credits = new SimpleIntegerProperty(100);
+        this.credits = new SimpleIntegerProperty(1000);
         Text creditsCounter = getUIFactory().newText("", Color.LIME, 20);
         creditsCounter.setTranslateX(590);
         creditsCounter.setTranslateY(25);
@@ -286,8 +350,14 @@ public class MotherLoadApp extends GameApplication {
         } else {
             fuelLoss = fuelLossStatic; // -1 fuel
         }
+        if (fuel.get() <= 0) {
+            JOptionPane.showMessageDialog(null, "GameOver, You ran out of fuel");
+            System.out.println("GameOver");
+            exit();
+        }
     }
 //------------------------------------------------------------------------------
+
     /**
      * Contains FXGL code to launch the window. Nothing else will need to be
      * added in here.
@@ -376,28 +446,32 @@ public class MotherLoadApp extends GameApplication {
         
         Button btnFuel = new Button();
         btnFuel.setText("Add Fuel");
-        
+
         btnFuel.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                //Adds fuel to the player for 10 credits
-                if(credits.get() > 0) {
-                    System.out.println("Fuel refilled!");
-                    fuel.set(fuel.get() + 100);
-                    credits.set(credits.get() - 10);
+                int cost = (maxFuel - fuel.get());
+                System.out.println();
+                if (credits.get() > cost) {
+                    System.out.println("Fuel Refilled!");
+                    fuel.set(maxFuel);
+                    credits.set(credits.get() - cost);
+                } else {
+                    System.out.println("Fuel Semi-refilled!");
+                    fuel.set(fuel.get() + credits.get());
+                    credits.set(0);
                 }
             }
         });
-        
+
         FlowPane flow = new FlowPane();
         flow.setPadding(new Insets(10, 10, 10, 10));
         flow.setStyle("-fx-background-color: #33cc33;");
         flow.setHgap(5);
         flow.getChildren().addAll(btnFuel);
-       
-        
+
         fuelWindow.setContentPane(flow);
-        
+
         // Set properties
         fuelWindow.setPrefSize(150, 50);
         fuelWindow.setPosition(0, 600);
@@ -407,21 +481,22 @@ public class MotherLoadApp extends GameApplication {
         getGameScene().addUINode(fuelWindow);
     }
 //------------------------------------------------------------------------------
+
     @OnUserAction(name = "Open Selling Shop", type = ActionType.ON_ACTION_BEGIN)
     public void openSellWindow() {
 
         // Create in-game window
         shopWindow = new InGameWindow("Sell Ore", WindowDecor.CLOSE);
-        
+
         Button sellOre = new Button();
         sellOre.setText("Sell your Ore");
         sellOre.setOnAction(new EventHandler<ActionEvent>() {
- 
+
             @Override
             public void handle(ActionEvent event) {
                 //Creates a new bank int variable and sets add the value of each ore multipled by the number of each ores you have
                 int bank = 0;
-                bank += ironOre *   1;
+                bank += ironOre * 1;
                 bank += bronzeOre * 5;
                 bank += silverOre * 10;
                 bank += goldOre *   50;
@@ -435,22 +510,20 @@ public class MotherLoadApp extends GameApplication {
                 credits.set(credits.get() + bank);
                 
                 //Resets the bank value
-                bank = 0;
                 
                 //Resets the ores back to 0
                 ironOre = 0; bronzeOre = 0; silverOre = 0; goldOre = 0; titOre = 0; estOre = 0; emeraldOre = 0; rubyOre = 0; diamOre = 0;
             }
         });
-        
+
         FlowPane flow = new FlowPane();
         flow.setPadding(new Insets(10, 10, 10, 10));
         flow.setStyle("-fx-background-color: #6600ff;");
         flow.setHgap(5);
         flow.getChildren().addAll(sellOre);
-       
-        
+
         shopWindow.setContentPane(flow);
-        
+
         // Set properties
         shopWindow.setPrefSize(150, 50);
         shopWindow.setPosition(325, 600);
@@ -460,32 +533,148 @@ public class MotherLoadApp extends GameApplication {
         getGameScene().addUINode(shopWindow);
     }
 //------------------------------------------------------------------------------
+
+    @OnUserAction(name = "Open Upgrades Shop", type = ActionType.ON_ACTION_BEGIN)
+    public void openUpgradesWindow() {
+
+        // Create in-game window
+        upgradesWindow = new InGameWindow("Upgrades Shop", WindowDecor.CLOSE);
+
+        Button Drill = new Button();
+        Drill.setText("Upgrade Drill - " + ((int) (100 * Math.pow(drillUpgardes, 2)) + 100) + "CR");
+        Drill.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                if (drillUpgardes < 10 && credits.get() > ((100 * Math.pow(drillUpgardes, 2)) + 100)) {
+                    credits.set(credits.get() - ((int) (100 * Math.pow(drillUpgardes, 2)) + 100));
+                    drillUpgardes++;
+                    Drill.setText("Upgrade Drill - " + ((int) (100 * Math.pow(drillUpgardes, 2)) + 100) + "CR");
+                    CtrPlayer.drillSpeed += 1;
+                }
+            }
+        });
+        Button Light = new Button();
+        Light.setText("Upgrade Light - " + ((int) (100 * Math.pow(lightUpgardes, 2)) + 100) + "CR");
+        Light.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                if (lightUpgardes < 10 && credits.get() > ((100 * Math.pow(lightUpgardes, 2)) + 100)) {
+                    credits.set(credits.get() - ((int) (100 * Math.pow(lightUpgardes, 2)) + 100));
+                    lightUpgardes++;
+                    Light.setText("Upgrade Light - " + ((int) (100 * Math.pow(lightUpgardes, 2)) + 100) + "CR");
+                    CtrDarkness.screenSizeMin += .25;
+                }
+            }
+        });
+        Button Armor = new Button();
+        Armor.setText("Upgrade Armor - " + ((int) (100 * Math.pow(armorUpgardes, 2)) + 100) + "CR");
+        Armor.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                System.out.println((armorUpgardes < 10 && credits.get() > ((100 * Math.pow(armorUpgardes, 2)) + 100)));
+                System.out.println(((100 * Math.pow(armorUpgardes, 2)) + 100));
+                if (armorUpgardes < 10 && credits.get() > (((100 * Math.pow(armorUpgardes, 2)) + 100))) {
+                    credits.set(credits.get() - ((int) (100 * Math.pow(armorUpgardes, 2)) + 100));
+                    armorUpgardes++;
+                    Armor.setText("Upgrade Armor - " + ((int) (100 * Math.pow(armorUpgardes, 2)) + 100) + "CR");
+                    maxArmour += 10;
+                    armour.add(armour.get() + 10);
+                }
+            }
+        });
+        Button Engine = new Button();
+        Engine.setText("Upgrade Engine - " + ((int) (100 * Math.pow(engineUpgardes, 2)) + 100) + "CR");
+        Engine.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                if (engineUpgardes < 10 && credits.get() > ((100 * Math.pow(engineUpgardes, 2)) + 100)) {
+                    credits.set(credits.get() - ((int) (100 * Math.pow(engineUpgardes, 2)) + 100));
+                    engineUpgardes++;
+                    Engine.setText("Upgrade Engine - " + ((int) (100 * Math.pow(engineUpgardes, 2)) + 100) + "CR");
+                    CtrPlayer.accelerationX += .01;
+                    CtrPlayer.accelerationY += .01;
+                }
+            }
+        });
+        Button Fuel = new Button();
+        Fuel.setText("Upgrade FuelTank - " + ((int) (100 * Math.pow(fuelUpgardes, 2)) + 100) + "CR");
+        Fuel.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                if (fuelUpgardes < 10 && credits.get() > ((100 * Math.pow(fuelUpgardes, 2)) + 100)) {
+                    credits.set(credits.get() - (int) ((100 * Math.pow(fuelUpgardes, 2)) + 100));
+                    fuelUpgardes++;
+                    Fuel.setText("Upgrade FuelTank - " + ((int) (100 * Math.pow(lightUpgardes, 2)) + 100) + 100 + "CR");
+                    maxFuel += 500 * Math.pow(fuelUpgardes, 2);
+                }
+            }
+        });
+        Button Radar = new Button();
+        Radar.setText("Fix Stuck Radar Dish - " + 5000 + "CR");
+        Radar.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                if (fuelUpgardes < 10 && credits.get() > 5000) {
+                    if (!Radar.toString().contains("Sold")) {
+                        credits.set(credits.get() - 5000);
+                        Radar.setText("Upgrade Radar - Sold Out");
+                        CtrBackground.enableRadarSpin();
+                    }
+                }
+            }
+        });
+
+        FlowPane flow = new FlowPane();
+        flow.setPadding(new Insets(10, 10, 10, 10));
+        flow.setStyle("-fx-background-color: #6600ff;");
+        flow.setHgap(5);
+        flow.getChildren().addAll(Drill, Light, Armor, Engine, Fuel, Radar);
+
+        upgradesWindow.setContentPane(flow);
+
+        // Set properties
+        upgradesWindow.setPrefSize(200, 300);
+        upgradesWindow.setPosition(325, 400);
+        upgradesWindow.setBackgroundColor(Color.ORANGE);
+
+        // Attach to the game scene as a UI node
+        getGameScene().addUINode(upgradesWindow);
+    }
+//------------------------------------------------------------------------------
+
     @OnUserAction(name = "Open Armour Repair", type = ActionType.ON_ACTION_BEGIN)
     public void openArmourWindow() {
 
         // Create in-game window
         armourWindow = new InGameWindow("Armour Repair", WindowDecor.CLOSE);
-        
+
         Button armour = new Button();
         armour.setText("Repair Armour");
         armour.setOnAction(new EventHandler<ActionEvent>() {
- 
+
             @Override
             public void handle(ActionEvent event) {
-                System.out.println("Armour repaired!");
+                if (credits.get() >= 100) {
+                    System.out.println("Armour repaired!");
+                    credits.set(credits.get() - 100);
+                }
             }
         });
-        
-        
+
         FlowPane flow = new FlowPane();
         flow.setPadding(new Insets(10, 10, 10, 10));
         flow.setStyle("-fx-background-color: #DAE6F3;");
         flow.setHgap(5);
         flow.getChildren().addAll(armour);
-       
-        
+
         armourWindow.setContentPane(flow);
-        
+
         // Set properties
         armourWindow.setPrefSize(150, 50);
         armourWindow.setPosition(650, 600);
@@ -495,26 +684,45 @@ public class MotherLoadApp extends GameApplication {
         getGameScene().addUINode(armourWindow);
     }
 //------------------------------------------------------------------------------
+
     public void closeFuelWindow() {
-        System.out.println("run");
         getGameScene().removeUINodes(fuelWindow);
     }
 //------------------------------------------------------------------------------
+
     public void closeSellWindow() {
-        System.out.println("run");
         getGameScene().removeUINodes(shopWindow);
     }
 //------------------------------------------------------------------------------
+
     public void closeArmourWindow() {
-        System.out.println("run");
         getGameScene().removeUINodes(armourWindow);
     }
 //------------------------------------------------------------------------------
+
+    public void closeUpgradesWindow() {
+        getGameScene().removeUINodes(upgradesWindow);
+    }
+//------------------------------------------------------------------------------
+
     public double getDirtType(int Tier, int x) {
 
-        double chance = -0.00003 * (x + 60 - (20 * Tier-1)) * (x - 40 - (20 * Tier-1));
+        double chance = -0.00003 * (x + 60 - (20 * Tier - 1)) * (x - 40 - (20 * Tier - 1));
         return chance;
     }
 //------------------------------------------------------------------------------
+
+    public void damagePlayer(int damage) {
+        if (damage >= armour.get()) {
+            armour.set(armour.get() - damage);
+            //end game
+            JOptionPane.showMessageDialog(null, "GameOver, You hit the ground too hard");
+            System.out.println("GameOver");
+            exit();
+        } else {
+            armour.set(armour.get() - damage);
+        }
+
+    }
 }
 ////////////////////////////////////////////////////////////////////////////////
