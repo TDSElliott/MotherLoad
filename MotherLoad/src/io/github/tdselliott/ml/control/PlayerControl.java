@@ -202,7 +202,7 @@ public class PlayerControl extends AbstractControl {
             oreType(animateX, animateY);
             MotherLoadApp.ground[animateX][animateY].removeFromWorld();
             MotherLoadApp.arrTier[animateX][animateY] = -1;
-            getAudioPlayer().playSound("Dig.wav");
+            getAudioPlayer().playSound("Dig.wav"); //Plays the digging sound
             isAnimating = false;
         }
     }
@@ -414,16 +414,22 @@ public class PlayerControl extends AbstractControl {
         return positionXY;
     }
 
+    /**
+     * Checks what ore is drilled and adds the specific ore to the inventory. Plays the drilling sound.
+     * @param arrX - the X position in the ground array
+     * @param arrY - the Y position in the ground array
+     */
     public void oreType(int arrX, int arrY) {
 
+        //Checks the tier number of the drilled block
         switch (MotherLoadApp.arrTier[arrX][arrY]) {
-            case 2:
-                MotherLoadApp.ironOre++;
-                getAudioPlayer().playSound("Iron Ore.wav");
+            case 2: //If the tier is 2 (Iron)
+                MotherLoadApp.ironOre++; //Adds one to the ironOre variable
+                getAudioPlayer().playSound("Iron Ore.wav"); //Plays the iron drilling sound
                 break;
-            case 3:
-                MotherLoadApp.bronzeOre++;
-                getAudioPlayer().playSound("Bronze Ore.wav");
+            case 3: //If the tier is 3 (Bronze)
+                MotherLoadApp.bronzeOre++; //Adds one to the ironOre variable
+                getAudioPlayer().playSound("Bronze Ore.wav"); //Plays the bronze drilling sound
                 break;
             case 4:
                 MotherLoadApp.silverOre++;

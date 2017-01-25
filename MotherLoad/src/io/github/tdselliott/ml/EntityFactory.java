@@ -38,7 +38,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 /**
- *
+ * @author Victor
  * @author Tyler
  */
 public class EntityFactory {
@@ -49,9 +49,16 @@ public class EntityFactory {
         assetLoader = FXGL.getService(ServiceType.ASSET_LOADER);
     }
 
+    /**
+     * Creates a player, sets it to the PLAYER entitytype, adds the player at the specified coordinates, adds the collidablecomponent, and sets the control.
+     * @param x - The x coordinate
+     * @param y - The y coordinate
+     * @return - The player GameEntity
+     */
     public static Entity newPlayer(double x, double y) {
-        //
+        //Creates a new game entity called Player
         GameEntity Player = new GameEntity();
+
 
         //
         Player.getTypeComponent().setValue(EntityType.PLAYER);
@@ -59,28 +66,40 @@ public class EntityFactory {
         //Player.getMainViewComponent().setView(new EntityView(assetLoader.loadTexture("PlayerLeft.png")), true);
         Player.getMainViewComponent().setView(new Rectangle(50, 50, Color.BLACK), true);
 
+
         //Components
         Player.addComponent(new CollidableComponent(true));
 
         //Control
         Player.addControl(new PlayerControl(x, y));
-
-        //
+        
         return Player;
     }
 
+    /**
+     * Creates the ground (Including the ores).
+     * @param x - The x coordinate
+     * @param y - The y coordinate
+     * @param arrX - The x spot in the ground array.
+     * @param arrY - The y spot in the ground array
+     * @param Tier - The ground tier number
+     * @return - The ground GameEntity
+     */
     public static Entity newGround(double x, double y, int arrX, int arrY, int Tier) {
-        GameEntity ground = new GameEntity(); //Creates a new grounf GameEntity
+        GameEntity ground = new GameEntity(); //Creates a new ground GameEntity
         ground.getTypeComponent().setValue(EntityType.GROUND); //Sets it to the GROUND EntityType
         ground.getMainViewComponent().setView(new EntityView(assetLoader.loadTexture("Ground" + Tier + ".png", 64, 64)), false); //Sets the image
+
         ground.getPositionComponent().setValue(x, y);
         ground.getMainViewComponent().setRenderLayer(RenderLayer.BACKGROUND);
+
 
         //Control
         ground.addControl(new LandControl(Tier));
 
         return ground;
     }
+
 
     public static Entity newFullScreenImage(boolean isBackground) {
         GameEntity image = new GameEntity(); //Creates a new grounf GameEntity
@@ -95,27 +114,51 @@ public class EntityFactory {
         return image;
     }
 
+
+    /**
+     * Creates the fuelShop.
+     * @param x - The x coordinate
+     * @param y - The y coordinate
+     * @return - The fuelShop GameEntity
+     */
+
     public static Entity newFuelShop(int x, int y) {
         GameEntity fuelShop = new GameEntity();
         // This sets physics to enabled, it allows the collision detection to work
         fuelShop.addComponent(new CollidableComponent(true));
         fuelShop.getTypeComponent().setValue(EntityType.FUELSHOP);
-        fuelShop.getMainViewComponent().setView(new EntityView(assetLoader.loadTexture("fuelshop.png", 256, 256)), true);
 
+        fuelShop.getMainViewComponent().setView(new EntityView(assetLoader.loadTexture("fuelshop.png", 256, 256)), true); //Sets the image
+        
         fuelShop.getPositionComponent().setValue(x, y);
         return fuelShop;
     }
+    
+    /**
+     * Creates the oreShop. 
+     * @param x - The x coordinate
+     * @param y - The y coordinate
+     * @return - The oreShop GameEntity
+     */
 
     public static Entity newOreShop(int x, int y) {
         GameEntity oreShop = new GameEntity();
         // This sets physics to enabled, it allows the collision detection to work
         oreShop.addComponent(new CollidableComponent(true));
         oreShop.getTypeComponent().setValue(EntityType.ORESHOP);
-        oreShop.getMainViewComponent().setView(new EntityView(assetLoader.loadTexture("oreshop.png", 256, 256)), true);
 
+        oreShop.getMainViewComponent().setView(new EntityView(assetLoader.loadTexture("oreshop.png", 256, 256)), true); //Sets the image
+        
         oreShop.getPositionComponent().setValue(x, y);
         return oreShop;
     }
+    
+    /**
+     * Creates the repairShop.
+     * @param x - The x coordinate
+     * @param y - The y coordinate
+     * @return - The repairShop GameEntity
+     */
 
     public static Entity newRepairShop(int x, int y) {
         GameEntity repairShop = new GameEntity();
@@ -127,6 +170,14 @@ public class EntityFactory {
         repairShop.getPositionComponent().setValue(x, y);
         return repairShop;
     }
+
+    
+    /**
+     * Creates the upgradeShop.
+     * @param x - The x coordinate
+     * @param y - The y coordinate
+     * @return - The repairShop GameEntity.
+     */
 
     public static Entity newUpgradeShop(int x, int y) {
         GameEntity upgradeShop = new GameEntity();

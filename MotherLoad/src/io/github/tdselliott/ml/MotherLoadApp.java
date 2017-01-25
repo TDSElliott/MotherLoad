@@ -20,13 +20,10 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
-
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.paint.Color;
-
 import javafx.util.Duration;
-
 import javafx.scene.control.Button;
 import javafx.scene.layout.FlowPane;
 import com.almasb.fxgl.scene.FXGLMenu;
@@ -35,7 +32,6 @@ import com.almasb.fxgl.scene.menu.MenuType;
 import javafx.scene.Node;
 import javafx.scene.text.Text;
 import javafx.scene.media.AudioClip;
-
 import com.almasb.fxgl.app.ApplicationMode;
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.scene.SceneFactory;
@@ -53,12 +49,14 @@ import org.jetbrains.annotations.NotNull;
  */
 public class MotherLoadApp extends GameApplication {
 
+
     private Entity player, fuelShop, oreShop, repairShop, upgradeShop, underGroundBackground, darkness;
     public PlayerControl CtrPlayer;
     public BackgroundControl CtrBackground;
     public BackgroundControl CtrDarkness;
     public IntegerProperty fuel, armour, credits;
     private InGameWindow fuelWindow, armourWindow, shopWindow, upgradesWindow;
+
     private boolean mouseDown = false;
 
     public int maxArmour = 10, maxFuel = 1000;
@@ -66,20 +64,21 @@ public class MotherLoadApp extends GameApplication {
     private int drillUpgardes = 0, lightUpgardes = 0, armorUpgardes = 0, engineUpgardes = 0, fuelUpgardes = 0;
 
     public static int ironOre, bronzeOre, silverOre, goldOre, titOre, estOre, emeraldOre, rubyOre, diamOre;
-    // fuelLoss and fuelLossStatic will be the same, but it cleans up lower code
     private int fuelLoss = 1, fuelLossStatic = 1, fuelLossDynamic = 10;
 
-    //    AudioPlayer ap;
-    //    Music m;
     private AudioClip music;
 
     public static Entity[][] ground = new Entity[2000][15000];
     //public static LandControl[][] ctrLand = new LandControl[20000][5000];
     public static byte[][] arrTier = new byte[2000][15000];
 
-    public static byte[] inventory = new byte[10]; //Inventory
 
 //------------------------------------------------------------------------------
+
+    /**
+     * Sets the setting of the window and the game. Sets the height  and width of the game, sets the title and version number.
+     * @param gs - Game Settings
+     */
     @Override
     protected void initSettings(GameSettings gs) {
         // The settings code to generate the window and remove FXGL intro for dev
@@ -96,86 +95,97 @@ public class MotherLoadApp extends GameApplication {
     }
 //------------------------------------------------------------------------------
 
+    //Sets the menu image.
+
+    /**
+     * //Sets the menu image
+     * @return - The menu image
+     */
     @Override
     protected SceneFactory initSceneFactory() {
         return new SceneFactory() {
 
-            // 2. override main menu and things you need
+            //Override main menu
             @NotNull
             @Override
             public FXGLMenu newMainMenu(@NotNull GameApplication app) {
                 return new FXGLDefaultMenu(app, MenuType.MAIN_MENU) {
                     @Override
                     protected Node createBackground(double width, double height) {
-                        return getAssetLoader().loadTexture("Menu Image.png");
+                        return getAssetLoader().loadTexture("Menu Image.png"); //Sets the image to the "Menu Image.png"
                     }
 
                 };
             }
 
-            // 4. override game menu
+            //Override game menu
             @NotNull
             @Override
             public FXGLMenu newGameMenu(@NotNull GameApplication app) {
                 return new FXGLDefaultMenu(app, MenuType.GAME_MENU) {
                     @Override
                     protected Node createBackground(double width, double height) {
-                        return getAssetLoader().loadTexture("Menu Image.png");
+                        return getAssetLoader().loadTexture("Menu Image.png"); //Sets the image to the "Menu Image.png"
                     }
 
                 };
             }
         };
-    }
+    }  
 //------------------------------------------------------------------------------
 
+
+    /**
+     * Gets the input from the user. 
+     * Moves th user with the mouse or with "W" key towards the mouse
+     */
     @Override
     protected void initInput() {
-        Input input = getInput(); // get input service
-
+        Input input = getInput(); //Get input service
+        
         input.addAction(new UserAction("Move With Mouse") {
             @Override
-            protected void onAction() {
-                CtrPlayer.moveToMouse(input.getMousePositionWorld());
-                mouseDown = true;
+            protected void onAction() { //When the mouse button is pressed
+                CtrPlayer.moveToMouse(input.getMousePositionWorld()); //Do the method 'moveToMouse' in the PlayerControl class. (Moves the player towards the mouse)
+                mouseDown = true; //Sets the mouseDown boolean to true
             }
 
             @Override
-            protected void onActionEnd() {
-                mouseDown = false;
+            protected void onActionEnd() { //When the mouse button is released
+                mouseDown = false; //Sets the mouseDown boolean to false
             }
-        }, MouseButton.PRIMARY);
+        }, MouseButton.PRIMARY); //All happens when the left mouse button is pressed
 
         input.addAction(new UserAction("Move up") {
             @Override
-            protected void onAction() {
-                CtrPlayer.moveToMouse(input.getMousePositionWorld());
+            protected void onAction() { //When the button is pressed
+                CtrPlayer.moveToMouse(input.getMousePositionWorld()); //Do the method 'moveToMouse' in the PlayerControl class. (Moves the player towards the mouse)
             }
-        }, KeyCode.W);
-
-        // Dev-code, the end-user should open by moving to shop 1- fuel 2 - ore 3 - armour
-        input.addInputMapping(new InputMapping("Open Fuel Shop", KeyCode.DIGIT1));
-        input.addInputMapping(new InputMapping("Open Selling Shop", KeyCode.DIGIT2));
-        input.addInputMapping(new InputMapping("Open Armour Repair", KeyCode.DIGIT3));
-        input.addInputMapping(new InputMapping("Open Upgrades Shop", KeyCode.DIGIT4));
+        }, KeyCode.W); //All this happens when the "W" button is pressed
     }
 //------------------------------------------------------------------------------
 
     @Override
     protected void initAssets() {
+        
     }
 //------------------------------------------------------------------------------
 
+    /**
+     * Adds in the player, stores. Sets the music and sound volume.
+     */
     @Override
-    protected void initGame() {
-        getAudioPlayer().setGlobalMusicVolume(0.3);
-        getAudioPlayer().setGlobalSoundVolume(0.5);
-        getAudioPlayer().playMusic("29 BONUS Horror.mp3");
+    protected void initGame() { //All happens when the game start
+        
+        getAudioPlayer().setGlobalMusicVolume(0.3); //Sets the music volume to 30%
+        getAudioPlayer().setGlobalSoundVolume(0.5); //Sets the sound volume to 50%
+        getAudioPlayer().playMusic("29 BONUS Horror.mp3"); //Plays the background music
 
         //Create player
         player = EntityFactory.newPlayer(2000, 100); //Adds player at (100, 100)
         getGameWorld().addEntity(player); //Adds player to the world
         CtrPlayer = player.getControlUnsafe(PlayerControl.class); //Sets the CtrPLayer class to the PlayerControl class
+
         //Ground start coordinates
         int groundStartX = 0;
         int groundStartY = 400;
@@ -196,19 +206,9 @@ public class MotherLoadApp extends GameApplication {
                 Orientation.HORIZONTAL));
         getGameScene().getViewport().bindToEntity(player, 400 - 28, 350 - 28);
 
-        //getGameScene().getViewport().setZoom(.5);
-        // QUICKTIME EVENTS CODE BELOW, for reference, currently timed
-        // Uncomment to use as is, take away the timer to use as a once-off
-//        getMasterTimer().runAtInterval(() -> {
-//            // 1. get QTE service
-//            QTE qte = getQTE();
-//            
-//            // 2. start event with duration and keys to be pressed
-//            qte.start(yes -> {
-//                // This is the example, 'yes' is used to determine success/failure
-//                System.out.println("Successful? " + yes);
-//            }, Duration.seconds(25), KeyCode.T, KeyCode.Y, KeyCode.L, KeyCode.E, KeyCode.R);
-//        }, Duration.seconds(5));
+        //getGameScene().getViewport().setZoom(.5); //uncomment to see macks magic
+
+
         getMasterTimer().runAtInterval(() -> { // lambda (calling a method with parameters and code seperated by ->)
             fuel.set(fuel.get() - fuelLoss); // Set the counter down
         }, Duration.millis(250)); // Every second (250 millis == 1/4 second)
@@ -221,11 +221,16 @@ public class MotherLoadApp extends GameApplication {
     }
 //------------------------------------------------------------------------------
 
+    /**
+     * Checks the collision between the player and the stores. Opens the store windows if the player is in range of the store. Closes the store window if the player is too far away from the store.
+     */
     @Override
     protected void initPhysics() {
-        PhysicsWorld physicsWorld = getPhysicsWorld();
+        PhysicsWorld physicsWorld = getPhysicsWorld(); //Creates a new PhysicsWorld
         physicsWorld.setGravity(0, 5);
 
+        
+        //Checks if the Player is colliding with the Fuelshop
         physicsWorld.addCollisionHandler(new CollisionHandler(EntityType.PLAYER, EntityType.FUELSHOP) {
             // Open on begin, close on end
             @Override
@@ -233,6 +238,7 @@ public class MotherLoadApp extends GameApplication {
                 openFuelWindow();
                 getAudioPlayer().playSound("Store Open.wav");
                 CtrPlayer.isInMenu = true;
+
             }
 
             @Override
@@ -243,6 +249,8 @@ public class MotherLoadApp extends GameApplication {
             }
         });
 
+        
+        //Checks if the player is colliding with the oreshop
         physicsWorld.addCollisionHandler(new CollisionHandler(EntityType.PLAYER, EntityType.ORESHOP) {
             // Open on begin, close on end
             @Override
@@ -294,23 +302,12 @@ public class MotherLoadApp extends GameApplication {
 
             }
         });
-
-        // Setting the zone for opening shop menu 
-//        physicsWorld.addCollisionHandler(new CollisionHandler(EntityType.PLAYER, EntityType.FUELSHOP) {
-//            @Override
-//            protected void onCollisionBegin(Entity player, Entity fuelshop) {
-//                System.out.print("Open fuel:");
-//                openFuelWindow();
-//            }  
-//            protected void onCollisonEnd(Entity player, Entity fuelshop) {
-//                System.out.print("Close fuel:");
-//                closeFuelWindow();
-//            }
-//            
-//        });
     }
 //------------------------------------------------------------------------------
 
+    /**
+     * Adds the fuel, armor, and credits counter to the world.
+     */
     @Override
     protected void initUI() {
         // The fuel counter being added to the UI
@@ -336,25 +333,22 @@ public class MotherLoadApp extends GameApplication {
         creditsCounter.setTranslateY(25);
         creditsCounter.textProperty().bind(credits.asString("Credits: %d"));
         getGameScene().addUINode(creditsCounter);
-//        Texture texture = getAssetLoader().loadTexture("Background.png");
-//
-//        //Creates a new EntityView called "bg" and sets it to the texure previously created
-//        EntityView bg = new EntityView(texture);
-//
-//        //Adds the "bg" entityview to the game
-//        getGameScene().addGameView(bg);
 
     }
 //------------------------------------------------------------------------------
 
+    /**
+     * Reduces the fuel by 10 if player is moving, or 1 of player is not moving
+     * @param d
+     */
     @Override
     protected void onUpdate(double d) {
         upDateLand();
         // Fuel consumption increase if moving (if mouse held down) 
-        if (mouseDown) {
-            fuelLoss = fuelLossDynamic; // 10
+        if(mouseDown) {
+            fuelLoss = fuelLossDynamic; // -10 fuel
         } else {
-            fuelLoss = fuelLossStatic; // 1
+            fuelLoss = fuelLossStatic; // -1 fuel
         }
         if (fuel.get() <= 0) {
             JOptionPane.showMessageDialog(null, "GameOver, You ran out of fuel");
@@ -375,12 +369,9 @@ public class MotherLoadApp extends GameApplication {
     }
 //------------------------------------------------------------------------------
 
-    public void setCamera() {
-        // attach gameworld to object
-        //getGameScene().getViewport().bindToEntity(player, 400, 350);
-    }
-//------------------------------------------------------------------------------
-
+    /**
+     * 
+     */
     public void upDateLand() {
         double camX = getGameScene().getViewport().getX();
         double camY = getGameScene().getViewport().getY() - 400;
@@ -444,12 +435,15 @@ public class MotherLoadApp extends GameApplication {
     }
 //------------------------------------------------------------------------------
 
+    /**
+     * Opens the fuelshop window
+     */
     @OnUserAction(name = "Open Fuel Shop", type = ActionType.ON_ACTION_BEGIN)
     public void openFuelWindow() {
 
         // Create in-game window
-        fuelWindow = new InGameWindow("Fuel Shop", WindowDecor.CLOSE);
-
+        fuelWindow = new InGameWindow("Fuel Shop", WindowDecor.CLOSE); //Closes the window
+        
         Button btnFuel = new Button();
         btnFuel.setText("Add Fuel");
 
@@ -500,28 +494,25 @@ public class MotherLoadApp extends GameApplication {
 
             @Override
             public void handle(ActionEvent event) {
+                //Creates a new bank int variable and sets add the value of each ore multipled by the number of each ores you have
                 int bank = 0;
                 bank += ironOre * 1;
                 bank += bronzeOre * 5;
                 bank += silverOre * 10;
-                bank += goldOre * 50;
-                bank += titOre * 100;
-                bank += estOre * 500;
-                bank += emeraldOre * 1000;
-                bank += rubyOre * 5000;
-                bank += diamOre * 10000;
-
+                bank += goldOre *   50;
+                bank += titOre *    100;
+                bank += estOre *    500;
+                bank += emeraldOre *1000;
+                bank += rubyOre *   5000;
+                bank += diamOre *   10000;
+                
+                //Sets the creadits to the value of the bank
                 credits.set(credits.get() + bank);
-                bank = 0;
-                ironOre = 0;
-                bronzeOre = 0;
-                silverOre = 0;
-                goldOre = 0;
-                titOre = 0;
-                estOre = 0;
-                emeraldOre = 0;
-                rubyOre = 0;
-                diamOre = 0;
+                
+                //Resets the bank value
+                
+                //Resets the ores back to 0
+                ironOre = 0; bronzeOre = 0; silverOre = 0; goldOre = 0; titOre = 0; estOre = 0; emeraldOre = 0; rubyOre = 0; diamOre = 0;
             }
         });
 
