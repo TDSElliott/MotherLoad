@@ -86,11 +86,11 @@ public class MotherLoadApp extends GameApplication {
         gs.setTitle("MotherLoad");
         gs.setVersion("0.5 [BETA]");
         gs.setIntroEnabled(false);
-        gs.setMenuEnabled(false); //Change later
+        gs.setMenuEnabled(true); //Change later
         gs.setMenuStyle(MenuStyle.WARCRAFT3);
-        gs.setProfilingEnabled(true); // Profiing enabled/disabled (dev/release)
+        gs.setProfilingEnabled(false); // Profiing enabled/disabled (dev/release)
         gs.setCloseConfirmation(false); // Close warning enabled/disabled
-        gs.setApplicationMode(ApplicationMode.DEVELOPER); // Dev, Debug, or Release
+        gs.setApplicationMode(ApplicationMode.RELEASE); // Dev, Debug, or Release
     }
 //------------------------------------------------------------------------------
 
@@ -161,10 +161,11 @@ public class MotherLoadApp extends GameApplication {
             }
         }, KeyCode.W); //All this happens when the "W" button is pressed
 
-        input.addInputMapping(new InputMapping("Open Fuel Shop", KeyCode.DIGIT1));
-        input.addInputMapping(new InputMapping("Open Selling Shop", KeyCode.DIGIT2));
-        input.addInputMapping(new InputMapping("Open Armour Repair", KeyCode.DIGIT3));
-        input.addInputMapping(new InputMapping("Open Upgrades Shop", KeyCode.DIGIT4));
+        input.addInputMapping(new InputMapping("Open Fuel Shop", KeyCode.JAPANESE_KATAKANA));
+        input.addInputMapping(new InputMapping("Open Selling Shop", KeyCode.JAPANESE_HIRAGANA));
+        input.addInputMapping(new InputMapping("Open Armour Repair", KeyCode.JAPANESE_ROMAN));
+        input.addInputMapping(new InputMapping("Open Upgrades Shop", KeyCode.UNDEFINED));
+        // Needed to be left in because causes crash when removed.
     }
 //------------------------------------------------------------------------------
 
@@ -296,7 +297,7 @@ public class MotherLoadApp extends GameApplication {
 
             @Override
             protected void onCollisionEnd(Entity player, Entity upgradesShop) {
-                openUpgradesWindow();
+                closeUpgradesWindow();
                 getAudioPlayer().playSound("Store Close.wav");
                 CtrPlayer.isInMenu = false;
 
@@ -497,10 +498,10 @@ public class MotherLoadApp extends GameApplication {
             public void handle(ActionEvent event) {
                 //Creates a new bank int variable and sets add the value of each ore multipled by the number of each ores you have
                 int bank = 0;
-                bank += ironOre * 1;
-                bank += bronzeOre * 5;
-                bank += silverOre * 10;
-                bank += goldOre * 50;
+                bank += ironOre * 20;
+                bank += bronzeOre * 30;
+                bank += silverOre * 40;
+                bank += goldOre * 70;
                 bank += titOre * 100;
                 bank += estOre * 500;
                 bank += emeraldOre * 1000;
