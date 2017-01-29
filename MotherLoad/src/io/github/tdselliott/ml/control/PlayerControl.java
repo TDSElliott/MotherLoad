@@ -1,3 +1,26 @@
+/*
+ * The MIT License
+ *
+ * Copyright 2016 Mackenzie G.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
 package io.github.tdselliott.ml.control;
 
 import com.almasb.ents.AbstractControl;
@@ -9,11 +32,9 @@ import io.github.tdselliott.ml.MotherLoadApp;
 import javafx.geometry.Point2D;
 
 /**
- *
- * @author Tyler Elliott
+ * Player movement code 
+ * contains - hitboxes, velocitys, mining
  * @author Mackenzie Guy
- * @author The Roooski
- * @author Logan laird
  */
 public class PlayerControl extends AbstractControl {
 
@@ -42,12 +63,15 @@ public class PlayerControl extends AbstractControl {
     public boolean isInMenu = false;
     private boolean mouseDownBug = false;
 
+    //what way is player pointing
     private boolean isPointDown = false;
     private boolean isPointLeft = false;
     private boolean isPointRight = false;
 
+    //is player moving
     boolean hKeyDown = false;
 
+    //is blocks near miner
     boolean groundDown = false;
     boolean groundUp = false;
     boolean groundLeft = false;
@@ -69,7 +93,12 @@ public class PlayerControl extends AbstractControl {
     public PlayerControl() {
 
     }
-
+    
+    /**
+     * add at XY
+     * @param x x
+     * @param y y
+     */
     public PlayerControl(double x, double y) {
         positionXY = new Point2D(x, y); //Sets the positionXY variable equal to the Point2D with the given coordinates
     }
@@ -96,6 +125,9 @@ public class PlayerControl extends AbstractControl {
 //        app.CtrDarkness.setDepth(getPosLandY(2, false, false));
     }
 
+    /**
+     * Velocity and move code
+     */
     private void updatePosition() {
 
         velocityY += gravity; //Adds the gravity value to the velocityY variable
@@ -122,7 +154,7 @@ public class PlayerControl extends AbstractControl {
         }
 
         int arrX = getPosLandX(0, false, true);
-        if (arrX < 10 || arrX > 990) {
+        if (arrX < 10 || arrX > 1990) {
             velocityX = -velocityX;
         }
 
@@ -142,6 +174,9 @@ public class PlayerControl extends AbstractControl {
 
     }
 
+    /**
+     * stops moving after time
+     */
     public void velocityDecay() {
 
         if (velocityX != 0 && !hKeyDown) {
@@ -156,6 +191,10 @@ public class PlayerControl extends AbstractControl {
         hKeyDown = false;
     }
 
+    /**
+     * moves to the mouse
+     * @param mouse Point2D mouse's XY pos
+     */
     public void moveToMouse(Point2D mouse) {
         mouseDownBug = (int) mouse.getX() == (int) simMouseXY.getX() && (int) mouse.getY() == (int) simMouseXY.getY();
 
@@ -186,6 +225,9 @@ public class PlayerControl extends AbstractControl {
         }
     }
 
+    /**
+     * moves to a block and removes it
+     */
     public void animateToBlock() {
 
         double x = Math.cos(animateAngle) * drillSpeed;
@@ -207,6 +249,12 @@ public class PlayerControl extends AbstractControl {
         }
     }
 
+    /**
+     * starts the drilling animation
+     * @param x landY pos to move to
+     * @param y landX pos to move to
+     * @param side is it on the X-axis
+     */
     public void setAnimateStart(int x, int y, boolean side) {
         if (!isInMenu) {
             double pointY;
@@ -238,6 +286,12 @@ public class PlayerControl extends AbstractControl {
         }
     }
 
+    /**
+     * gets angle between two points
+     * @param player point 1
+     * @param target point 2
+     * @return angle
+     */
     public double getAngle(Point2D player, Point2D target) {
         double angle = Math.atan2(target.getY() - player.getY(), target.getX() - player.getX());
 
@@ -248,6 +302,9 @@ public class PlayerControl extends AbstractControl {
         return angle;
     }
 
+    /**
+     * checks if colliding with land if so act accordingly
+     */
     public void isColliding() {
 
         groundDown = false;
@@ -355,6 +412,13 @@ public class PlayerControl extends AbstractControl {
         isPointRight = false;
     }
 
+    /**
+     * gets the x pos of the land array
+     * @param point where on the lander to check top middle or bottem
+     * @param isSide in checking on X-axis
+     * @param Left is on left side
+     * @return int Xpos of land array
+     */
     public int getPosLandX(int point, boolean isSide, boolean Left) {
 
         double offset;
@@ -383,6 +447,13 @@ public class PlayerControl extends AbstractControl {
         return posX;
     }
 
+    /**
+     * gets the x pos of the land array
+     * @param point where on the lander to check top middle or bottem
+     * @param isSide in checking on Y-axis
+     * @param Down is on bottem of the carft
+     * @return int Ypos of land array
+     */
     public int getPosLandY(int point, boolean isSide, boolean Down) {
         double offset;
         switch (point) {
@@ -410,10 +481,17 @@ public class PlayerControl extends AbstractControl {
         return posY;
     }
 
+    /**
+     * returns the location of the miner
+     * @return the point2d of the minder
+     */
     public Point2D rtnPosition() {
         return positionXY;
     }
 
+    /**
+     * adds ores to backend invintory to be sold
+     */
     /**
      * Checks what ore is drilled and adds the specific ore to the inventory. Plays the drilling sound.
      * @param arrX - the X position in the ground array

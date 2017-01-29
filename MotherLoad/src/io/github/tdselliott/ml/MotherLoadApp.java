@@ -1,3 +1,26 @@
+/*
+ * The MIT License
+ *
+ * Copyright 2016 Mackenzie G.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
 package io.github.tdselliott.ml;
 
 import com.almasb.ents.Entity;
@@ -56,6 +79,8 @@ public class MotherLoadApp extends GameApplication {
     public IntegerProperty fuel, armour, credits;
     private InGameWindow fuelWindow, armourWindow, shopWindow, upgradesWindow;
 
+    private int mapX = 2000, mapY = 15000;
+
     private boolean mouseDown = false;
 
     public int maxArmour = 10, maxFuel = 1000;
@@ -84,10 +109,10 @@ public class MotherLoadApp extends GameApplication {
         gs.setWidth(800);
         gs.setHeight(700);
         gs.setTitle("MotherLoad");
-        gs.setVersion("0.5 [BETA]");
+        gs.setVersion("1.0");
         gs.setIntroEnabled(false);
         gs.setMenuEnabled(true); //Change later
-        gs.setMenuStyle(MenuStyle.WARCRAFT3);
+        gs.setMenuStyle(MenuStyle.GTA5);
         gs.setProfilingEnabled(false); // Profiing enabled/disabled (dev/release)
         gs.setCloseConfirmation(false); // Close warning enabled/disabled
         gs.setApplicationMode(ApplicationMode.RELEASE); // Dev, Debug, or Release
@@ -185,7 +210,7 @@ public class MotherLoadApp extends GameApplication {
         getAudioPlayer().setGlobalSoundVolume(0.5); //Sets the sound volume to 50%
         getAudioPlayer().playMusic("29 BONUS Horror.mp3"); //Plays the background music
         //Create player
-        player = EntityFactory.newPlayer(2000, 100); //Adds player at (100, 100)
+        player = EntityFactory.newPlayer(65001, 100); //Adds player at (100, 100)
         getGameWorld().addEntity(player); //Adds player to the world
         CtrPlayer = player.getControlUnsafe(PlayerControl.class); //Sets the CtrPLayer class to the PlayerControl class
 
@@ -214,10 +239,10 @@ public class MotherLoadApp extends GameApplication {
             fuel.set(fuel.get() - fuelLoss); // Set the counter down
         }, Duration.millis(250)); // Every second (250 millis == 1/4 second)
 
-        fuelShop = EntityFactory.newFuelShop(1000, 164); //Adds player at (100, 100)
-        oreShop = EntityFactory.newOreShop(1500, 164); //Adds player at (100, 100)
-        repairShop = EntityFactory.newRepairShop(2000, 164); //Adds player at (100, 100)
-        upgradeShop = EntityFactory.newUpgradeShop(2500, 164); //Adds player at (100, 100)
+        fuelShop = EntityFactory.newFuelShop(1000 + 64000, 164); //Adds player at (100, 100)
+        oreShop = EntityFactory.newOreShop(1500 + 64000, 164); //Adds player at (100, 100)
+        repairShop = EntityFactory.newRepairShop(2000 + 64000, 164); //Adds player at (100, 100)
+        upgradeShop = EntityFactory.newUpgradeShop(2500 + 64000, 164); //Adds player at (100, 100)
         getGameWorld().addEntities(fuelShop, repairShop, oreShop, upgradeShop); //Adds player to the world  
     }
 //------------------------------------------------------------------------------
@@ -714,8 +739,14 @@ public class MotherLoadApp extends GameApplication {
     }
 //------------------------------------------------------------------------------
 
+    /**
+     * gets the chance of each ore types for a given depth
+     *
+     * @param Tier tier to get the chance for
+     * @param x depth
+     * @return double chance of ore
+     */
     public double getDirtType(int Tier, int x) {
-
         double chance = -0.00003 * (x + 60 - (20 * Tier - 1)) * (x - 40 - (20 * Tier - 1));
         return chance;
     }

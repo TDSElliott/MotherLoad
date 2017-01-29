@@ -104,7 +104,7 @@ public class EntityFactory {
     public static Entity newFullScreenImage(boolean isBackground) {
         GameEntity image = new GameEntity(); //Creates a new grounf GameEntity
         if (isBackground) {
-            image.getMainViewComponent().setView(new EntityView(assetLoader.loadTexture("UG_Background.png", 800, 700)), false);
+            image.getMainViewComponent().setView(new EntityView(assetLoader.loadTexture("UG_Background.png", 1000, 800)), false);
             image.getMainViewComponent().setRenderLayer(RenderLayer.TOP);
         } else {
             image.getMainViewComponent().setView(new EntityView(assetLoader.loadTexture("Darkness.png", 800, 700)), false);
